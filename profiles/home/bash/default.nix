@@ -26,6 +26,10 @@ in
     };
 
     functions = {
+      "+" = ''
+        "$@"
+      '';
+
       "." = ''
         if [ $# -eq 0 ]; then
           local root
