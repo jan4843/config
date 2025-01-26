@@ -6,33 +6,35 @@
 }:
 {
   imports = with inputs.self.homeProfiles; [
-    alfred
     asdf
     bash
-    docker_darwin
-    force-macbook-mic
     git
     gnu-utils
     go
+    nix
+    python
+    ssh
+    tree
+    vim
+    vscode
+    wget
+    yt-dlp
+
+    alfred
+    docker_darwin
+    force-macbook-mic
+    fork
     iina
     keyboard-maestro
     launchcontrol
     macos-settings
     middle
     monitorcontrol
-    nix
     notunes
-    python
     skalacolor
-    ssh
     tailscale_darwin
     transmit
     trash
-    tree
-    vim
-    vscode
-    wget
-    yt-dlp
   ];
 
   home.packages = with pkgs; [

@@ -7,8 +7,13 @@
 {
   imports = with inputs.self.homeProfiles; [
     bash
+    git
     gnu-utils
     nix
+    tree
+    vim
+    wget
+
     yuzu
   ];
 
