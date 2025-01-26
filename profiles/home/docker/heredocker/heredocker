@@ -1,0 +1,213 @@
+#!/bin/sh -e
+
+SELF=$(basename "$0")
+
+abort() {
+	echo "$SELF:" "$@" >&2
+	exit 1
+}
+
+expand() {
+	if [ -d "$1" ]; then
+		(cd -- "$1" && pwd)
+	else
+		dir=$(cd -- "$(dirname "$1")" && pwd)
+		printf '%s/%s' "$dir" "$(basename "$1")"
+	fi
+}
+
+last_arg=option
+
+for arg in "$@"; do
+	if [ -z "$args_reset" ]; then
+		set --
+		args_reset=1
+	fi
+
+	if [ "$last_arg" = option ]; then
+		case $arg in
+			# 8080:8080
+			# 5353:5353/udp
+			[0-9]*:[0-9]*)
+				set -- \
+					--publish="$arg" \
+					"$@"
+				;;
+
+			# 5353/udp
+			[0-9]*/*)
+				port=${arg%/*}
+				proto=${arg#*/}
+				set -- \
+					--publish="$port:$port/$proto" \
+					"$@"
+				;;
+
+			# 8080
+			[0-9]*)
+				set -- \
+					--publish="$arg:$arg" \
+					"$@"
+				;;
+
+			# .:/data
+			# .:/data:ro
+			.:/*|..:/*|./:/*|./*:/*|../:/*|../*:/*|/*:/*)
+				src=$(expand "${arg%%:*}")
+				dst_opt=${arg#*:}
+				set -- \
+					--volume="$src:$dst_opt" \
+					"$@"
+				;;
+
+			# .:ro
+			.:*|..:*|./:*|./*:*|../:*|../*:*|/*:*)
+				test -z "$workdir_set" || abort "cannot specify multiple workdirs"
+				workdir_set=1
+
+				workdir=$(expand "${arg%%:*}")
+				opt=${arg#*:}
+				set -- \
+					--volume="$workdir:/host:$opt" \
+					--workdir="/host" "$@"
+				;;
+
+			# .
+			.|..|./*|../*|/*)
+				test -z "$workdir_set" || abort "cannot specify multiple workdirs"
+				workdir_set=1
+
+				workdir=$(expand "$arg")
+				set -- \
+					--volume="$workdir:/host" \
+					--workdir="/host" \
+					"$@"
+				;;
+
+			# LC_ALL=C
+			[A-Z]*=*)
+				set -- \
+					--env="$arg" \
+					"$@"
+				;;
+
+			# TZ
+			[A-Z]*)
+				value=$(eval "printf '%s' \${$arg?}")
+				set -- \
+					--env="$arg=$value" \
+					"$@"
+				;;
+
+			+*)
+				arch=${arg#+}
+				set -- \
+					--platform="linux/$arch" \
+					"$@"
+				;;
+
+			# -P
+			# --publish-all
+			# -u1001
+			# --user=1001
+
+			# alpine:latest
+			*)
+				case $arg in
+					# docker option
+					-*)
+						;;
+
+					# image
+					*)
+						last_arg=image
+						;;
+				esac
+
+				set -- \
+					"$@" \
+					"$arg"
+				;;
+		esac
+	elif [ "$last_arg" = image ]; then
+		case $arg in
+			# $
+			# $,
+			# $,curl,git
+			$|$,*)
+				test -z "$command_set" || abort 'cannot use $ with COMMAND'
+				test -z "$shell_set"   || abort 'cannot use $ multiple times'
+				shell_set=1
+
+				packages=$(printf %s "${arg#$}" | tr , ' ')
+				cmd=
+				case $arg in
+					$,*)
+						cmd="$cmd command -v apt-get >/dev/null && apt-get update;"
+						;;
+				esac
+				if [ -n "$packages" ]; then
+					cmd="$cmd command -v apt-get >/dev/null && DEBIAN_FRONTEND=noninteractive apt-get install -y $packages;"
+					cmd="$cmd command -v apk     >/dev/null && apk add $packages;"
+					cmd="$cmd command -v dnf     >/dev/null && dnf install -y $packages;"
+					cmd="$cmd command -v pacman  >/dev/null && pacman -Sy --noconfirm $packages;"
+				fi
+				cmd="$cmd"'command -v bash >/dev/null && exec bash "$@" || exec sh "$@"'
+
+				set -- \
+					--init \
+					--entrypoint=sh \
+					"$@" \
+					-c "$cmd"
+				;;
+
+			# date
+			# -Iseconds
+			*)
+				test -z "$shell_set" || abort 'cannot use $ with COMMAND'
+				command_set=1
+
+				set -- \
+					"$@" \
+					"$arg"
+				;;
+		esac
+	fi
+done
+
+if [ -t 0 ]; then
+	set -- \
+		--tty \
+		"$@"
+fi
+
+if [ -d ~/.ssh ]; then
+	set -- \
+		--volume="$HOME/.ssh:/root/.ssh:ro" \
+		"$@"
+fi
+if [ -L ~/.ssh/config ]; then
+	set -- \
+		--volume="$(realpath ~/.ssh/config):/root/.ssh/config:ro" \
+		"$@"
+fi
+if [ -n "$SSH_AUTH_SOCK" ]; then
+	if grep -q '"credsStore":\s*"desktop"' ~/.docker/config.json 2>/dev/null; then
+		# https://docs.docker.com/desktop/networking/#ssh-agent-forwarding
+		set -- \
+			--mount="type=bind,src=/run/host-services/ssh-auth.sock,target=/run/host-services/ssh-auth.sock,readonly" \
+			--env=SSH_AUTH_SOCK="/run/host-services/ssh-auth.sock" \
+			"$@"
+	else
+		set -- \
+			--mount="type=bind,src=$SSH_AUTH_SOCK,target=$SSH_AUTH_SOCK,readonly" \
+			--env=SSH_AUTH_SOCK="$SSH_AUTH_SOCK" \
+			"$@"
+	fi
+fi
+
+docker container run \
+	--rm \
+	--interactive \
+	--no-healthcheck \
+	"$@"

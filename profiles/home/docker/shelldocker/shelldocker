@@ -1,0 +1,7 @@
+#!/bin/sh
+
+exec docker container exec \
+	--interactive \
+	--tty \
+	"$@" \
+	sh -c 'command -v bash >/dev/null && exec bash "$@" || exec sh "$@"'
