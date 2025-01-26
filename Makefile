@@ -20,7 +20,7 @@ $(darwinConfigurations):
 
 $(filter-out $(self),$(homeConfigurations)):
 	+$(NIX) copy $(flake) \
-	--to ssh://$@?remote-program=/nix/var/nix/profiles/default/bin/nix-store
+	--to ssh-ng://$@?remote-program=/nix/var/nix/profiles/default/bin/nix-daemon
 	+ssh -t $@ PATH=/nix/var/nix/profiles/default/bin $(NIX) run home-manager -- \
 	--flake $(flake)#$@ \
 	--no-write-lock-file \

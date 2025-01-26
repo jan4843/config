@@ -17,7 +17,7 @@
     repositoryFile = pkgs.writeText "" "/run/media/mmcblk0p1/backup";
     passwordFile = pkgs.writeText "" "local";
     paths = [
-      "${config.home.homeDirectory}/.steam/steam/steamapps/compatdata/*/pfx/drive_c/users/steamuser"
+      "${config.home.homeDirectory}/.local/share/Steam/steamapps/compatdata/*/pfx/drive_c/users/steamuser"
       "${config.home.homeDirectory}/retrodeck/saves"
       "${config.home.homeDirectory}/retrodeck/states"
     ];
