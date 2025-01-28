@@ -17,7 +17,7 @@ let
     ${lib.concatLines (taps ++ brews ++ casks ++ mas)}
   '';
 in
-lib.mkIf cfg.enable {
+{
   self.homebrew.brews = lib.optional (cfg.mas != { }) "homebrew/core/mas";
 
   self.scripts.install."13-homebrew-bundle".text = ''

@@ -1,5 +1,5 @@
-{ config, lib, ... }:
-lib.mkIf config.self.homebrew.enable {
+{ config, ... }:
+{
   home.sessionPath = [
     "${config.self.homebrew.prefix}/bin"
     "${config.self.homebrew.prefix}/sbin"

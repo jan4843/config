@@ -1,0 +1,1 @@
+{ nix.channel.enable = false; }

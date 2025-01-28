@@ -5,6 +5,7 @@
   ...
 }:
 let
+  # TODO
   root = "${config.home.homeDirectory}/.local/nix/sideband";
   expectedFiles = lib.pipe config.self.sideband [
     (lib.filterAttrs (_: v: v.enable))
@@ -12,30 +13,7 @@ let
   ];
 in
 {
-  options.self.sideband = lib.mkOption {
-    type = lib.types.attrsOf (
-      lib.types.submodule (
-        { name, ... }:
-        {
-          options = {
-            enable = lib.mkOption {
-              type = lib.types.bool;
-              default = true;
-            };
-
-            path = lib.mkOption {
-              type = lib.types.path;
-              readOnly = true;
-              default = "${root}/${name}";
-            };
-          };
-        }
-      )
-    );
-    default = { };
-  };
-
-  config.self.scripts.check.sideband.text = ''
+  self.scripts.check.sideband.text = ''
     ${pkgs.coreutils}/bin/mkdir -p ${root}
 
     for f in ${lib.escapeShellArgs expectedFiles}; do

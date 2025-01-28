@@ -19,44 +19,15 @@ let
   };
 in
 {
-  options.self.git = {
-    enable = lib.mkOption {
-      type = lib.types.bool;
-      default = false;
-    };
+  home.packages = [ pkgs.git ];
 
-    package = lib.mkOption {
-      type = lib.types.package;
-      default = pkgs.git;
-    };
-
-    config = lib.mkOption {
-      type = lib.types.anything;
-      default = [ ];
-    };
-
-    ignore = lib.mkOption {
-      type = lib.types.listOf lib.types.str;
-      default = [ ];
-    };
-
-    hooks = lib.mkOption {
-      type = lib.types.attrsOf (lib.types.attrsOf lib.types.path);
-      default = { };
-    };
+  home.file = {
+    ".config/git/config".text = lib.generators.toGitINI config.self.git.config;
+    ".config/git/ignore".text = lib.concatLines config.self.git.ignore;
+    ".config/git/hooks".source = "${hooksEnv}/bin";
   };
 
-  config = lib.mkIf config.self.git.enable {
-    home.packages = [ pkgs.git ];
-
-    home.file = {
-      ".config/git/config".text = lib.generators.toGitINI config.self.git.config;
-      ".config/git/ignore".text = lib.concatLines config.self.git.ignore;
-      ".config/git/hooks".source = "${hooksEnv}/bin";
-    };
-
-    programs.bash.profileExtra = ''
-      . ${pkgs.git}/share/bash-completion/completions/git-prompt.sh
-    '';
-  };
+  programs.bash.initExtra = ''
+    . ${pkgs.git}/share/bash-completion/completions/git-prompt.sh
+  '';
 }

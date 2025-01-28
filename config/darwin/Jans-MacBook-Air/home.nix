@@ -5,36 +5,38 @@
   ...
 }:
 {
-  imports = with inputs.self.homeProfiles; [
+  imports = with inputs.self.homeModules; [
+    alfred-config
     asdf
-    bash
-    git
-    gnu-utils
-    go
-    nix
-    python
-    ssh
-    tree
-    vim
-    vscode
-    wget
-    yt-dlp
-
-    alfred
-    docker_darwin
+    backup
+    bash-config
+    darwin
+    docker-darwin
     force-macbook-mic
     fork
+    git-config
+    gnu-utils
+    go
     iina
     keyboard-maestro
     launchcontrol
     macos-settings
+    maestral
     middle
     monitorcontrol
+    nix
     notunes
+    python
     skalacolor
-    tailscale_darwin
+    ssh-config
+    tailscale-darwin
     transmit
     trash
+    tree
+    vim
+    vscode-config
+    wget
+    yt-dlp
   ];
 
   home.packages = with pkgs; [
@@ -74,7 +76,6 @@
   ];
 
   self.backup = {
-    enable = true;
     paths = [
       "${config.home.homeDirectory}/Documents"
       "${config.home.homeDirectory}/Developer"
@@ -84,6 +85,4 @@
       daily = 365;
     };
   };
-
-  self.maestral.enable = true;
 }

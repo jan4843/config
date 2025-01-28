@@ -11,7 +11,4 @@ in
 
   darwinModules = self.lib.mkModules ./modules/darwin;
   homeModules = self.lib.mkModules ./modules/home;
-
-  darwinProfiles = self.lib.mapDir (path: path) ./profiles/darwin;
-  homeProfiles = self.lib.mapDir (path: path) ./profiles/home;
 }

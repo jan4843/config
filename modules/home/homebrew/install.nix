@@ -8,7 +8,7 @@
 let
   prefix = lib.escapeShellArg config.self.homebrew.prefix;
 in
-lib.mkIf config.self.homebrew.enable {
+{
   self.scripts.check.homebrew.text = ''
     if [ -e ${prefix} ] && ! [ -e ${prefix}/.nix ]; then
       echo "${prefix}: existing installation not managed by nix"

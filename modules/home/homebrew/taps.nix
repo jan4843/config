@@ -17,7 +17,7 @@ let
     (pkgs.runCommand "Taps" { })
   ];
 in
-lib.mkIf config.self.homebrew.enable {
+{
   self.scripts.install."12-homebrew-taps" = {
     path = with pkgs; [
       coreutils

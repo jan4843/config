@@ -5,20 +5,22 @@
   ...
 }:
 {
-  imports = with inputs.self.homeProfiles; [
-    bash
-    git
+  imports = with inputs.self.homeModules; [
+    backup
+    bash-config
+    git-config
     gnu-utils
     nix
+    tailscale-linux
     tree
     vim
     wget
-
     yuzu
   ];
 
+  self.bash.functions.__steamos_prompt_command = ":";
+
   self.backup = {
-    enable = true;
     repositoryFile = pkgs.writeText "" "/run/media/mmcblk0p1/backup";
     passwordFile = pkgs.writeText "" "local";
     paths = [
@@ -34,7 +36,6 @@
   };
 
   self.tailscale = {
-    enable = true;
     tags = [ "edge" ];
     upFlags = [ "--ssh" ];
   };

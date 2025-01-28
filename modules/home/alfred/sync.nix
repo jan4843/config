@@ -1,5 +1,5 @@
 { config, lib, ... }:
-lib.mkIf config.self.alfred.enable {
+{
   targets.darwin.defaults."com.runningwithcrayons.Alfred-Preferences" = {
     syncfolder = config.self.alfred.syncFolder;
   };

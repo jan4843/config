@@ -1,9 +1,9 @@
-{ config, lib, ... }:
+{ config, ... }:
 let
   key = "AppleSymbolicHotKeys:64";
   file = "${config.home.homeDirectory}/Library/Preferences/com.apple.symbolichotkeys.plist";
 in
-lib.mkIf config.self.alfred.enable {
+{
   self.plistbuddy = [
     {
       command = "Delete ${key}";

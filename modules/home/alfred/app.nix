@@ -2,7 +2,7 @@
 let
   appPath = "/Applications/Alfred 5.app";
 in
-lib.mkIf config.self.alfred.enable {
+{
   self.homebrew.casks = [ "homebrew/cask/alfred" ];
 
   self.tcc = {

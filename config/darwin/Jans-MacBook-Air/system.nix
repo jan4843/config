@@ -1,6 +1,6 @@
 { inputs, ... }:
 {
-  imports = with inputs.self.darwinProfiles; [
+  imports = with inputs.self.darwinModules; [
     charge-limit
   ];
 

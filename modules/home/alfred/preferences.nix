@@ -18,7 +18,7 @@ let
 
   helper = ".local/nix/alfred/alfred-preferences";
 in
-lib.mkIf config.self.alfred.enable {
+{
   home.file.${helper}.source = pkgs.writeShellScript "alfred-preferences" ''
     for pref_dir in ${lib.escapeShellArg target}/*/; do
       [ -e "$pref_dir" ] || continue

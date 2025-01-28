@@ -41,40 +41,13 @@ let
     );
 in
 {
-  options.self.scripts = rec {
-    check = lib.mkOption {
-      type = lib.types.attrsOf (
-        lib.types.submodule (
-          { name, config, ... }:
-          {
-            options = {
-              path = lib.mkOption {
-                type = lib.types.listOf (lib.types.either lib.types.package (lib.types.enum [ "darwin" ]));
-                default = [ ];
-              };
+  home.activation = {
+    customChecks = lib.hm.dag.entryBefore [ "checkFilesChanged" ] (mkActivation "check");
 
-              text = lib.mkOption { type = lib.types.lines; };
-            };
-          }
-        )
-      );
-      default = { };
-    };
+    customInstalls = lib.hm.dag.entryBetween [ "linkGeneration" ] [ "installPackages" ] (
+      mkActivation "install"
+    );
 
-    install = check;
-
-    write = check;
-  };
-
-  config = {
-    home.activation = {
-      customChecks = lib.hm.dag.entryBefore [ "checkFilesChanged" ] (mkActivation "check");
-
-      customInstalls = lib.hm.dag.entryBetween [ "linkGeneration" ] [ "installPackages" ] (
-        mkActivation "install"
-      );
-
-      customWrites = lib.hm.dag.entryAfter [ "linkGeneration" ] (mkActivation "write");
-    };
+    customWrites = lib.hm.dag.entryAfter [ "linkGeneration" ] (mkActivation "write");
   };
 }

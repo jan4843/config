@@ -63,7 +63,7 @@ let
     i: n: lib.lists.optional (n != null) "--keep-${i}=${toString n}"
   ) config.self.backup.retention;
 in
-lib.mkIf config.self.backup.enable {
+{
   home.file.${helper}.source = script;
 
   launchd.agents.backup = {

@@ -5,30 +5,17 @@ let
   path = lib.strings.escapeShellArg config.self.maestral.syncFolder;
 in
 {
-  options.self.maestral = {
-    enable = lib.mkOption {
-      type = lib.types.bool;
-      default = false;
-    };
+  self.maestral.syncFolder = lib.mkDefault "${config.home.homeDirectory}/Library/Dropbox";
 
-    syncFolder = lib.mkOption {
-      type = lib.types.path;
-    };
-  };
+  self.homebrew.casks = [ "homebrew/cask/maestral" ];
 
-  config = lib.mkIf config.self.maestral.enable {
-    self.maestral.syncFolder = lib.mkDefault "${config.home.homeDirectory}/Library/Dropbox";
-
-    self.homebrew.casks = [ "homebrew/cask/maestral" ];
-
-    self.open-at-login.maestral = {
-      inherit appPath;
-      preExec = ''
-        if [ "$(${cli} config get path)" != ${path} ]; then
-          mkdir -p ${path}
-          open -R ${path}
-        fi
-      '';
-    };
+  self.open-at-login.maestral = {
+    inherit appPath;
+    preExec = ''
+      if [ "$(${cli} config get path)" != ${path} ]; then
+        mkdir -p ${path}
+        open -R ${path}
+      fi
+    '';
   };
 }

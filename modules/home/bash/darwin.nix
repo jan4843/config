@@ -8,7 +8,7 @@
 let
   shellPath = "/run/current-system/sw${pkgs.bashInteractive.shellPath}";
 in
-lib.mkIf (config.self.bash.enable && pkgs.hostPlatform.isDarwin) {
+lib.mkIf pkgs.hostPlatform.isDarwin {
   assertions = [
     {
       assertion = builtins.elem shellPath osConfig.environment.shells;
