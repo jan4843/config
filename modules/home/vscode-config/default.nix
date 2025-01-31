@@ -1,4 +1,5 @@
-{ inputs, ... }: {
+{ inputs, ... }:
+{
   imports = [ inputs.self.homeModules.vscode ];
 
   self.vscode = {
@@ -17,7 +18,6 @@
       "editor.minimap.showSlider" = "always";
       "editor.renderWhitespace" = "boundary";
       "editor.rulers" = [ 80 ];
-      "editor.scrollbar.vertical" = "hidden";
       "editor.stickyScroll.enabled" = true;
       "explorer.confirmDelete" = false;
       "explorer.confirmDragAndDrop" = false;
