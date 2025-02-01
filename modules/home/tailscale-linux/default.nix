@@ -9,7 +9,7 @@ let
   socketPath = "/tmp/tailscaled.${config.home.username}.sock";
   proxyAddress = "127.0.0.1:1055";
 in
-rec {
+{
   imports = [ inputs.self.homeModules.tailscale ];
 
   self.tailscale.authKeyFile = lib.mkDefault config.self.sideband."self.tailscale.authKey".path;
@@ -18,12 +18,10 @@ rec {
 
   home.packages = [ pkgs.tailscale ];
 
-  home.shellAliases.tailscale = "tailscale --socket=${socketPath}";
-
-  systemd.user.sessionVariables = home.sessionVariables;
-  home.sessionVariables = {
-    ALL_PROXY = "socks5://${proxyAddress}";
-    http_roxy = "http://${proxyAddress}";
+  home.shellAliases = {
+    tailscale = "tailscale --socket=${socketPath}";
+    wget = "wget -e use_proxy=yes -e http_proxy=http://${proxyAddress} -e https_proxy=http://${proxyAddress}";
+    curl = "http_proxy=http://${proxyAddress} curl";
   };
 
   systemd.user.services.tailscaled = {

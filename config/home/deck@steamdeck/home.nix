@@ -1,9 +1,4 @@
-{
-  config,
-  inputs,
-  pkgs,
-  ...
-}:
+{ inputs, pkgs, ... }:
 {
   imports = with inputs.self.homeModules; [
     backup
@@ -13,6 +8,7 @@
     gnu-utils
     heroic
     nix
+    opengoal
     retrodeck
     steamos
     tailscale-linux
@@ -20,6 +16,10 @@
     vim
     wget
     yuzu
+  ];
+
+  home.packages = with pkgs; [
+    unar
   ];
 
   self.backup = {

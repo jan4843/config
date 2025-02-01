@@ -8,6 +8,6 @@
   self.bash.functions.__steamos_prompt_command = ":";
 
   self.backup.paths = [
-    "${config.home.homeDirectory}/.local/share/Steam/steamapps/compatdata/*/pfx/drive_c/users/steamuser"
+    "${config.home.homeDirectory}/.local/share/Steam/steamapps/compatdata/*/pfx/drive_c/users"
   ];
 }

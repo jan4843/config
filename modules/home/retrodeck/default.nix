@@ -1,10 +1,13 @@
 { config, pkgs, ... }:
+let
+  flatpak = "net.retrodeck.retrodeck";
+in
 {
-  self.flatpak.apps = [ "net.retrodeck.retrodeck" ];
+  self.flatpak.apps = [ flatpak ];
 
   self.steam-shortcuts.RetroDECK = {
     script = ''
-      exec flatpak --user run net.retrodeck.retrodeck
+      exec flatpak --user run ${flatpak}
     '';
     assets = {
       grid.horizontal = pkgs.fetchurl {

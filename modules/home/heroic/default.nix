@@ -1,7 +1,14 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
+let
+  flatpak = "com.heroicgameslauncher.hgl";
+in
 {
+  self.flatpak.apps = [ flatpak ];
+
   self.steam-shortcuts.Heroic = {
-    script = "LD_PRELOAD= ${pkgs.heroic-unwrapped}/bin/heroic";
+    script = ''
+      exec flatpak --user run --filesystem="~/Games/OpenGOAL:create" ${flatpak}
+    '';
     assets = {
       grid.horizontal = pkgs.fetchurl {
         url = "https://cdn2.steamgriddb.com/grid/726d04d0731a3930f3359dca8f721168.png";
@@ -25,4 +32,8 @@
       };
     };
   };
+
+  self.backup.paths = [
+    "${config.home.homeDirectory}/Games/Heroic/Prefixes/default/*/drive_c/users"
+  ];
 }
