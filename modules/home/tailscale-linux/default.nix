@@ -11,7 +11,7 @@ let
 in
 rec {
   imports = [ inputs.self.homeModules.tailscale ];
-  
+
   self.tailscale.authKeyFile = lib.mkDefault config.self.sideband."self.tailscale.authKey".path;
   self.sideband."self.tailscale.authKey".enable =
     config.self.tailscale.authKeyFile == config.self.sideband."self.tailscale.authKey".path;

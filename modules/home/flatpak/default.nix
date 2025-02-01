@@ -1,0 +1,30 @@
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+{
+  self.scripts.install.flatpak = {
+    path = [ pkgs.flatpak ];
+    text = ''
+      flatpak --user remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+
+      set -- ${lib.escapeShellArgs config.self.flatpak.apps}
+      if [ $# -gt 0 ]; then
+        flatpak --user --noninteractive install --or-update --app "$@"
+      fi
+
+      want=$*
+      set --
+      for app in $(flatpak --user list --app --columns=application); do
+        case " $want " in " $app ") continue;; esac
+        set -- "$app"
+      done
+      if [ $# -gt 0 ]; then
+        flatpak --user --noninteractive uninstall --app "$@"
+        flatpak --user --noninteractive uninstall --unused
+      fi
+    '';
+  };
+}

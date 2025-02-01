@@ -8,9 +8,13 @@
   imports = with inputs.self.homeModules; [
     backup
     bash-config
+    chiaki
     git-config
     gnu-utils
+    heroic
     nix
+    retrodeck
+    steamos
     tailscale-linux
     tree
     vim
@@ -18,16 +22,9 @@
     yuzu
   ];
 
-  self.bash.functions.__steamos_prompt_command = ":";
-
   self.backup = {
     repositoryFile = pkgs.writeText "" "/run/media/mmcblk0p1/backup";
     passwordFile = pkgs.writeText "" "local";
-    paths = [
-      "${config.home.homeDirectory}/.local/share/Steam/steamapps/compatdata/*/pfx/drive_c/users/steamuser"
-      "${config.home.homeDirectory}/retrodeck/saves"
-      "${config.home.homeDirectory}/retrodeck/states"
-    ];
     retention = {
       hourly = 24 * 7;
       daily = 365;
