@@ -7,7 +7,7 @@ in
 
   self.steam-shortcuts.Heroic = {
     script = ''
-      exec flatpak --user run --filesystem="~/Games/OpenGOAL:create" ${flatpak}
+      exec flatpak --user run ${flatpak}
     '';
     assets = {
       grid.horizontal = pkgs.fetchurl {
