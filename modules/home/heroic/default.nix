@@ -34,6 +34,6 @@ in
   };
 
   self.backup.paths = [
-    "${config.home.homeDirectory}/Games/Heroic/Prefixes/default/*/drive_c/users"
+    "${config.home.homeDirectory}/Games/Heroic/Prefixes/*/*/drive_c/users"
   ];
 }
