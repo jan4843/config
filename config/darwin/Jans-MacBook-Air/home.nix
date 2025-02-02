@@ -85,4 +85,14 @@
       daily = 365;
     };
   };
+
+  self.bash.functions.pdfdecrypt = ''
+    (
+      read -rsp "password: "
+      for f in "$@"; do
+        ${pkgs.qpdf}/bin/qpdf --decrypt --replace-input --password="$REPLY" "$f"
+        rm -f "$f.~qpdf-orig"
+      done
+    )
+  '';
 }
