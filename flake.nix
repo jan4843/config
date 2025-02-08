@@ -40,7 +40,7 @@
 
     # homebrew
     homebrew = {
-      url = "github:homebrew/brew/4.4.17";
+      url = "github:homebrew/brew/4.4.20";
       flake = false;
     };
     homebrew-bundle = {
