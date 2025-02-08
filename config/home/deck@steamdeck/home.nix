@@ -7,6 +7,7 @@
     git-config
     gnu-utils
     heroic
+    ips
     nix
     opengoal
     retrodeck
@@ -19,6 +20,7 @@
   ];
 
   home.packages = with pkgs; [
+    magic-wormhole
     unar
   ];
 

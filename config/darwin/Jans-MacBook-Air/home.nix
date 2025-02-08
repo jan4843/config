@@ -18,6 +18,7 @@
     gnu-utils
     go
     iina
+    ips
     keyboard-maestro
     launchcontrol
     macos-settings
