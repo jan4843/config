@@ -1,13 +1,28 @@
-{ config, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
-  flatpak = "com.heroicgameslauncher.hgl";
+  driversDir = "${pkgs.mesa.drivers}/share/vulkan/icd.d";
+  drivers = lib.pipe driversDir [
+    builtins.readDir
+    builtins.attrNames
+    (map (f: "${driversDir}/${f}"))
+  ];
+
+  pkgs'.heroic = pkgs.heroic-unwrapped.overrideAttrs (old: {
+    patches = [ ];
+  });
 in
 {
-  self.flatpak.apps = [ flatpak ];
+  home.packages = [ pkgs'.heroic ];
 
   self.steam-shortcuts.Heroic = {
     script = ''
-      exec flatpak --user run ${flatpak}
+      LD_PRELOAD= \
+      exec ${pkgs'.heroic}/bin/heroic
     '';
     assets = {
       grid.horizontal = pkgs.fetchurl {
