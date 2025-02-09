@@ -15,8 +15,12 @@ inputs.nix-darwin.lib.darwinSystem {
     inputs.home-manager.darwinModules.home-manager
     {
       system.stateVersion = system.stateVersion or null;
-      nixpkgs.hostPlatform = system.platform;
       users.users.${home.user}.home = home.directory;
+
+      nixpkgs = {
+        hostPlatform = system.platform;
+        overlays = [ inputs.self.overlays.default ];
+      };
 
       home-manager = {
         useGlobalPkgs = true;

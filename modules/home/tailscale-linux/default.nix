@@ -20,8 +20,8 @@ in
 
   home.shellAliases = {
     tailscale = "tailscale --socket=${socketPath}";
-    wget = "wget -e use_proxy=yes -e http_proxy=http://${proxyAddress} -e https_proxy=http://${proxyAddress}";
     curl = "http_proxy=http://${proxyAddress} curl";
+    wget = "wget -e use_proxy=yes -e http_proxy=http://${proxyAddress} -e https_proxy=http://${proxyAddress}";
   };
 
   systemd.user.services.tailscaled = {
