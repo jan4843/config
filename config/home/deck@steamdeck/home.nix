@@ -7,6 +7,7 @@
     git-config
     gnu-utils
     heroic
+    home-manager
     ips
     nix
     opengoal
