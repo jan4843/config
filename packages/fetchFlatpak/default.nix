@@ -1,3 +1,7 @@
+# nix shell nixpkgs#flatpak
+# export FLATPAK_USER_DIR=$(mktemp -d) && flatpak() { command flatpak --user "$@"; } && flatpak remote-add flathub https://flathub.org/repo/flathub.flatpakrepo
+# flatpak --verbose --noninteractive install flathub org.mozilla.firefox 2>&1 | grep resolved
+# flatpak remote-info --log flathub org.mozilla.firefox
 { pkgs, lib, ... }:
 {
   repo ? "https://dl.flathub.org/repo/flathub.flatpakrepo",
@@ -16,12 +20,10 @@ let
   runtime =
     pkgs.runCommand app
       {
+        NIX_SSL_CERT_FILE = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
         outputHash = hash;
         outputHashAlgo = if hash == "" then "sha256" else null;
         outputHashMode = "recursive";
-
-        NIX_SSL_CERT_FILE = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
-        FLATPAK_REFS = lib.escapeShellArgs refs;
       }
       ''
         mkdir -p ./root/sys/{block,bus,class,dev,devices}
@@ -39,14 +41,13 @@ let
             ${pkgs.flatpak}/bin/flatpak --verbose --user "$@"
         )
 
-        flatpak remote-add repo ${repo}
-        for ref_commit in $FLATPAK_REFS; do
+        flatpak remote-add repo ${lib.escapeShellArg repo}
+        for ref_commit in ${lib.escapeShellArgs refs}; do
           ref=''${ref_commit%@*}
           commit=''${ref_commit#*@}
-          flatpak install --noninteractive --no-related --no-deps "$ref"
-          flatpak update  --noninteractive --no-related --no-deps --commit="$commit" "$ref"
+          flatpak install --noninteractive --no-related --no-deps --subpath=TMPNONEXISTENT "$ref"
+          flatpak update  --noninteractive --no-related --no-deps --subpath= --commit="$commit" "$ref"
         done
-        flatpak uninstall --noninteractive --unused
 
         mkdir $out
         mv ./user/{app,runtime} $out

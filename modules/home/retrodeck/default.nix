@@ -2,22 +2,29 @@
 let
   retrodeck = pkgs.fetchFlatpak {
     refs = [
-      "app/net.retrodeck.retrodeck/x86_64/stable@d0ca160265e691fb4813ec255c2ddfacbcc11751bea7466dbcc935a3a477a008"
-      "runtime/org.kde.Platform/x86_64/6.7@87997f02ba47e4e9c70a29d5f80c57c932f07bb90583c92fa7ecd84b73921b0c"
-      "runtime/net.retrodeck.retrodeck.Locale/x86_64/stable@fd881a1899aec2474f6af8a377eb0f2084f020a50091c82f95bcd54f88ff50c4"
-      "runtime/org.freedesktop.Platform.ffmpeg-full/x86_64/23.08@3ef91fbf154edc8dbdd7f6130364f1c5fffd6e9ada42b9c81496a57a00fbcafc"
-      "runtime/org.kde.Platform.Locale/x86_64/6.7@1ef98e72028ae58917b449f78eb8404d267b5c3ef4f8bb1a380fbf22573c20cc"
-      "runtime/org.kde.KStyle.Adwaita/x86_64/6.7@f1b7398559fd8a7dde2a9ed85833cc0c5b75086c871e9f798143268952638ff4"
+      "app/net.retrodeck.retrodeck/x86_64/stable@4bce48e1a51baae9013f50bace61d600b5df6eb999eb6b3e2f00d79d5f25aebe"
+      "runtime/org.kde.Platform/x86_64/6.5@9fa4355a807109a061ce727f18a51128f8eb61e4c097f5e7e58cf1162d08b755"
+      "runtime/org.kde.Platform.Locale/x86_64/6.5@3af3820a32090dfb4941a9c1d03e65e8610dbffb94152c5d4ee9dffd87daa3e5"
+      "runtime/org.kde.KStyle.Adwaita/x86_64/6.5@598a394874266d95b745070852df7e935d32889387027976c8f11b6aa00efba1"
       "runtime/org.freedesktop.Platform.openh264/x86_64/2.2.0@bf24f23f3ba385f6e8c9215ed94d979db99814b0b614504a23a6d0751dc5f063"
-      "runtime/org.freedesktop.Platform.GL.default/x86_64/23.08-extra@4ec382899342be0e2e83192b37e015f1742854bc7ebb9742ef4072a960c66755"
-      "runtime/org.freedesktop.Platform.GL.default/x86_64/23.08@eb55a37807f391c514ec2621492a13c18d0a8fc9e4a1c38265e6e7f804ccc0e8"
+      "runtime/org.freedesktop.Platform.GL.default/x86_64/22.08-extra@10fc92ea465df41fec2471f0dda7f60d4f8a55beac9fc9f9cbe17d186a83cf7b"
+      "runtime/org.freedesktop.Platform.GL.default/x86_64/22.08@db524dc0f1a0befee753e243a7905dc359a473eb118fdbfe4d175609b31d6765"
     ];
-    hash = "sha256-0XNEf40+ODmodbZyZvGy9fcgXOtNa3FtQaQz2L6ue6A=";
+    hash = "sha256-/FuG0YvKjIHY49SzBq2cnfM32mq1aNWderoKRPM+Ri8=";
   };
 in
 {
   self.steam-shortcuts.RetroDECK = {
-    script = "LD_PRELOAD= exec ${retrodeck}/bin/net.retrodeck.retrodeck";
+    script = ''
+      export LD_PRELOAD=
+      ${pkgs.coreutils}/bin/mkdir -p ~/Games/RetroDECK/var &&
+      exec ${pkgs.bubblewrap}/bin/bwrap \
+        --dev-bind / / \
+        --tmpfs ~ \
+        --bind ~/Games/RetroDECK ~/retrodeck \
+        --bind ~/Games/RetroDECK/var ~/.var/app/net.retrodeck.retrodeck \
+        ${retrodeck}/bin/net.retrodeck.retrodeck
+    '';
     assets = {
       grid.horizontal = pkgs.fetchurl {
         url = "https://cdn2.steamgriddb.com/grid/c21ceff81f372048509914fdf9ee4804.png";
@@ -43,7 +50,7 @@ in
   };
 
   self.backup.paths = [
-    "${config.home.homeDirectory}/retrodeck/saves"
-    "${config.home.homeDirectory}/retrodeck/states"
+    "${config.home.homeDirectory}/Games/RetroDECK/saves"
+    "${config.home.homeDirectory}/Games/RetroDECK/states"
   ];
 }

@@ -21,6 +21,7 @@
 
   home.packages = with pkgs; [
     magic-wormhole
+    mame-tools
     unar
   ];
 

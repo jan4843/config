@@ -5,24 +5,23 @@
   ...
 }:
 let
-  driversDir = "${pkgs.mesa.drivers}/share/vulkan/icd.d";
-  drivers = lib.pipe driversDir [
-    builtins.readDir
-    builtins.attrNames
-    (map (f: "${driversDir}/${f}"))
-  ];
-
-  pkgs'.heroic = pkgs.heroic-unwrapped.overrideAttrs (old: {
-    patches = [ ];
-  });
+  launcher = ".nix/heroic/launcher";
 in
 {
-  home.packages = [ pkgs'.heroic ];
+  # https://github.com/Heroic-Games-Launcher/HeroicGamesLauncher/blob/v2.15.2/src/backend/shortcuts/nonesteamgame/nonesteamgame.ts#L271-L272
+  home.file.${launcher} = {
+    executable = true;
+    text = ''
+      LD_PRELOAD= \
+      exec ${pkgs.heroic-unwrapped}/bin/heroic "$@"
+    '';
+  };
 
   self.steam-shortcuts.Heroic = {
     script = ''
       LD_PRELOAD= \
-      exec ${pkgs'.heroic}/bin/heroic
+      APPIMAGE=${lib.escapeShellArg config.home.homeDirectory}/${launcher} \
+      exec ${pkgs.heroic-unwrapped}/bin/heroic
     '';
     assets = {
       grid.horizontal = pkgs.fetchurl {
