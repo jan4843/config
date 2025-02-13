@@ -1,7 +1,5 @@
-{ config, inputs,... }:
+{ config, ... }:
 {
-  imports = [ inputs.self.homeModules.alfred ];
-
   self.alfred = {
     syncFolder = "${config.self.maestral.syncFolder}/Alfred";
     preferences = {

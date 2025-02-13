@@ -2,9 +2,9 @@
 {
   imports = with inputs.self.homeModules; [
     backup
-    bash-config
+    bash
     chiaki
-    git-config
+    git
     gnu-utils
     heroic
     ips

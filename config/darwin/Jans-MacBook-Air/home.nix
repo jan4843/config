@@ -6,15 +6,15 @@
 }:
 {
   imports = with inputs.self.homeModules; [
-    alfred-config
+    alfred
     asdf
     backup
-    bash-config
+    bash
     darwin
     docker-darwin
     force-macbook-mic
     fork
-    git-config
+    git
     gnu-utils
     go
     iina
@@ -29,7 +29,7 @@
     notunes
     python
     skalacolor
-    ssh-config
+    ssh-client
     tailscale-darwin
     transmit
     trash

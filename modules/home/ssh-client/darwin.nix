@@ -9,14 +9,14 @@ let
   key = "${config.home.homeDirectory}/.ssh/id_${type}";
 in
 lib.mkIf pkgs.hostPlatform.isDarwin {
-  self.ssh.config = ''
+  self.ssh-client.config = ''
     Host *
       IgnoreUnknown UseKeychain
       UseKeychain yes
       AddKeysToAgent yes
   '';
 
-  self.scripts.write.ssh = {
+  self.scripts.write.ssh-client-id = {
     path = [ "darwin" ];
     text = ''
       if ! [ -e ${key} ]; then

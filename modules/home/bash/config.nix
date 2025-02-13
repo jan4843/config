@@ -1,9 +1,4 @@
-{
-  inputs,
-  lib,
-  pkgs,
-  ...
-}:
+{ lib, pkgs, ... }:
 let
   bold = ''\[\e[1m\]'';
   dim = ''\[\e[90m\]'';
@@ -11,8 +6,6 @@ let
   highlighted = x: ''${bold}${dim}${x}${reset}'';
 in
 {
-  imports = [ inputs.self.homeModules.bash ];
-
   self.bash = {
     PS1 = highlighted ''\h:\W$(prompt_info) \$ '';
     PS2 = highlighted "> ";

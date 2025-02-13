@@ -1,16 +1,9 @@
-{
-  inputs,
-  lib,
-  pkgs,
-  ...
-}:
+{ lib, pkgs, ... }:
 let
   includeIf = cond: ''includeIf "${lib.escape [ "\"" ] cond}"'';
   mkInclude = cfg: { path = pkgs.writeText "" (lib.generators.toGitINI cfg); };
 in
 {
-  imports = [ inputs.self.homeModules.git ];
-
   self.git.config = {
     alias = {
       l = ''!git --no-pager log --max-count=50 --reverse --oneline'';
