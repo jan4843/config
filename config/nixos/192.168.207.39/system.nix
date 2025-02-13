@@ -1,6 +1,7 @@
 { inputs, ... }:
 {
   imports = with inputs.self.nixosModules; [
+    autoupgrade
     qemu-guest
     ssh-server
   ];
@@ -35,12 +36,6 @@
   '';
 
   time.timeZone = "CET";
-
-  system.autoUpgrade = {
-    enable = true;
-    allowReboot = true;
-    flake = "${inputs.self}";
-  };
 
   zramSwap.enable = true;
 }

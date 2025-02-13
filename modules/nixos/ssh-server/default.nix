@@ -28,7 +28,9 @@ in
       openssh
     ];
     script = ''
-      ssh-import-id --output=${lib.escapeShellArg authorizedKeysFile} ${lib.escapeShellArg config.self.ssh-server.importID}
+      ssh-import-id \
+        --output=${lib.escapeShellArg authorizedKeysFile} \
+        ${lib.escapeShellArg config.self.ssh-server.importID}
     '';
   };
 }
