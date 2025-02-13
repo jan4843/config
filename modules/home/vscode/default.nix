@@ -6,15 +6,9 @@
   ...
 }:
 {
-  programs.vscode.enable = true;
-
-  self.homebrew.casks = [ "homebrew/cask/visual-studio-code" ];
-  programs.vscode.package = lib.optionalAttrs pkgs.hostPlatform.isDarwin {
-    type = "derivation";
-    inherit (pkgs.vscode) pname version;
-  };
-
   programs.vscode = {
+    enable = true;
+
     keybindings = config.self.vscode.keybindings;
     userSettings = config.self.vscode.settings;
     globalSnippets = config.self.vscode.snippets.global;
@@ -37,6 +31,4 @@
     EDITOR = lib.mkOverride 800 "code --wait";
     VISUAL = EDITOR;
   };
-
-  self.tcc.SystemPolicyAllFiles = [ "/Applications/Visual Studio Code.app" ];
 }
