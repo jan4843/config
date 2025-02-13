@@ -1,4 +1,5 @@
 {
+  outputs = inputs: import ./outputs.nix inputs;
   inputs = {
     # nixpkgs
     nixpkgs = {
@@ -56,6 +57,4 @@
       flake = false;
     };
   };
-
-  outputs = inputs: import ./outputs.nix inputs;
 }
