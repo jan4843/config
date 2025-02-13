@@ -38,7 +38,7 @@ let
             --bind /tmp /tmp \
             --dev-bind /dev /dev \
             --setenv FLATPAK_USER_DIR $PWD/user \
-            ${pkgs.flatpak}/bin/flatpak --verbose --user "$@"
+            ${pkgs.flatpak}/bin/flatpak --user --verbose --ostree-verbose "$@"
         )
 
         flatpak remote-add repo ${lib.escapeShellArg repo}
