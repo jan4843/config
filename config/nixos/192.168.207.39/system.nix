@@ -34,9 +34,6 @@
     mkfs.ext2 -F -L root /dev/disk/by-partlabel/root
   '';
 
-  boot.postBootCommands = "ln -sfn ${inputs.self} /run/booted-config";
-  systemd.tmpfiles.rules = [ "L+ /run/current-config - - - - ${inputs.self}" ];
-
   time.timeZone = "CET";
 
   system.autoUpgrade = {
