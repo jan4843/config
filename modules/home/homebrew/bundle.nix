@@ -21,15 +21,8 @@ in
   self.homebrew.brews = lib.optional (cfg.mas != { }) "homebrew/core/mas";
 
   self.scripts.install."13-homebrew-bundle".text = ''
-    set -e
-
-    export HOMEBREW_NO_AUTO_UPDATE=1
-    export HOMEBREW_NO_INSTALL_FROM_API=1
-
-    ${cfg.prefix}/bin/brew install \
-      --dry-run \
-      ${lib.escapeShellArgs (cfg.brews ++ cfg.casks)}
-
+    HOMEBREW_NO_AUTO_UPDATE=1 \
+    HOMEBREW_NO_INSTALL_FROM_API=1 \
     ${cfg.prefix}/bin/brew bundle \
         --file ${brewfile} \
         --cleanup --no-lock --quiet
