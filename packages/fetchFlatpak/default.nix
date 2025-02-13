@@ -20,7 +20,7 @@ let
   runtime =
     pkgs.runCommand app
       {
-        NIX_SSL_CERT_FILE = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
+        nativeBuildInputs = [ pkgs.cacert ];
         outputHash = hash;
         outputHashAlgo = if hash == "" then "sha256" else null;
         outputHashMode = "recursive";
