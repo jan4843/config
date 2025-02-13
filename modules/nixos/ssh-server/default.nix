@@ -5,7 +5,7 @@
   ...
 }:
 let
-  authorizedKeysFile = "/nix/persist/ssh/authorized_keys";
+  authorizedKeysFile = "${config.self.persistence.path}/ssh/authorized_keys";
 in
 {
   services.openssh = {
@@ -14,7 +14,7 @@ in
     hostKeys = [
       rec {
         type = "ed25519";
-        path = "/nix/persist/ssh/ssh_host_${type}_key";
+        path = "${config.self.persistence.path}/ssh/ssh_host_${type}_key";
       }
     ];
   };
