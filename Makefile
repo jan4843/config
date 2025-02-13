@@ -1,8 +1,10 @@
 NIX ?= nix --extra-experimental-features nix-command --extra-experimental-features flakes
+OPTIONS ?= --no-write-lock-file --print-build-logs --show-trace
+COMMAND ?= switch
 
 host := $(shell hostname)
 home := $(shell whoami)@$(hostname)
-flake := $(shell $(NIX) flake metadata --json | jq -r .path)
+flake := $(shell $(NIX) flake metadata --no-write-lock-file --json 2>/dev/null | jq -r .path)
 
 darwinConfigurations := $(notdir $(wildcard ./config/darwin/*))
 nixosConfigurations := $(notdir $(wildcard ./config/nixos/*))
@@ -23,49 +25,27 @@ $(filter-out $(host),$(darwinConfigurations)):
 # darwin local
 ifneq (,$(findstring $(host),$(darwinConfigurations)))
 $(host):
-	+darwin-rebuild \
-	--flake $(flake)#$@ \
-	--no-write-lock-file \
-	--print-build-logs \
-	--show-trace \
-	switch
+	darwin-rebuild --flake $(flake)#$@ $(OPTIONS) $(COMMAND)
 endif
 
 # nixos remote
 $(filter-out $(host),$(nixosConfigurations)):
-	+$(NIX) copy $(flake) \
-	--to ssh-ng://$@
-	+ssh -t $@ nixos-rebuild \
-	--flake $(flake)#$@ \
-	--no-write-lock-file \
-	--print-build-logs \
-	--show-trace \
-	switch
+	$(NIX) copy $(flake) --to ssh-ng://$@
+	ssh -t $@ nixos-rebuild --flake $(flake)#$@ $(OPTIONS) $(COMMAND)
 
 # nixos local
 ifneq (,$(findstring $(host),$(nixosConfigurations)))
 $(host):
-	$(error Local NixOS not supported)
+	nixos-rebuild --flake $(flake)#$@ $(OPTIONS) $(COMMAND)
 endif
 
 # home remote
 $(filter-out $(home),$(homeConfigurations)):
-	+$(NIX) copy $(flake) \
-	--to ssh-ng://$@?remote-program=/nix/var/nix/profiles/default/bin/nix-daemon
-	+ssh -t $@ PATH=/nix/var/nix/profiles/default/bin $(NIX) run home-manager -- \
-	--flake $(flake)#$@ \
-	--no-write-lock-file \
-	--print-build-logs \
-	--show-trace \
-	switch
+	$(NIX) copy $(flake) --to ssh-ng://$@?remote-program=/nix/var/nix/profiles/default/bin/nix-daemon
+	ssh -t $@ PATH=/nix/var/nix/profiles/default/bin $(NIX) run home-manager -- --flake $(flake)#$@ $(OPTIONS) $(COMMAND)
 
 # home local
 ifneq (,$(findstring $(home),$(homeConfigurations)))
 $(home):
-	+$(NIX) run home-manager -- \
-	--flake $(flake)#$@ \
-	--no-write-lock-file \
-	--print-build-logs \
-	--show-trace \
-	switch
+	$(NIX) run home-manager -- --flake $(flake)#$@ $(OPTIONS) $(COMMAND)
 endif
