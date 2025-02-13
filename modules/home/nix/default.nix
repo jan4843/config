@@ -13,8 +13,6 @@
 
   nix.gc.automatic = true;
 
-  nixpkgs.config.allowUnfree = true;
-
   self.git.ignore = [ "/result" ];
 
   self.vscode = {

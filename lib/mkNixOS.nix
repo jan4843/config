@@ -4,18 +4,19 @@
   home,
 }:
 let
-  inputs = self.lib.filterInputs "darwin";
+  inputs = self.lib.filterInputs "linux";
 in
-inputs.nix-darwin.lib.darwinSystem {
+inputs.nixpkgs.lib.nixosSystem {
   specialArgs.inputs = inputs;
 
   modules = [
-    inputs.home-manager.darwinModules.home-manager
+    inputs.home-manager.nixosModules.home-manager
     {
       system.stateVersion = system.stateVersion or null;
 
       users.users.${home.user} = {
         home = home.directory;
+        linger = true;
       };
 
       nixpkgs = {

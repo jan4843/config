@@ -15,7 +15,11 @@ inputs.home-manager.lib.homeManagerConfiguration {
 
   modules = [
     {
-      nixpkgs.overlays = [ inputs.self.overlays.default ];
+      nixpkgs = {
+        config.allowUnfree = true;
+        overlays = [ inputs.self.overlays.default ];
+      };
+
       home = {
         username = home.user;
         homeDirectory = home.directory;
