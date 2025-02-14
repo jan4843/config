@@ -5,7 +5,6 @@
   imports = with inputs.self.homeModules; [
     default
 
-    backup
     bash
     chiaki
     git
@@ -16,7 +15,6 @@
     opengoal
     retrodeck
     steamos
-    tailscale-linux
     tree
     vim
     wget
@@ -28,19 +26,4 @@
     mame-tools
     unar
   ];
-
-  self.backup = {
-    repositoryFile = pkgs.writeText "" "/run/media/mmcblk0p1/backup";
-    passwordFile = pkgs.writeText "" "local";
-    retention = {
-      hourly = 24 * 7;
-      daily = 365;
-      yearly = 999;
-    };
-  };
-
-  self.tailscale = {
-    tags = [ "edge" ];
-    upFlags = [ "--ssh" ];
-  };
 }

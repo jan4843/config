@@ -1,9 +1,4 @@
-{
-  config,
-  inputs,
-  pkgs,
-  ...
-}:
+{ inputs, pkgs, ... }:
 {
   home.stateVersion = "24.11";
 
@@ -12,7 +7,6 @@
 
     alfred
     asdf
-    backup
     bash
     darwin
     docker-darwin
@@ -79,25 +73,4 @@
     "homebrew/cask/utm"
     "homebrew/cask/whatsapp"
   ];
-
-  self.backup = {
-    paths = [
-      "${config.home.homeDirectory}/Documents"
-      "${config.home.homeDirectory}/Developer"
-    ];
-    retention = {
-      hourly = 24 * 7;
-      daily = 365;
-    };
-  };
-
-  self.bash.functions.pdfdecrypt = ''
-    (
-      read -rsp "password: "
-      for f in "$@"; do
-        ${pkgs.qpdf}/bin/qpdf --decrypt --replace-input --password="$REPLY" "$f"
-        rm -f "$f.~qpdf-orig"
-      done
-    )
-  '';
 }
