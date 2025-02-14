@@ -12,10 +12,6 @@ in
 {
   imports = [ inputs.self.homeModules.tailscale ];
 
-  self.tailscale.authKeyFile = lib.mkDefault config.self.sideband."self.tailscale.authKey".path;
-  self.sideband."self.tailscale.authKey".enable =
-    config.self.tailscale.authKeyFile == config.self.sideband."self.tailscale.authKey".path;
-
   home.packages = [ pkgs.tailscale ];
 
   home.shellAliases = {
@@ -41,17 +37,6 @@ in
         "--outbound-http-proxy-listen=${proxyAddress}"
         "--socks5-server=${proxyAddress}"
       ];
-
-      ExecStartPost = lib.escapeShellArgs (
-        lib.flatten [
-          "${pkgs.tailscale}/bin/tailscale"
-          "--socket=${socketPath}"
-          "up"
-          "--auth-key=file:${config.self.tailscale.authKeyFile}"
-          (map (tag: "--advertise-tags=tag:${tag}") config.self.tailscale.tags)
-          config.self.tailscale.upFlags
-        ]
-      );
     };
 
     Install = {

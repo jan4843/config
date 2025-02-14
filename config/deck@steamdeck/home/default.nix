@@ -15,6 +15,7 @@
     opengoal
     retrodeck
     steamos
+    tailscale-linux
     tree
     vim
     wget
