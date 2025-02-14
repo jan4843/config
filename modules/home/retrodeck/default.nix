@@ -21,6 +21,9 @@ in
       exec ${pkgs.bubblewrap}/bin/bwrap \
         --dev-bind / / \
         --tmpfs ~ \
+        --bind-try ~/.local/share/Steam ~/.local/share/Steam \
+        --bind-try ~/.steam ~/.steam \
+        --bind-try ~/.var/app/com.valvesoftware.Steam ~/.var/app/com.valvesoftware.Steam \
         --bind ~/Games/RetroDECK ~/retrodeck \
         --bind ~/Games/RetroDECK/var ~/.var/app/net.retrodeck.retrodeck \
         ${retrodeck}/bin/net.retrodeck.retrodeck

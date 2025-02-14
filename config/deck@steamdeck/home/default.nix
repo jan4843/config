@@ -27,4 +27,6 @@
     mame-tools
     unar
   ];
+
+  programs.librewolf.enable = true;
 }
