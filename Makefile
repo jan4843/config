@@ -3,7 +3,7 @@ OPTIONS ?= --no-write-lock-file --print-build-logs --show-trace
 COMMAND ?= switch
 
 self := $(shell whoami)@$(shell hostname)
-flake := $(shell $(NIX) flake metadata --no-write-lock-file --json | jq -r .path)
+flake := $(shell $(RM) flake.lock && git add --intent-to-add . && $(NIX) flake metadata --no-write-lock-file --json | jq -r .path)
 
 darwinConfigurations := $(notdir $(patsubst %/,%,$(dir $(wildcard ./config/*/darwin))))
 nixosConfigurations  := $(notdir $(patsubst %/,%,$(dir $(wildcard ./config/*/nixos))))

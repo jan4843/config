@@ -4,10 +4,10 @@
     default
 
     autoupgrade
-    lan
     persistence
     qemu-guest
     ssh-server
+    tailscale
   ];
 
   nixpkgs.hostPlatform = "aarch64-linux";
@@ -18,7 +18,7 @@
     systemd-boot.configurationLimit = 8;
   };
 
+  networking.firewall.enable = false;
   time.timeZone = "CET";
-
   zramSwap.enable = true;
 }
