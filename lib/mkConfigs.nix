@@ -91,15 +91,18 @@ let
 in
 builtins.mapAttrs (
   name: path:
-  let
-    username = builtins.head (builtins.split "@" (builtins.baseNameOf path));
-  in
-  if type == "nixos" then
-    mkNixOS { inherit path username; }
-  else if type == "darwin" then
-    mkDarwin { inherit path username; }
-  else if type == "system" then
-    mkHome { inherit path username; }
-  else
-    abort "invalid config type '${type}'"
+  (
+    if type == "nixos" then
+      mkNixOS
+    else if type == "darwin" then
+      mkDarwin
+    else if type == "system" then
+      mkHome
+    else
+      abort "invalid config type '${type}'"
+  )
+    {
+      inherit path;
+      username = builtins.head (builtins.split "@" (builtins.baseNameOf path));
+    }
 ) configs
