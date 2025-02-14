@@ -5,9 +5,9 @@ COMMAND ?= switch
 self := $(shell whoami)@$(shell hostname)
 flake := $(shell $(NIX) flake metadata --no-write-lock-file --json | jq -r .path)
 
-darwinConfigurations := $(notdir $(wildcard ./config/darwin/*))
-nixosConfigurations := $(notdir $(wildcard ./config/nixos/*))
-homeConfigurations := $(notdir $(wildcard ./config/home/*))
+darwinConfigurations := $(notdir $(patsubst %/,%,$(dir $(wildcard ./config/*/darwin))))
+nixosConfigurations  := $(notdir $(patsubst %/,%,$(dir $(wildcard ./config/*/nixos))))
+homeConfigurations   := $(notdir $(patsubst %/,%,$(dir $(wildcard ./config/*/system))))
 
 ifeq ($(shell uname),Darwin)
 .DEFAULT_GOAL := $(self)

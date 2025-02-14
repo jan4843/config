@@ -1,13 +1,10 @@
 { self, ... }@inputs:
-let
-  mapDir = import ./lib/mapDir.nix { };
-in
 {
-  lib = mapDir (path: import path inputs) ./lib;
+  lib = (import ./lib/mapDir.nix { }) (path: import path inputs) ./lib;
 
-  darwinConfigurations = mapDir self.lib.mkDarwin ./config/darwin;
-  nixosConfigurations = mapDir self.lib.mkNixOS ./config/nixos;
-  homeConfigurations = mapDir self.lib.mkHome ./config/home;
+  darwinConfigurations = self.lib.mkConfigs "darwin" ./config;
+  nixosConfigurations = self.lib.mkConfigs "nixos" ./config;
+  homeConfigurations = self.lib.mkConfigs "system" ./config;
 
   darwinModules = self.lib.mkModules ./modules/darwin;
   nixosModules = self.lib.mkModules ./modules/nixos;
