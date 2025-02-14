@@ -13,6 +13,7 @@
     ips
     nix
     opengoal
+    ping
     retrodeck
     steamos
     tailscale-linux
