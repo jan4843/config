@@ -4,7 +4,7 @@ COMMAND ?= switch
 
 host := $(shell hostname)
 home := $(shell whoami)@$(hostname)
-flake := $(shell $(NIX) flake metadata --no-write-lock-file --json 2>/dev/null | jq -r .path)
+flake := $(shell $(NIX) flake metadata --no-write-lock-file --json | jq -r .path)
 
 darwinConfigurations := $(notdir $(wildcard ./config/darwin/*))
 nixosConfigurations := $(notdir $(wildcard ./config/nixos/*))

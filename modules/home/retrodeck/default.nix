@@ -1,6 +1,6 @@
 { config, pkgs, ... }:
 let
-  retrodeck = pkgs.fetchFlatpak {
+  retrodeck = pkgs.self.fetchFlatpak {
     refs = [
       "app/net.retrodeck.retrodeck/x86_64/stable@4bce48e1a51baae9013f50bace61d600b5df6eb999eb6b3e2f00d79d5f25aebe"
       "runtime/org.kde.Platform/x86_64/6.5@9fa4355a807109a061ce727f18a51128f8eb61e4c097f5e7e58cf1162d08b755"

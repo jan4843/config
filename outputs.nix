@@ -14,5 +14,7 @@ in
   nixosModules = self.lib.mkModules ./modules/nixos;
   homeModules = self.lib.mkModules ./modules/home;
 
-  overlays.default = final: prev: self.lib.mapDir (path: final.callPackage path { }) ./packages;
+  overlays.default = final: prev: {
+    self = self.lib.mapDir (path: final.callPackage path { }) ./packages;
+  };
 }
