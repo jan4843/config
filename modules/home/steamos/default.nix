@@ -1,8 +1,16 @@
-{ config, inputs, ... }:
+{
+  config,
+  inputs,
+  pkgs,
+  ...
+}:
 {
   imports = with inputs.self.homeModules; [
-    flatpak
     steam-shortcuts
+  ];
+
+  home.packages = with pkgs; [
+    protontricks
   ];
 
   self.bash.functions.__steamos_prompt_command = ":";

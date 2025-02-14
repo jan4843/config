@@ -1,13 +1,19 @@
 { config, pkgs, ... }:
 let
-  flatpak = "dev.opengoal.OpenGOAL";
+  opengoal = pkgs.self.fetchFlatpak {
+    refs = [
+      "app/dev.opengoal.OpenGOAL/x86_64/stable@a4440bd7720feea57f4f0f1a9d5b9e0fa1ebefc72c97b847727e84bc41b55d28"
+      "runtime/dev.opengoal.OpenGOAL.Locale/x86_64/stable@72a789e5a1c48e5240e54c9b0c1c8d95f2a947d0299f9b8ddaaa2eb7877c412a"
+    ];
+    hash = "sha256-9BhE0DZWOuEXD13w+c1QFava5l0b7HHjN2k6qjyNclU=";
+    overrides.Context.filesystems = [ "~/Games/OpenGOAL:create" ];
+  };
 in
 {
-  self.flatpak.apps = [ flatpak ];
-
   self.steam-shortcuts.OpenGOAL = {
     script = ''
-      exec flatpak --user run --filesystem="~/Games/OpenGOAL:create" ${flatpak}
+      LD_PRELOAD= \
+      exec ${opengoal}/bin/dev.opengoal.OpenGOAL
     '';
     assets = {
       grid.horizontal = pkgs.fetchurl {
