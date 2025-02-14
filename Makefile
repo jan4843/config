@@ -2,8 +2,7 @@ NIX ?= nix --extra-experimental-features nix-command --extra-experimental-featur
 OPTIONS ?= --no-write-lock-file --print-build-logs --show-trace
 COMMAND ?= switch
 
-host := $(shell hostname)
-home := $(shell whoami)@$(hostname)
+self := $(shell whoami)@$(shell hostname)
 flake := $(shell $(NIX) flake metadata --no-write-lock-file --json | jq -r .path)
 
 darwinConfigurations := $(notdir $(wildcard ./config/darwin/*))
@@ -11,31 +10,31 @@ nixosConfigurations := $(notdir $(wildcard ./config/nixos/*))
 homeConfigurations := $(notdir $(wildcard ./config/home/*))
 
 ifeq ($(shell uname),Darwin)
-.DEFAULT_GOAL := $(host)
+.DEFAULT_GOAL := $(self)
 else ifneq (,$(wildcard /etc/NIXOS))
-.DEFAULT_GOAL := $(host)
+.DEFAULT_GOAL := $(self)
 else
 .DEFAULT_GOAL := $(home)
 endif
 
 # darwin remote
-$(filter-out $(host),$(darwinConfigurations)):
+$(filter-out $(self),$(darwinConfigurations)):
 	$(error Remote Darwin not supported)
 
 # darwin local
-ifneq (,$(findstring $(host),$(darwinConfigurations)))
-$(host):
+ifneq (,$(findstring $(self),$(darwinConfigurations)))
+$(self):
 	darwin-rebuild --flake $(flake)#$@ $(OPTIONS) $(COMMAND)
 endif
 
 # nixos remote
-$(filter-out $(host),$(nixosConfigurations)):
+$(filter-out $(self),$(nixosConfigurations)):
 	$(NIX) copy $(flake) --to ssh-ng://$@
 	ssh -t $@ nixos-rebuild --flake $(flake)#$@ $(OPTIONS) $(COMMAND)
 
 # nixos local
-ifneq (,$(findstring $(host),$(nixosConfigurations)))
-$(host):
+ifneq (,$(findstring $(self),$(nixosConfigurations)))
+$(self):
 	nixos-rebuild --flake $(flake)#$@ $(OPTIONS) $(COMMAND)
 endif
 

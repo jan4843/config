@@ -1,30 +1,23 @@
 { self, ... }:
-{
-  system,
-  home,
-}:
+path:
 let
   inputs = self.lib.filterInputs "linux";
+  username = builtins.head (builtins.split "@" (builtins.baseNameOf path));
+  readDir = path: builtins.attrValues (self.lib.mapDir (x: x) path);
 in
 inputs.home-manager.lib.homeManagerConfiguration {
-  extraSpecialArgs = {
-    inherit inputs;
-  };
+  extraSpecialArgs.inputs = inputs;
 
-  pkgs = inputs.nixpkgs.legacyPackages.${system.platform};
+  pkgs = inputs.nixpkgs.legacyPackages.${(import "${path}/system").nixpkgs.hostPlatform};
 
-  modules = [
+  modules = (readDir "${path}/home") ++ [
     {
-      nixpkgs = {
-        config.allowUnfree = true;
-        overlays = [ inputs.self.overlays.default ];
-      };
+      nixpkgs.overlays = [ inputs.self.overlays.default ];
 
       home = {
-        username = home.user;
-        homeDirectory = home.directory;
-        stateVersion = home.stateVersion or null;
+        inherit username;
+        homeDirectory = if username == "root" then "/root" else "/home/${username}";
       };
     }
-  ] ++ (home.modules or [ ]);
+  ];
 }

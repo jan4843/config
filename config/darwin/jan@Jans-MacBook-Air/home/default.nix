@@ -5,7 +5,11 @@
   ...
 }:
 {
+  home.stateVersion = "24.11";
+
   imports = with inputs.self.homeModules; [
+    default
+
     alfred
     asdf
     backup
