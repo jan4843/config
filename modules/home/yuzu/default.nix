@@ -1,24 +1,10 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}:
-let
-  driversDir = "${pkgs.mesa.drivers}/share/vulkan/icd.d";
-  drivers = lib.pipe driversDir [
-    builtins.readDir
-    builtins.attrNames
-    (map (f: "${driversDir}/${f}"))
-  ];
-in
+{ config, pkgs, ... }:
 {
   self.steam-shortcuts.Yuzu = {
     script = ''
       LD_PRELOAD= \
       QT_XCB_GL_INTEGRATION=none \
-      VK_ADD_DRIVER_FILES=${lib.concatStringsSep ":" drivers} \
-      exec ${pkgs.torzu}/bin/yuzu
+      exec ${pkgs.self.vulkan-run}/bin/vulkan-run ${pkgs.torzu}/bin/yuzu
     '';
     assets = {
       grid.horizontal = pkgs.fetchurl {

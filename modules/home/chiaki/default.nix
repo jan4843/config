@@ -1,19 +1,10 @@
-{ lib, pkgs, ... }:
-let
-  driversDir = "${pkgs.mesa.drivers}/share/vulkan/icd.d";
-  drivers = lib.pipe driversDir [
-    builtins.readDir
-    builtins.attrNames
-    (map (f: "${driversDir}/${f}"))
-  ];
-in
+{ pkgs, ... }:
 {
   self.steam-shortcuts.Chiaki = {
     script = ''
       LD_PRELOAD= \
       QT_XCB_GL_INTEGRATION=none \
-      VK_ADD_DRIVER_FILES=${lib.concatStringsSep ":" drivers} \
-      exec ${pkgs.chiaki-ng}/bin/chiaki
+      exec ${pkgs.self.vulkan-run}/bin/vulkan-run ${pkgs.chiaki-ng}/bin/chiaki
     '';
     assets = {
       grid.horizontal = pkgs.fetchurl {
