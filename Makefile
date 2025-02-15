@@ -1,9 +1,9 @@
 NIX ?= nix --extra-experimental-features nix-command --extra-experimental-features flakes
-OPTIONS ?= --no-write-lock-file --print-build-logs --show-trace
+OPTIONS ?= --print-build-logs --show-trace
 COMMAND ?= switch
 
 self := $(shell whoami)@$(shell hostname)
-flake := $(shell $(RM) flake.lock && git add --intent-to-add . && $(NIX) flake metadata --no-write-lock-file --json | jq -r .path)
+flake := $(shell git add --intent-to-add . && $(NIX) flake metadata --json | jq -r .path)
 
 darwinConfigurations := $(notdir $(patsubst %/,%,$(dir $(wildcard ./config/*/darwin))))
 nixosConfigurations  := $(notdir $(patsubst %/,%,$(dir $(wildcard ./config/*/nixos))))

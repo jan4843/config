@@ -1,7 +1,7 @@
 { inputs, ... }:
 {
-  networking.hostName = "vm";
-  nixpkgs.hostPlatform = "aarch64-linux";
+  networking.hostName = "srv2";
+  nixpkgs.hostPlatform = "x86_64-linux";
   system.stateVersion = "24.11";
 
   time.timeZone = "CET";
@@ -11,6 +11,7 @@
     default
 
     autoupgrade
+    compose
     docker
     persistence
     qemu-guest

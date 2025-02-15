@@ -2,7 +2,7 @@
 # export FLATPAK_USER_DIR=$(mktemp -d) && flatpak() { command flatpak --user "$@"; } && flatpak remote-add flathub https://flathub.org/repo/flathub.flatpakrepo
 # flatpak --verbose --noninteractive install flathub org.mozilla.firefox 2>&1 | grep resolved
 # flatpak remote-info --log flathub org.mozilla.firefox
-{ pkgs, lib, ... }:
+{ lib, pkgs, ... }:
 {
   repo ? "https://dl.flathub.org/repo/flathub.flatpakrepo",
   refs,
