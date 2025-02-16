@@ -35,12 +35,12 @@ $(.DEFAULT_GOAL):
 endif
 
 # home remote
-$(filter-out $(home),$(HOME_CONFIGS)):
+$(filter-out $(.DEFAULT_GOAL),$(HOME_CONFIGS)):
 	$(NIX) copy $(FLAKE) --to ssh-ng://$(SSH_DESTINATION)?remote-program=/nix/var/nix/profiles/default/bin/nix-daemon
 	ssh -t $(SSH_DESTINATION) PATH=/nix/var/nix/profiles/default/bin $(HOME_MANAGER) --flake $(FLAKE)#$@ $(OPTIONS) $(COMMAND)
 
 # home local
-ifneq (,$(findstring $(home),$(HOME_CONFIGS)))
-$(home):
+ifneq (,$(findstring $(.DEFAULT_GOAL),$(HOME_CONFIGS)))
+$(.DEFAULT_GOAL):
 	$(HOME_MANAGER) --flake $(FLAKE)#$@ $(OPTIONS) $(COMMAND)
 endif
