@@ -6,21 +6,16 @@
     default
 
     bash
-    chiaki
     git
     gnu-utils
-    heroic
     ips
     nix
-    opengoal
     ping
-    retrodeck
     steamos
     tailscale-linux
     tree
     vim
     wget
-    yuzu
   ];
 
   home.packages = with pkgs; [
