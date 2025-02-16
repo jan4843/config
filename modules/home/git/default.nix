@@ -1,33 +1,24 @@
+{ lib, pkgs, ... }:
 {
-  config,
-  lib,
-  pkgs,
-  ...
-}:
-let
-  hookScript =
-    name: hooks:
-    pkgs.writeShellApplication {
-      inherit name;
-      text = lib.concatLines (builtins.attrValues hooks);
+  options.self.git = {
+    package = lib.mkOption {
+      type = lib.types.package;
+      default = pkgs.git;
     };
 
-  hooksEnv = pkgs.buildEnv {
-    name = "hooks";
-    paths = lib.attrsets.mapAttrsToList hookScript config.self.git.hooks;
-    pathsToLink = [ "/bin" ];
-  };
-in
-{
-  home.packages = [ pkgs.git ];
+    config = lib.mkOption {
+      type = lib.types.anything;
+      default = [ ];
+    };
 
-  home.file = {
-    ".config/git/config".text = lib.generators.toGitINI config.self.git.config;
-    ".config/git/ignore".text = lib.concatLines config.self.git.ignore;
-    ".config/git/hooks".source = "${hooksEnv}/bin";
-  };
+    ignore = lib.mkOption {
+      type = lib.types.listOf lib.types.str;
+      default = [ ];
+    };
 
-  programs.bash.initExtra = ''
-    . ${pkgs.git}/share/bash-completion/completions/git-prompt.sh
-  '';
+    hooks = lib.mkOption {
+      type = lib.types.attrsOf (lib.types.attrsOf lib.types.path);
+      default = { };
+    };
+  };
 }

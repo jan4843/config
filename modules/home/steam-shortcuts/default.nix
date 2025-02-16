@@ -1,28 +1,32 @@
+{ lib, ... }:
+let
+  opts.asset = lib.mkOption {
+    type = lib.types.nullOr lib.types.path;
+    default = null;
+  };
+in
 {
-  config,
-  lib,
-  pkgs,
-  ...
-}:
-{
-  home.file = lib.mapAttrs' (name: cfg: {
-    name = ".nix/steam-shortcuts/${name}";
-    value.source = pkgs.writeScript name cfg.script;
-  }) config.self.steam-shortcuts;
+  options.self.steam-shortcuts = lib.mkOption {
+    type = lib.types.attrsOf (
+      lib.types.submodule (
+        { name, ... }:
+        {
+          options = {
+            script = lib.mkOption {
+              type = lib.types.str;
+            };
 
-  self.scripts.write.steam-shortcuts = {
-    path = [ (pkgs.python3.withPackages (p: [ p.vdf ])) ];
-    text = toString [
-      "python"
-      ./files/steam-shortcuts.py
-      (pkgs.writers.writeJSON "shortcuts.json" (
-        lib.mapAttrs' (name: cfg: {
-          inherit name;
-          value = cfg // {
-            script = "${config.home.homeDirectory}/.nix/steam-shortcuts/${name}";
+            assets = {
+              grid.horizontal = opts.asset;
+              grid.vertical = opts.asset;
+              hero = opts.asset;
+              logo = opts.asset;
+              icon = opts.asset;
+            };
           };
-        }) config.self.steam-shortcuts
-      ))
-    ];
+        }
+      )
+    );
+    default = { };
   };
 }

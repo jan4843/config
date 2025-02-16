@@ -1,34 +1,39 @@
+{ lib, pkgs, ... }:
+let
+  types.json = (pkgs.formats.json { }).type;
+in
 {
-  config,
-  lib,
-  pkgs,
-  inputs,
-  ...
-}:
-{
-  programs.vscode = {
-    enable = true;
-
-    keybindings = config.self.vscode.keybindings;
-    userSettings = config.self.vscode.settings;
-    globalSnippets = config.self.vscode.snippets.global;
-    languageSnippets = config.self.vscode.snippets.languages;
-    userTasks = {
-      version = "2.0.0";
-      inherit (config.self.vscode) tasks;
+  options.self.vscode = {
+    keybindings = lib.mkOption {
+      type = lib.types.listOf types.json;
+      default = [ ];
     };
 
-    mutableExtensionsDir = false;
-    extensions = map (
-      name:
-      lib.attrByPath (lib.strings.splitString "." name)
-        (builtins.abort "vscode extension '${name}' not found")
-        inputs.nix-vscode-extensions.extensions.${pkgs.system}.vscode-marketplace
-    ) config.self.vscode.extensions;
-  };
+    settings = lib.mkOption {
+      type = types.json;
+      default = { };
+    };
 
-  home.sessionVariables = rec {
-    EDITOR = lib.mkOverride 800 "code --wait";
-    VISUAL = EDITOR;
+    tasks = lib.mkOption {
+      type = lib.types.listOf types.json;
+      default = [ ];
+    };
+
+    snippets = {
+      global = lib.mkOption {
+        type = types.json;
+        default = { };
+      };
+
+      languages = lib.mkOption {
+        type = lib.types.attrsOf types.json;
+        default = { };
+      };
+    };
+
+    extensions = lib.mkOption {
+      type = lib.types.listOf lib.types.str;
+      default = [ ];
+    };
   };
 }

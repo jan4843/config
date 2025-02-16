@@ -1,4 +1,99 @@
 { self, ... }@inputs:
+let
+  pipe = builtins.foldl' (x: f: f x);
+
+  hasSuffix =
+    suffix: content:
+    let
+      lenSuffix = builtins.stringLength suffix;
+      lenContent = builtins.stringLength content;
+    in
+    (
+      (lenContent >= lenSuffix)
+      && (builtins.substring (lenContent - lenSuffix) lenContent content) == suffix
+    );
+
+  modules = rec {
+    modulesRoot = ./modules;
+    defaultPrefix = "_default_";
+
+    collectModulesRoots =
+      type:
+      pipe "${modulesRoot}/${type}" [
+        builtins.readDir
+        builtins.attrNames
+        (map (module: {
+          name = module;
+          value = "${modulesRoot}/${type}/${module}";
+        }))
+        (builtins.filter (attr: builtins.pathExists attr.value))
+        builtins.listToAttrs
+      ];
+
+    collectModulesDefaults =
+      root:
+      pipe root [
+        builtins.readDir
+        builtins.attrNames
+        (builtins.filter (f: f == "default.nix"))
+        (map (f: "${root}/${f}"))
+      ];
+
+    collectModulesFiles =
+      root:
+      pipe root [
+        builtins.readDir
+        builtins.attrNames
+        (builtins.filter (f: hasSuffix ".nix" f))
+        (map (f: "${root}/${f}"))
+      ];
+
+    modulesImports =
+      type:
+      pipe (collectModulesRoots type) [
+        (builtins.mapAttrs (name: path: collectModulesFiles path))
+        (builtins.mapAttrs (
+          name: files: {
+            key = name;
+            imports = files ++ [
+              {
+                disabledModules = [ { key = "${defaultPrefix}${name}"; } ];
+              }
+            ];
+          }
+        ))
+      ];
+
+    defaultImports =
+      type:
+      pipe (collectModulesRoots type) [
+        (builtins.mapAttrs (name: path: collectModulesDefaults path))
+        (builtins.mapAttrs (
+          name: files: {
+            key = "${defaultPrefix}${name}";
+            imports = files;
+          }
+        ))
+        builtins.attrValues
+      ];
+
+    mkModules =
+      type:
+      let
+        modules = modulesImports type;
+        originalDefaultImports =
+          (builtins.filter (imports: !(imports ? disabledModules)))
+            modules.default.imports or [ ];
+      in
+      modules
+      // {
+        default = {
+          key = "default";
+          imports = originalDefaultImports ++ defaultImports type;
+        };
+      };
+  };
+in
 {
   lib = (import ./lib/mapDir.nix { }) (path: import path inputs) ./lib;
 
@@ -6,9 +101,9 @@
   nixosConfigurations = self.lib.mkConfigs "nixos" ./config;
   homeConfigurations = self.lib.mkConfigs "system" ./config;
 
-  darwinModules = self.lib.mkModules ./modules/darwin;
-  nixosModules = self.lib.mkModules ./modules/nixos;
-  homeModules = self.lib.mkModules ./modules/home;
+  darwinModules = modules.mkModules "darwin";
+  nixosModules = modules.mkModules "nixos";
+  homeModules = modules.mkModules "home";
 
   packages = {
     aarch64-darwin.darwin-rebuild = inputs.nix-darwin.packages.aarch64-darwin.darwin-rebuild;
