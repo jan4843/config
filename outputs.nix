@@ -22,6 +22,6 @@
   };
 
   overlays.default = final: prev: {
-    self = self.lib.mapDir (path: final.callPackage path { }) ./packages;
+    self = self.lib.mapDir (path: final.callPackage path { }) ./pkgs;
   };
 }
