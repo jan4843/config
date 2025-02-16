@@ -1,50 +1,45 @@
 NIX ?= nix --extra-experimental-features nix-command --extra-experimental-features flakes
+DARWIN_REBUILD ?= $(NIX) run $(FLAKE)\#darwin-rebuild --
+NIXOS_REBUILD  ?= $(NIX) run $(FLAKE)\#nixos-rebuild --
+HOME_MANAGER   ?= $(NIX) run $(FLAKE)\#home-manager --
 OPTIONS ?= --print-build-logs --show-trace
 COMMAND ?= switch
 
-self := $(shell whoami)@$(shell hostname)
-flake := $(shell git add --intent-to-add . && $(NIX) flake metadata --json | jq -r .path)
+FLAKE := $(shell git add --intent-to-add . && $(NIX) flake metadata --json | jq -r .path)
+DARWIN_CONFIGS := $(notdir $(patsubst %/,%,$(dir $(wildcard ./config/*/darwin))))
+NIXOS_CONFIGS  := $(notdir $(patsubst %/,%,$(dir $(wildcard ./config/*/nixos))))
+HOME_CONFIGS   := $(notdir $(patsubst %/,%,$(dir $(wildcard ./config/*/system))))
 
-darwinConfigurations := $(notdir $(patsubst %/,%,$(dir $(wildcard ./config/*/darwin))))
-nixosConfigurations  := $(notdir $(patsubst %/,%,$(dir $(wildcard ./config/*/nixos))))
-homeConfigurations   := $(notdir $(patsubst %/,%,$(dir $(wildcard ./config/*/system))))
-
-ifeq ($(shell uname),Darwin)
-.DEFAULT_GOAL := $(self)
-else ifneq (,$(wildcard /etc/NIXOS))
-.DEFAULT_GOAL := $(self)
-else
-.DEFAULT_GOAL := $(home)
-endif
+.DEFAULT_GOAL := $(shell whoami)@$(shell hostname)
 
 # darwin remote
-$(filter-out $(self),$(darwinConfigurations)):
+$(filter-out $(.DEFAULT_GOAL),$(DARWIN_CONFIGS)):
 	$(error Remote Darwin not supported)
 
 # darwin local
-ifneq (,$(findstring $(self),$(darwinConfigurations)))
-$(self):
-	darwin-rebuild --flake $(flake)#$@ $(OPTIONS) $(COMMAND)
+ifneq (,$(findstring $(.DEFAULT_GOAL),$(DARWIN_CONFIGS)))
+$(.DEFAULT_GOAL):
+	$(DARWIN_REBUILD) --flake $(FLAKE)#$@ $(OPTIONS) $(COMMAND)
 endif
 
 # nixos remote
-$(filter-out $(self),$(nixosConfigurations)):
-	$(NIX) copy $(flake) --to ssh-ng://$@
-	ssh -t $@ nixos-rebuild --flake $(flake)#$@ $(OPTIONS) $(COMMAND)
+$(filter-out $(.DEFAULT_GOAL),$(NIXOS_CONFIGS)):
+	$(NIX) copy $(FLAKE) --to ssh-ng://$@
+	ssh -t $@ $(NIXOS_REBUILD) --flake $(FLAKE)#$@ $(OPTIONS) $(COMMAND)
 
 # nixos local
-ifneq (,$(findstring $(self),$(nixosConfigurations)))
-$(self):
-	nixos-rebuild --flake $(flake)#$@ $(OPTIONS) $(COMMAND)
+ifneq (,$(findstring $(.DEFAULT_GOAL),$(NIXOS_CONFIGS)))
+$(.DEFAULT_GOAL):
+	$(NIXOS_REBUILD) --flake $(FLAKE)#$@ $(OPTIONS) $(COMMAND)
 endif
 
 # home remote
-$(filter-out $(home),$(homeConfigurations)):
-	$(NIX) copy $(flake) --to ssh-ng://$@?remote-program=/nix/var/nix/profiles/default/bin/nix-daemon
-	ssh -t $@ PATH=/nix/var/nix/profiles/default/bin $(NIX) run home-manager -- --flake $(flake)#$@ $(OPTIONS) $(COMMAND)
+$(filter-out $(home),$(HOME_CONFIGS)):
+	$(NIX) copy $(FLAKE) --to ssh-ng://$@?remote-program=/nix/var/nix/profiles/default/bin/nix-daemon
+	ssh -t $@ PATH=/nix/var/nix/profiles/default/bin $(HOME_MANAGER) --flake $(FLAKE)#$@ $(OPTIONS) $(COMMAND)
 
 # home local
-ifneq (,$(findstring $(home),$(homeConfigurations)))
+ifneq (,$(findstring $(home),$(HOME_CONFIGS)))
 $(home):
-	$(NIX) run home-manager -- --flake $(flake)#$@ $(OPTIONS) $(COMMAND)
+	$(HOME_MANAGER) --flake $(FLAKE)#$@ $(OPTIONS) $(COMMAND)
 endif
