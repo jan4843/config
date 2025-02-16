@@ -4,6 +4,7 @@ NIXOS_REBUILD  ?= $(NIX) run $(FLAKE)\#nixos-rebuild --
 HOME_MANAGER   ?= $(NIX) run $(FLAKE)\#home-manager --
 OPTIONS ?= --print-build-logs --show-trace
 COMMAND ?= switch
+SSH_DESTINATION ?= $@
 
 FLAKE := $(shell git add --intent-to-add . && $(NIX) flake metadata --json | jq -r .path)
 DARWIN_CONFIGS := $(notdir $(patsubst %/,%,$(dir $(wildcard ./config/*/darwin))))
@@ -24,8 +25,8 @@ endif
 
 # nixos remote
 $(filter-out $(.DEFAULT_GOAL),$(NIXOS_CONFIGS)):
-	$(NIX) copy $(FLAKE) --to ssh-ng://$@
-	ssh -t $@ $(NIXOS_REBUILD) --flake $(FLAKE)#$@ $(OPTIONS) $(COMMAND)
+	$(NIX) copy $(FLAKE) --to ssh-ng://$(SSH_DESTINATION)
+	ssh -t $(SSH_DESTINATION) $(NIXOS_REBUILD) --flake $(FLAKE)#$@ $(OPTIONS) $(COMMAND)
 
 # nixos local
 ifneq (,$(findstring $(.DEFAULT_GOAL),$(NIXOS_CONFIGS)))
@@ -35,8 +36,8 @@ endif
 
 # home remote
 $(filter-out $(home),$(HOME_CONFIGS)):
-	$(NIX) copy $(FLAKE) --to ssh-ng://$@?remote-program=/nix/var/nix/profiles/default/bin/nix-daemon
-	ssh -t $@ PATH=/nix/var/nix/profiles/default/bin $(HOME_MANAGER) --flake $(FLAKE)#$@ $(OPTIONS) $(COMMAND)
+	$(NIX) copy $(FLAKE) --to ssh-ng://$(SSH_DESTINATION)?remote-program=/nix/var/nix/profiles/default/bin/nix-daemon
+	ssh -t $(SSH_DESTINATION) PATH=/nix/var/nix/profiles/default/bin $(HOME_MANAGER) --flake $(FLAKE)#$@ $(OPTIONS) $(COMMAND)
 
 # home local
 ifneq (,$(findstring $(home),$(HOME_CONFIGS)))
