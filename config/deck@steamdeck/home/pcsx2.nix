@@ -15,8 +15,8 @@
         hash = "sha256-cYWD3BxCsq1Uh1ZqOD5/zMeqrwVTEr/Pp+OSDwX04Tc=";
       };
       hero = pkgs.fetchurl {
-        url = "https://cdn2.steamgriddb.com/hero/5c8887e856d03bf0e2f205b184048890-fakepng.png";
-        hash = "sha256-K/hNqFot0AQtQjI9jGeG3DjbrBWU+0Nv7lqIIzOuLiM=";
+        url = "https://cdn2.steamgriddb.com/hero/18320ca6b79fbfcb9aa442e484885af6.png";
+        hash = "sha256-9hO6rRFnBL+dKSkFr7vXUQhCs+hEkuDVQP2ulo4WrdY=";
       };
       logo = pkgs.fetchurl {
         url = "https://cdn2.steamgriddb.com/logo/cb9c528565c30d49b548831022bc9b32.png";

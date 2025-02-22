@@ -7,24 +7,24 @@
     '';
     assets = {
       grid.horizontal = pkgs.fetchurl {
-        url = "https://cdn2.steamgriddb.com/grid/86fb4d9e1de18ebdb6fc534de828d605.png";
-        hash = "sha256-PoJBJa99Awf15bBSLQrciBL4AFMsNF+7TVc6Z0tQEwE=";
+        url = "https://cdn2.steamgriddb.com/grid/33adf515b05df298e5834fea30d40ecb.png";
+        hash = "sha256-47QBN8WcPIGDFApubUhMyy4AXHwl9CbPxXDC4AuDeas=";
       };
       grid.vertical = pkgs.fetchurl {
-        url = "https://cdn2.steamgriddb.com/grid/429f3ebdc9e3c2582ac685bc001b6262.png";
-        hash = "sha256-hifqfNUYyEAmQaPsILX/VdluAtXra5aBA8faOPxujrY=";
+        url = "https://cdn2.steamgriddb.com/grid/298d97bf8b61a6603efdd17e4a5cb03b.png";
+        hash = "sha256-aHCTo8S1e5t+u53B0hZr+0UvT0UVi74k4Jg8p+nUMWE=";
       };
       hero = pkgs.fetchurl {
-        url = "https://cdn2.steamgriddb.com/hero/6f611188ad4a81ffc2edab83b0705d76.jpg";
-        hash = "sha256-kEMkcW07fR+30wvfnHyLeQ0g9MKlVtqzXr4mGUDPfE4=";
+        url = "https://cdn2.steamgriddb.com/hero/78dd46886c1d8fb577832eb8fbff11a3.png";
+        hash = "sha256-iCTqkcSwsc8u4BgBOlDU0VJh4hKkviHJZ3UqPIRHWgw=";
       };
       logo = pkgs.fetchurl {
-        url = "https://cdn2.steamgriddb.com/logo/c7a9f13a6c0940277d46706c7ca32601.png";
-        hash = "sha256-yxsnbeeN3QhjqSHHSkYqY77DcPa+hm//jendFwSFfBI=";
+        url = "https://cdn2.steamgriddb.com/logo/67fe0f66449e31fdafdc3505c37d6acb.png";
+        hash = "sha256-OzRre2ElBgwQUNjss+WLD9W6IZvvb0mEjthwF4sf6vI=";
       };
       icon = pkgs.fetchurl {
-        url = "https://cdn2.steamgriddb.com/icon/2480e640b88539a4256bd04b37bb8a29.png";
-        hash = "sha256-C1QfzCmwCGBBpk+1MOUqsMx7iXg/HBBkeWUa715EaRc=";
+        url = "https://cdn2.steamgriddb.com/icon/9308b0d6e5898366a4a986bc33f3d3e7.ico";
+        hash = "sha256-KBt49lMrqOnuBLK2dU34O93WJeJgMk5eTxWg9I0slGg=";
       };
     };
   };

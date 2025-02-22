@@ -13,6 +13,8 @@
 
   nix.gc.automatic = true;
 
+  nixpkgs.config.allowUnfree = true;
+
   self.git.ignore = [ "/result" ];
 
   self.vscode = {
@@ -23,7 +25,6 @@
       "nix.serverPath" = lib.getExe pkgs.nil;
       "nix.serverSettings".nil = {
         formatting.command = [ (lib.getExe pkgs.nixfmt-rfc-style) ];
-        nix.binary = "/run/current-system/sw/bin/nix";
       };
 
       "[nix]" = {

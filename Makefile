@@ -1,7 +1,8 @@
-NIX ?= nix --extra-experimental-features nix-command --extra-experimental-features flakes
-DARWIN_REBUILD ?= $(NIX) run $(FLAKE)\#darwin-rebuild --
-NIXOS_REBUILD  ?= $(NIX) run $(FLAKE)\#nixos-rebuild --
-HOME_MANAGER   ?= $(NIX) run $(FLAKE)\#home-manager --
+NIX_OPTIONS ?= --extra-experimental-features nix-command --extra-experimental-features flakes
+NIX ?= nix $(NIX_OPTIONS)
+DARWIN_REBUILD ?= $(NIX) run $(FLAKE)\#darwin-rebuild -- $(NIX_OPTIONS)
+NIXOS_REBUILD  ?= $(NIX) run $(FLAKE)\#nixos-rebuild -- $(NIX_OPTIONS)
+HOME_MANAGER   ?= $(NIX) run $(FLAKE)\#home-manager -- $(NIX_OPTIONS)
 OPTIONS ?= --print-build-logs --show-trace
 COMMAND ?= switch
 SSH_DESTINATION ?= $@
