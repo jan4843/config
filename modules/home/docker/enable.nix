@@ -9,7 +9,7 @@
     functions.upd = ''
       (
         set -e
-        docker compose config --quiet
+        docker compose config >/dev/null
         docker compose pull "$@"
         docker compose build "$@" --pull
         docker compose down --remove-orphans

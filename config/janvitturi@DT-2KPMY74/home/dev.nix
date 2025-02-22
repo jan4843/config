@@ -1,12 +1,8 @@
 { inputs, pkgs, ... }:
 let
-  pkgs' = rec {
-    gcc = pkgs.gcc9;
-    gccCross = pkgs.runCommand "" { } ''
-      mkdir -p $out/bin
-      ln -s ${gcc}/bin/gcc $out/bin/${pkgs.hostPlatform.system}-gnu-gcc
-    '';
-  };
+  pkgs'.gccCross = pkgs.writeScriptBin "${pkgs.hostPlatform.system}-gnu-gcc" ''
+    exec gcc "$@"
+  '';
 in
 {
   imports = with inputs.self.homeModules; [
@@ -16,9 +12,9 @@ in
   ];
 
   home.packages = with pkgs; [
-    pkgs'.gcc
     pkgs'.gccCross
 
+    gcc9
     glibc
     gnumake
     jetbrains.clion

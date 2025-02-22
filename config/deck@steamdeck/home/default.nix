@@ -6,6 +6,7 @@
     default
 
     bash
+    docker-podman
     git
     gnu-utils
     ips
