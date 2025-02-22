@@ -1,5 +1,5 @@
 {
-  inputs.nixpkgs.url = "github:NixOS/nixpkgs/36864ed72f234b9540da4cf7a0c49e351d30d3f1";
+  inputs.nixpkgs.url = "github:NixOS/nixpkgs/f444c7cb4f9395451da6b40492d3bcd795b7d3f8";
   description = "24.11";
 
   inputs = {
