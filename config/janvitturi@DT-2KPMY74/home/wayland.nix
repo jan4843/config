@@ -6,4 +6,6 @@ in
 {
   home.sessionVariables = vars;
   systemd.user.sessionVariables = vars;
+
+  self.vscode.settings."window.titleBarStyle" = "custom";
 }
