@@ -1,6 +1,6 @@
 { pkgs, ... }:
 project: compose:
-pkgs.runCommand "${project}/compose.yaml"
+pkgs.runCommand "${project}.yaml"
   {
     COMPOSE_PROJECT_NAME = project;
     COMPOSE_FILE = pkgs.writers.writeJSON "" compose;

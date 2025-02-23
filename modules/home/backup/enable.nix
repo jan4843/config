@@ -2,9 +2,15 @@
   config,
   lib,
   pkgs,
+  osConfig,
   ...
 }:
 {
+  self.backup = {
+    paths = osConfig.self.backup.paths or [ ];
+    exclude = osConfig.self.backup.exclude or [ ];
+  };
+
   home.packages = with pkgs; [
     restic
     ncdu
