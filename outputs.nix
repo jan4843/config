@@ -258,6 +258,11 @@ in
   homeModules = modules.mkModules "home";
 
   packages = {
+    aarch64-darwin.default = inputs'.darwin.nixpkgs.legacyPackages.aarch64-darwin.gnumake;
+    x86_64-darwin.default = inputs'.darwin.nixpkgs.legacyPackages.x86_64-darwin.gnumake;
+    aarch64-linux.default = inputs'.linux.nixpkgs.legacyPackages.aarch64-linux.gnumake;
+    x86_64-linux.default = inputs'.linux.nixpkgs.legacyPackages.x86_64-linux.gnumake;
+
     aarch64-darwin.darwin-rebuild = inputs'.darwin.nix-darwin.packages.aarch64-darwin.darwin-rebuild;
     x86_64-darwin.darwin-rebuild = inputs'.darwin.nix-darwin.packages.x86_64-darwin.darwin-rebuild;
 
