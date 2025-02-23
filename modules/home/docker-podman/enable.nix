@@ -1,6 +1,7 @@
 {
   config,
   inputs,
+  lib,
   pkgs,
   ...
 }:
@@ -18,6 +19,22 @@ in
     podman
     podman-compose
   ];
+
+  systemd.user.services.podman = {
+    Install = {
+      WantedBy = [ "default.target" ];
+    };
+
+    Service = {
+      ExecStart = lib.escapeShellArgs [
+        "${pkgs.podman}/bin/podman"
+        "system"
+        "service"
+        "--time=0"
+        "unix://%t/docker.sock"
+      ];
+    };
+  };
 
   home.file = {
     ".config/containers/policy.json".source = "${pkgs.skopeo.policy}/default-policy.json";
