@@ -9,7 +9,7 @@
     gnu-utils
     ips
     nix
-    ping
+    push
     tree
     vim
     wget

@@ -1,6 +1,6 @@
 { lib, pkgs, ... }:
 let
-  script = pkgs.writeScript "ping" ''
+  script = pkgs.writeScript "push" ''
     #!/bin/sh
     export PATH=${
       lib.makeBinPath [
@@ -9,10 +9,8 @@ let
         pkgs.nettools
       ]
     }
-    mkdir -p ~/.nix/ping
-    touch ~/.nix/ping/key
     while :; do
-      KEY=$(cat ~/.nix/ping/key)
+      KEY=$(cat /nix/secrets/push.key)
       SLUG=$(hostname | tr '[:upper:]' '[:lower:]')
       curl \
         --silent \
@@ -23,7 +21,7 @@ let
   '';
 in
 {
-  systemd.user.services.ping = {
+  systemd.user.services.push = {
     Install = {
       WantedBy = [ "default.target" ];
     };
@@ -34,7 +32,7 @@ in
     };
   };
 
-  launchd.agents.ping = {
+  launchd.agents.push = {
     enable = true;
     config = {
       RunAtLoad = true;

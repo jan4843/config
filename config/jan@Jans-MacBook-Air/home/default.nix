@@ -25,7 +25,7 @@
     monitorcontrol
     nix
     notunes
-    ping
+    push
     python
     skalacolor
     ssh-client

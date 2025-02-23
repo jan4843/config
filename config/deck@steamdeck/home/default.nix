@@ -11,7 +11,7 @@
     gnu-utils
     ips
     nix
-    ping
+    push
     steamos
     tailscale-linux
     tree
