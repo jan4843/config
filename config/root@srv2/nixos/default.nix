@@ -10,7 +10,6 @@
   imports = with inputs.self.nixosModules; [
     default
 
-    autoupgrade
     compose
     docker
     persistence
