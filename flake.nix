@@ -1,40 +1,59 @@
 {
-  inputs.nixpkgs.url = "github:NixOS/nixpkgs/f444c7cb4f9395451da6b40492d3bcd795b7d3f8";
-  description = "24.11";
-
+  outputs = inputs: import ./outputs.nix inputs;
   inputs = {
-    nix-darwin = {
-      url = "github:LnL7/nix-darwin/nix-darwin-24.11";
-      inputs.nixpkgs.follows = "nixpkgs";
+    # common
+
+    nixpkgs = {
+      url = "file:///dev/null";
+      flake = false;
+    };
+    nixpkgs_darwin = {
+      url = "github:NixOS/nixpkgs/nixpkgs-24.11-darwin";
+    };
+    nixpkgs_linux = {
+      url = "github:NixOS/nixpkgs/nixos-24.11";
     };
 
-    home-manager = {
+    home-manager_darwin = {
       url = "github:nix-community/home-manager/release-24.11";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs_darwin";
+    };
+    home-manager_linux = {
+      url = "github:nix-community/home-manager/release-24.11";
+      inputs.nixpkgs.follows = "nixpkgs_linux";
     };
 
-    nix-vscode-extensions = {
+    nix-vscode-extensions_darwin = {
       url = "github:nix-community/nix-vscode-extensions";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs_darwin";
+    };
+    nix-vscode-extensions_linux = {
+      url = "github:nix-community/nix-vscode-extensions";
+      inputs.nixpkgs.follows = "nixpkgs_linux";
     };
 
-    homebrew = {
+    # darwin
+
+    nix-darwin_darwin = {
+      url = "github:LnL7/nix-darwin/nix-darwin-24.11";
+      inputs.nixpkgs.follows = "nixpkgs_darwin";
+    };
+
+    homebrew_darwin = {
       url = "github:homebrew/brew/4.4.20";
       flake = false;
     };
-    homebrew-bundle = {
+    homebrew-bundle_darwin = {
       url = "github:homebrew/homebrew-bundle";
       flake = false;
     };
-    homebrew-core = {
+    homebrew-core_darwin = {
       url = "github:homebrew/homebrew-core";
       flake = false;
     };
-    homebrew-cask = {
+    homebrew-cask_darwin = {
       url = "github:homebrew/homebrew-cask";
       flake = false;
     };
   };
-
-  outputs = inputs: import ./outputs.nix inputs;
 }

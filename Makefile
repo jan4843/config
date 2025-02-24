@@ -14,17 +14,6 @@ HOME_CONFIGS   := $(notdir $(patsubst %/,%,$(dir $(wildcard ./config/*/system)))
 
 .DEFAULT_GOAL := $(shell whoami)@$(shell hostname)
 
-# update
-.update_repo = NixOS/nixpkgs
-.update_release = $(shell $(NIX) flake metadata --json | jq -r .description)
-.update_commit = $(shell curl -s https://api.github.com/repos/$(.update_repo)/compare/nixpkgs-$(.update_release)-darwin...nixos-$(.update_release) | jq -r '.merge_base_commit.sha // ""')
-.update:
-	@commit=$(.update_commit) && \
-	test -n "$$commit" && \
-	sed -E -i.bak "s,$(.update_repo)/[0-9a-f]+,$(.update_repo)/$$commit," flake.nix && \
-	rm -f flake.nix.bak
-	$(NIX) flake update
-
 # darwin remote
 $(filter-out $(.DEFAULT_GOAL),$(DARWIN_CONFIGS)):
 	$(error Remote Darwin not supported)
