@@ -25,5 +25,5 @@ in
   systemd.user.startServices = true;
   news.display = "silent";
 
-  targets.genericLinux.enable = pkgs.hostPlatform.isLinux && osConfig != null;
+  targets.genericLinux.enable = pkgs.hostPlatform.isLinux && osConfig == null;
 }
