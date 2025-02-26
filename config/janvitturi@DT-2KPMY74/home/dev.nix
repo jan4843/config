@@ -46,6 +46,7 @@ in
     glibc
     gnumake
     jetbrains.clion
+    jetbrains.goland
     jetbrains.idea-community
   ];
 }

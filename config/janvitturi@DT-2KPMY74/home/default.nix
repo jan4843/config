@@ -5,6 +5,7 @@
   imports = with inputs.self.homeModules; [
     default
 
+    asdf
     bash
     docker-podman
     git
