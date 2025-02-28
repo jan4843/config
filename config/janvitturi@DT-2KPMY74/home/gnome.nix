@@ -28,8 +28,16 @@
       use-tree-view = true;
     };
 
+    "org/gnome/shell/extensions/ding" = {
+      show-home = false;
+    };
+
     "org/gtk/gtk4/settings/file-chooser" = {
       show-hidden = true;
+    };
+
+    "org/gnome/shell/extensions/dash-to-dock" = {
+      multi-monitor = true;
     };
   };
 }
