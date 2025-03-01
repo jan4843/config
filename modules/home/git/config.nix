@@ -10,12 +10,38 @@ in
       s = ''status --short'';
 
       amend = ''commit --amend --allow-empty-message --no-edit'';
-      autorebase = ''!git -c sequence.editor=: rebase --interactive --autosquash'';
-      fixup = ''git commit --fixup="$(git log -1 --pretty=format:%H --grep=^fixup! --invert-grep)"'';
+      fixup = ''!git commit --fixup="$(git log -1 --pretty=format:%H --grep=^fixup! --invert-grep)"'';
       save = ''!git add --all && git commit --allow-empty-message --no-edit'';
 
       regex = ''log --source --all --reverse --patch -G'';
       string = ''log --source --all --reverse --patch -S'';
+    };
+
+    branch = {
+      sort = "-committerdate";
+    };
+
+    column = {
+      ui = "auto";
+    };
+
+    commit = {
+      verbose = true;
+    };
+
+    diff = {
+      algorithm = "histogram";
+      colorMoved = "plain";
+    };
+
+    fetch = {
+      all = true;
+      prune = true;
+      pruneTags = true;
+    };
+
+    merge = {
+      conflictStyle = "zdiff3";
     };
 
     pull = {
@@ -25,6 +51,10 @@ in
 
     push = {
       autosetupremote = true;
+    };
+
+    tag = {
+      sort = "version:refname";
     };
 
     url = {
