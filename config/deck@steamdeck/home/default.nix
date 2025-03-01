@@ -16,6 +16,7 @@
     tailscale-linux
     tree
     vim
+    vkbasalt
     wget
   ];
 
