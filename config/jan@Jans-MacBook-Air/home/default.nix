@@ -71,6 +71,7 @@
     "homebrew/cask/spotify"
     "homebrew/cask/suspicious-package"
     "homebrew/cask/telegram"
+    "homebrew/cask/tor-browser"
     "homebrew/cask/utm"
     "homebrew/cask/whatsapp"
   ];
