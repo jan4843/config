@@ -39,5 +39,18 @@
     "org/gnome/shell/extensions/dash-to-dock" = {
       multi-monitor = true;
     };
+
+    "org/gnome/desktop/input-sources" = {
+      sources = [
+        (lib.hm.gvariant.mkTuple [
+          "xkb"
+          "us+mac"
+        ])
+      ];
+    };
+
+    "org/gnome/settings-daemon/plugins/power" = {
+      ambient-enabled = false;
+    };
   };
 }
