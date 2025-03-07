@@ -9,6 +9,7 @@
     gnu-utils
     ips
     nix
+    push
     tree
     vim
     wget
