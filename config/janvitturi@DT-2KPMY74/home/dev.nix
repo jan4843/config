@@ -1,28 +1,23 @@
 { inputs, pkgs, ... }:
 let
   pkgs' = {
-    cmake-mold = pkgs.writeScriptBin "cmake-mold" ''
-      #!/bin/sh
-      exec ${pkgs.mold}/bin/mold -run cmake "$@"
+    cmake-mold = pkgs.writeShellScriptBin "cmake-mold" ''
+      exec mold -run cmake "$@"
     '';
 
-    gcc-ccache = pkgs.writeScriptBin "gcc-ccache" ''
-      #!/bin/sh
-      exec ${pkgs.ccache}/bin/ccache gcc "$@"
+    gcc-ccache = pkgs.writeShellScriptBin "gcc-ccache" ''
+      exec ccache gcc "$@"
     '';
 
-    gxx-ccache = pkgs.writeScriptBin "g++-ccache" ''
-      #!/bin/sh
-      exec ${pkgs.ccache}/bin/ccache g++ "$@"
+    gxx-ccache = pkgs.writeShellScriptBin "g++-ccache" ''
+      exec ccache g++ "$@"
     '';
 
-    gcc-cross = pkgs.writeScriptBin "${pkgs.hostPlatform.system}-gnu-gcc" ''
-      #!/bin/sh
+    gcc-cross = pkgs.writeShellScriptBin "${pkgs.hostPlatform.system}-gnu-gcc" ''
       exec gcc "$@"
     '';
 
-    gxx-cross = pkgs.writeScriptBin "${pkgs.hostPlatform.system}-gnu-g++" ''
-      #!/bin/sh
+    gxx-cross = pkgs.writeShellScriptBin "${pkgs.hostPlatform.system}-gnu-g++" ''
       exec g++ "$@"
     '';
   };
@@ -41,10 +36,13 @@ in
     pkgs'.gcc-cross
     pkgs'.gxx-cross
 
+    ccache
     cmake
     gcc9
     glibc
     gnumake
+    mold
+
     jetbrains.clion
     jetbrains.goland
     jetbrains.idea-community
