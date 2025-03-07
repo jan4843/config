@@ -55,5 +55,11 @@
       url = "github:homebrew/homebrew-cask";
       flake = false;
     };
+
+    # linux
+
+    nixos-hardware_linux = {
+      url = "github:NixOS/nixos-hardware";
+    };
   };
 }
