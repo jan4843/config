@@ -25,6 +25,6 @@ in
     HOMEBREW_NO_INSTALL_FROM_API=1 \
     ${cfg.prefix}/bin/brew bundle \
         --file ${brewfile} \
-        --cleanup --no-lock --quiet
+        --cleanup --quiet
   '';
 }

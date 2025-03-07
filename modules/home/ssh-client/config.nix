@@ -1,4 +1,4 @@
-{ inputs, ... }:
+{ inputs, lib, ... }:
 let
   hosts =
     with inputs.self;
@@ -12,6 +12,15 @@ in
       UserKnownHostsFile /dev/null
       LogLevel error
 
-    Host ${toString hosts}
+    ${lib.concatMapStringsSep "\n" (
+      host:
+      let
+        parts = builtins.split "@" host;
+      in
+      ''
+        Host ${lib.last parts}
+          User ${builtins.head parts}
+      ''
+    ) hosts}
   '';
 }
