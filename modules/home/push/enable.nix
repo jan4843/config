@@ -15,7 +15,7 @@ let
       curl \
         --silent \
         --output /dev/null \
-        "https://hc-ping.com/$KEY/$SLUG"
+        "https://hc-ping.com/$KEY/$SLUG?create=1"
       sleep 55
     done
   '';
