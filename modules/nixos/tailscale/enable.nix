@@ -3,8 +3,8 @@
   services.tailscale = {
     enable = true;
     extraDaemonFlags = [
-      "--no-logs-no-support"
       "--statedir=${config.self.persistence.path}/tailscale"
+      "--state=${config.self.persistence.path}/tailscale/tailscaled.state"
     ];
   };
 }

@@ -15,4 +15,6 @@
   ];
 
   networking.firewall.enable = false;
+  services.avahi.enable = true;
+  zramSwap.enable = true;
 }

@@ -17,6 +17,7 @@
   };
 
   boot.initrd.postDeviceCommands = ''
+    waitDevice /dev/disk/by-partlabel/root
     mkfs.ext2 -F -L root /dev/disk/by-partlabel/root
   '';
 }

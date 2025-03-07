@@ -1,4 +1,4 @@
-{ inputs, ... }:
+{ inputs, pkgs, ... }:
 {
   home.stateVersion = "24.11";
 
@@ -12,5 +12,10 @@
     tree
     vim
     wget
+  ];
+
+  home.packages = with pkgs; [
+    htop
+    ncdu
   ];
 }
