@@ -9,8 +9,8 @@
 let
   installer = extendModules {
     modules = [
-      "${inputs.nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
       { _overtakeInstallBootLoader = false; }
+      "${inputs.nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
     ];
   };
 
@@ -20,8 +20,7 @@ let
     ${installer.config.sdImage.populateFirmwareCommands}
   '';
 
-  populateBootScript = pkgs.writeScript "populate-boot" ''
-    #!/bin/sh
+  populateBootScript = pkgs.writeShellScript "populate-boot" ''
     ${pkgs.coreutils}/bin/cp -R ${firmware} /boot
     ${installer.config.system.build.installBootLoader} "$@"
   '';
