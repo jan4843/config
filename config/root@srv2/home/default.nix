@@ -29,6 +29,7 @@
     pv
     rsync
     unar
+    usbutils
     watch
   ];
 }

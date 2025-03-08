@@ -1,4 +1,4 @@
-{ inputs, ... }:
+{ inputs, pkgs, ... }:
 {
   networking.hostName = "srv2";
   nixpkgs.hostPlatform = "x86_64-linux";
@@ -17,4 +17,10 @@
     ssh-server
     tailscale
   ];
+
+  hardware.firmware = with pkgs; [
+    linux-firmware
+    libreelec-dvb-firmware
+  ];
+  nixpkgs.config.allowUnfree = true;
 }

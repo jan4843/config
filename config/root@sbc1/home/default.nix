@@ -16,7 +16,14 @@
   ];
 
   home.packages = with pkgs; [
+    file
     htop
+    lsscsi
     ncdu
+    parted
+    sg3_utils
+    smartmontools
+    unar
+    usbutils
   ];
 }
