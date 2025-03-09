@@ -198,9 +198,9 @@ let
               linger = true;
             };
             home-manager = {
+              extraSpecialArgs.inputs = inputs'.linux;
               useGlobalPkgs = true;
               useUserPackages = true;
-              extraSpecialArgs.inputs = inputs'.linux;
               users.${username path}.imports = lib'.readDir "${path}/home";
             };
           }
