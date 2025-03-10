@@ -1,11 +1,13 @@
 { pkgs, ... }:
-{
-  home.file.".config/keyd/default.conf".text = ''
-    [ids]
+let
+  conf = ''
+      [ids]
 
     046d:b377
 
     [main]
+
+    capslock = layer(mac_ctrl)
 
     # ctrl
     leftcontrol = layer(mac_ctrl)
@@ -68,8 +70,17 @@
     left = M-pageup
     right = M-pagedown
   '';
+in
+{
+  home.file.".config/keyd/default.conf".text = conf;
+
+  home.packages = [ pkgs.keyd ];
 
   systemd.user.services.keyd = {
+    Unit = {
+      X-Restart-Triggers = [ (builtins.hashString "md5" conf) ];
+    };
+
     Install = {
       WantedBy = [ "default.target" ];
     };
