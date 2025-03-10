@@ -1,14 +1,12 @@
 { config, inputs, ... }:
 {
-  imports = [ inputs.self.homeModules.backup ];
+  homeConfig.imports = [ inputs.self.homeModules.backup ];
 
-  self.backup = {
+  homeConfig.self.backup = {
     repositoryFile = "/nix/secrets/backup.repository";
     passwordFile = "/nix/secrets/backup.password";
-    paths = [
-      "${config.home.homeDirectory}/Documents"
-      "${config.home.homeDirectory}/Developer"
-    ];
+    paths = [ config.homeConfig.home.homeDirectory ];
+    exclude = [ "${config.homeConfig.home.homeDirectory}/.*" ];
     retention = {
       hourly = 24 * 7;
       daily = 365;

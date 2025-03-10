@@ -1,8 +1,8 @@
 { inputs, pkgs, ... }:
 {
-  home.stateVersion = "24.11";
+  homeConfig.home.stateVersion = "24.11";
 
-  imports = with inputs.self.homeModules; [
+  homeConfig.imports = with inputs.self.homeModules; [
     default
 
     bash
@@ -15,7 +15,7 @@
     wget
   ];
 
-  home.packages = with pkgs; [
+  homeConfig.home.packages = with pkgs; [
     file
     htop
     lsscsi

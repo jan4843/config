@@ -1,6 +1,6 @@
 { pkgs, ... }:
 {
-  self.bash.functions.pdfdecrypt = ''
+  homeConfig.self.bash.functions.pdfdecrypt = ''
     (
       [ $# -gt 0 ] || {
         echo "usage: pdfdecrypt FILE..."

@@ -8,11 +8,11 @@ COMMAND ?= switch
 SSH_DESTINATION ?= $@
 
 FLAKE := $(shell git add --intent-to-add . && $(NIX) flake metadata --json | jq -r .path)
-DARWIN_CONFIGS := $(notdir $(patsubst %/,%,$(dir $(wildcard ./config/*/darwin))))
-NIXOS_CONFIGS  := $(notdir $(patsubst %/,%,$(dir $(wildcard ./config/*/nixos))))
-HOME_CONFIGS   := $(notdir $(patsubst %/,%,$(dir $(wildcard ./config/*/system))))
+DARWIN_CONFIGS := $(notdir $(wildcard ./hosts/darwin/*))
+NIXOS_CONFIGS  := $(notdir $(wildcard ./hosts/nixos/*))
+HOME_CONFIGS   := $(notdir $(wildcard ./hosts/home/*))
 
-.DEFAULT_GOAL := $(shell whoami)@$(shell hostname)
+.DEFAULT_GOAL := $(shell hostname)
 
 # darwin remote
 $(filter-out $(.DEFAULT_GOAL),$(DARWIN_CONFIGS)):

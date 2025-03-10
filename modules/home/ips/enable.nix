@@ -9,7 +9,7 @@ let
       gnused
       jq
     ];
-    text = builtins.readFile ./ips.bash;
+    text = builtins.readFile ./bin/ips.bash;
   };
 in
 {

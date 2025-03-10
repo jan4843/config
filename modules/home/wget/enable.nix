@@ -1,5 +1,5 @@
 { pkgs, ... }:
 {
   home.packages = [ pkgs.wget ];
-  home.file.".wgetrc".source = ./wgetrc;
+  home.file.".wgetrc".source = ./files/wgetrc;
 }

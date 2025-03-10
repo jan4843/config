@@ -8,6 +8,7 @@
 
     compose
     docker
+    home-manager
     persistence
     pi4
     ssh-server

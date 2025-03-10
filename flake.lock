@@ -221,18 +221,6 @@
         "type": "github"
       }
     },
-    "nixpkgs": {
-      "flake": false,
-      "locked": {
-        "narHash": "sha256-d6xi4mKdjkX2JFicDIv5niSzpyI0m/Hnm8GGAIU04kY=",
-        "type": "file",
-        "url": "file:///dev/null"
-      },
-      "original": {
-        "type": "file",
-        "url": "file:///dev/null"
-      }
-    },
     "nixpkgs_darwin": {
       "locked": {
         "lastModified": 1741205704,
@@ -277,7 +265,6 @@
         "nix-vscode-extensions_darwin": "nix-vscode-extensions_darwin",
         "nix-vscode-extensions_linux": "nix-vscode-extensions_linux",
         "nixos-hardware_linux": "nixos-hardware_linux",
-        "nixpkgs": "nixpkgs",
         "nixpkgs_darwin": "nixpkgs_darwin",
         "nixpkgs_linux": "nixpkgs_linux"
       }

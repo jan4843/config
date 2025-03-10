@@ -12,6 +12,7 @@
 
     compose
     docker
+    home-manager
     persistence
     qemu-guest
     ssh-server

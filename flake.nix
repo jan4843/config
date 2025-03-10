@@ -1,12 +1,9 @@
 {
   outputs = inputs: import ./outputs.nix inputs;
+
   inputs = {
     # common
 
-    nixpkgs = {
-      url = "file:///dev/null";
-      flake = false;
-    };
     nixpkgs_darwin = {
       url = "github:NixOS/nixpkgs/nixpkgs-24.11-darwin";
     };

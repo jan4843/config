@@ -1,5 +1,9 @@
 { inputs, pkgs, ... }:
 {
+  nixpkgs.hostPlatform = "x86_64-linux";
+
+  home.username = "deck";
+  home.homeDirectory = "/home/deck";
   home.stateVersion = "24.11";
 
   imports = with inputs.self.homeModules; [
