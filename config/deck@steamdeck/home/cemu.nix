@@ -3,7 +3,7 @@
   self.steam-shortcuts.CEMU = {
     script = ''
       LD_PRELOAD= \
-      exec ${pkgs.self.vulkan-run}/bin/vulkan-run ${pkgs.cemu}/bin/cemu
+      exec ${pkgs.cemu}/bin/cemu
     '';
     assets = {
       grid.horizontal = pkgs.fetchurl {

@@ -4,7 +4,7 @@
     script = ''
       LD_PRELOAD= \
       QT_XCB_GL_INTEGRATION=none \
-      exec ${pkgs.self.vulkan-run}/bin/vulkan-run ${pkgs.torzu}/bin/yuzu
+      exec ${pkgs.torzu}/bin/yuzu
     '';
     assets = {
       grid.horizontal = pkgs.fetchurl {

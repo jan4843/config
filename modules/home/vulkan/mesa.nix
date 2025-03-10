@@ -6,8 +6,9 @@ let
     builtins.attrNames
     (map (f: "${driversDir}/${f}"))
   ];
+  vars.VK_ADD_DRIVER_FILES = lib.concatStringsSep ":" drivers;
 in
-pkgs.writeScriptBin "vulkan-run" ''
-  VK_ADD_DRIVER_FILES="${lib.concatStringsSep ":" drivers}''${VK_ADD_DRIVER_FILES:+:$VK_ADD_DRIVER_FILES}" \
-  exec "$@"
-''
+{
+  home.sessionVariables = vars;
+  systemd.user.sessionVariables = vars;
+}

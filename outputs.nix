@@ -173,7 +173,6 @@ let
         modules = (lib'.readDir "${path}/darwin") ++ [
           inputs'.darwin.home-manager.darwinModules.home-manager
           {
-            nixpkgs.overlays = [ inputs'.darwin.self.overlays.default ];
             users.users.${username path}.home = "/Users/${username path}";
             home-manager = {
               extraSpecialArgs.inputs = inputs'.darwin;
@@ -192,7 +191,6 @@ let
         modules = (lib'.readDir "${path}/nixos") ++ [
           inputs'.linux.home-manager.nixosModules.home-manager
           {
-            nixpkgs.overlays = [ inputs'.linux.self.overlays.default ];
             users.users.${username path} = {
               home = home (username path);
               linger = true;
@@ -214,7 +212,6 @@ let
         pkgs = inputs'.linux.nixpkgs.legacyPackages.${(import "${path}/system").nixpkgs.hostPlatform};
         modules = (lib'.readDir "${path}/home") ++ [
           {
-            nixpkgs.overlays = [ inputs'.linux.self.overlays.default ];
             home = {
               username = username path;
               homeDirectory = home (username path);
@@ -271,9 +268,5 @@ in
 
     aarch64-linux.home-manager = inputs'.linux.home-manager.packages.aarch64-linux.home-manager;
     x86_64-linux.home-manager = inputs'.linux.home-manager.packages.x86_64-linux.home-manager;
-  };
-
-  overlays.default = final: prev: {
-    self = lib'.mapDir (path: final.callPackage path { }) ./pkgs;
   };
 }

@@ -3,7 +3,7 @@
   self.steam-shortcuts.PCSX2 = {
     script = ''
       LD_PRELOAD= \
-      exec ${pkgs.self.vulkan-run}/bin/vulkan-run ${pkgs.pcsx2}/bin/pcsx2-qt
+      exec ${pkgs.pcsx2}/bin/pcsx2-qt
     '';
     assets = {
       grid.horizontal = pkgs.fetchurl {

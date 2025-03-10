@@ -17,14 +17,14 @@
     tree
     vim
     vkbasalt
+    vulkan
     wget
   ];
 
   home.packages = with pkgs; [
+    librewolf-bin
     magic-wormhole
     mame-tools
     unar
   ];
-
-  programs.librewolf.enable = true;
 }

@@ -3,7 +3,7 @@
   self.steam-shortcuts.RPCS3 = {
     script = ''
       LD_PRELOAD= \
-      exec ${pkgs.self.vulkan-run}/bin/vulkan-run ${pkgs.rpcs3}/bin/rpcs3
+      exec ${pkgs.rpcs3}/bin/rpcs3
     '';
     assets = {
       grid.horizontal = pkgs.fetchurl {
