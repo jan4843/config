@@ -1,11 +1,11 @@
-{ inputs, ... }:
-{
+args: {
   nixpkgs.hostPlatform = "aarch64-darwin";
   system.stateVersion = 5;
 
-  self.username = "jan";
+  homeConfig.home.username = "jan";
+  users.users.jan.home = "/Users/jan";
 
-  imports = with inputs.self.darwinModules; [
+  imports = with args.inputs.self.darwinModules; [
     default
 
     bash

@@ -4,6 +4,8 @@
   nixpkgs.hostPlatform = "x86_64-linux";
   system.stateVersion = "24.11";
 
+  homeConfig.home.username = "root";
+
   time.timeZone = "CET";
   zramSwap.enable = true;
 

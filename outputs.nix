@@ -111,4 +111,28 @@ in
     aarch64-linux.home-manager = inputs.home-manager_linux.packages.aarch64-linux.home-manager;
     x86_64-linux.home-manager = inputs.home-manager_linux.packages.x86_64-linux.home-manager;
   };
+
+  checks =
+    let
+      _ = builtins.deepSeq (
+        { }
+        // (builtins.mapAttrs (
+          name: value: builtins.trace "checking NixOS configuration ${name}" null
+        ) inputs.self.nixosConfigurations)
+        // (builtins.mapAttrs (
+          name: value:
+          builtins.trace "checking Darwin configuration ${name}" value.config.system.build.toplevel.type
+        ) inputs.self.darwinConfigurations)
+        // (builtins.mapAttrs (
+          name: value: builtins.trace "checking home configuration ${name}" value.activationPackage.type
+        ) inputs.self.homeConfigurations)
+      ) { };
+    in
+    {
+      aarch64-darwin = _;
+      x86_64-darwin = _;
+
+      aarch64-linux = _;
+      x86_64-linux = _;
+    };
 }

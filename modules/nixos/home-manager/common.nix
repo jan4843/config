@@ -1,11 +1,26 @@
-args: {
+{ extendModules, ... }@args:
+let
+  username =
+    (extendModules {
+      modules = [
+        {
+          disabledModules = [ { key = "_homeConfigAlias"; } ];
+          options.homeConfig = args.lib.mkOption { };
+        }
+      ];
+    }).config.homeConfig.home.username;
+in
+{
   imports = [
-    (args.lib.mkAliasOptionModule [ "homeConfig" ] [ "home-manager" "users" args.config.self.username ])
+    {
+      key = "_homeConfigAlias";
+      imports = [
+        (args.lib.mkAliasOptionModule [ "homeConfig" ] [ "home-manager" "users" username ])
+      ];
+    }
   ];
 
-  options.self.username = args.lib.mkOption { };
-
-  config.home-manager = {
+  home-manager = {
     extraSpecialArgs.inputs = args.inputs;
     useGlobalPkgs = true;
     useUserPackages = true;
