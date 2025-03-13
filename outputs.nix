@@ -43,7 +43,6 @@ let
   mkModules =
     root:
     lib.mapDir (name: path: {
-      disabledModules = [ name ];
       imports =
         lib.listFiles path
         ++ (
@@ -51,13 +50,9 @@ let
             lib.pipe root [
               builtins.readDir
               builtins.attrNames
-              (map (key: {
-                inherit key;
-                imports = /.${root}/${key}/default.nix;
-              }))
-              (builtins.filter (x: x.key != "default"))
-              (builtins.filter (x: builtins.pathExists x.imports))
-              (map (x: x // { imports = [ x.imports ]; }))
+              (builtins.filter (x: x != "default"))
+              (map (x: /.${root}/${x}/default.nix))
+              (builtins.filter builtins.pathExists)
             ]
           else
             [ ]
@@ -116,9 +111,6 @@ in
     let
       _ = builtins.deepSeq (
         { }
-        // (builtins.mapAttrs (
-          name: value: builtins.trace "checking NixOS configuration ${name}" null
-        ) inputs.self.nixosConfigurations)
         // (builtins.mapAttrs (
           name: value:
           builtins.trace "checking Darwin configuration ${name}" value.config.system.build.toplevel.type
