@@ -50,7 +50,6 @@ let
             lib.pipe root [
               builtins.readDir
               builtins.attrNames
-              (builtins.filter (x: x != "default"))
               (map (x: /.${root}/${x}/default.nix))
               (builtins.filter builtins.pathExists)
             ]
