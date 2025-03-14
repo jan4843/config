@@ -55,25 +55,24 @@
     watch
   ];
 
-  homeConfig.self.homebrew.casks =
-    with args.config.homeConfig.self.homebrew.taps."homebrew/cask".casks; [
-      appcleaner
-      firefox
-      google-chrome
-      hex-fiend
-      imageoptim
-      librewolf
-      netnewswire
-      pdf-squeezer
-      proxyman
-      rapidapi
-      raspberry-pi-imager
-      sf-symbols
-      spotify
-      suspicious-package
-      telegram
-      tor-browser
-      utm
-      whatsapp
-    ];
+  homeConfig.self.homebrew.casks = with args.casks; [
+    appcleaner
+    firefox
+    google-chrome
+    hex-fiend
+    imageoptim
+    librewolf
+    netnewswire
+    pdf-squeezer
+    proxyman
+    rapidapi
+    raspberry-pi-imager
+    sf-symbols
+    spotify
+    suspicious-package
+    telegram
+    tor-browser
+    utm
+    whatsapp
+  ];
 }
