@@ -29,6 +29,7 @@
 
       "[nix]" = {
         "editor.formatOnSave" = true;
+        "editor.rulers" = [ 100 ];
       };
 
       "files.associations" = {

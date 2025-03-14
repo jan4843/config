@@ -1,4 +1,7 @@
 { pkgs, ... }@args:
+let
+  casks = args.config.homeConfig.self.homebrew.taps."homebrew/cask".casks;
+in
 {
   homeConfig.home.stateVersion = "24.11";
 
@@ -55,7 +58,7 @@
     watch
   ];
 
-  homeConfig.self.homebrew.casks = with args.casks; [
+  homeConfig.self.homebrew.casks = with casks; [
     appcleaner
     firefox
     google-chrome
