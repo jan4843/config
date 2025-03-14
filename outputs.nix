@@ -86,7 +86,11 @@ in
       extraSpecialArgs.inputs = mkInputs "linux";
       pkgs = inputs.nixpkgs_linux.legacyPackages.${system};
       modules = lib.listFiles path ++ [
-        { options.nixpkgs.hostPlatform = inputs.nixpkgs_linux.lib.mkOption { }; }
+        {
+          options.nixpkgs.hostPlatform = inputs.nixpkgs_linux.lib.mkOption {
+            apply = inputs.nixpkgs_linux.lib.systems.elaborate;
+          };
+        }
       ];
     }
   ) ./hosts/home;
