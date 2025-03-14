@@ -2,6 +2,7 @@
   outputs = inputs: import ./outputs.nix inputs;
 
   inputs = {
+
     # common
 
     nixpkgs_darwin = {
@@ -36,14 +37,6 @@
       inputs.nixpkgs.follows = "nixpkgs_darwin";
     };
 
-    homebrew_darwin = {
-      url = "github:homebrew/brew/4.4.20";
-      flake = false;
-    };
-    homebrew-bundle_darwin = {
-      url = "github:homebrew/homebrew-bundle";
-      flake = false;
-    };
     homebrew-core_darwin = {
       url = "github:homebrew/homebrew-core";
       flake = false;
@@ -58,5 +51,6 @@
     nixos-hardware_linux = {
       url = "github:NixOS/nixos-hardware";
     };
+
   };
 }

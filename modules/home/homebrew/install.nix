@@ -1,5 +1,7 @@
 { pkgs, ... }@args:
 let
+  inputs' = import ./inputs;
+
   prefix = args.lib.escapeShellArg args.config.self.homebrew.prefix;
 in
 {
@@ -18,11 +20,11 @@ in
             --archive \
             --owner --group --chown=$(id -u):$(id -g) \
             --perms --chmod=u+w \
-            ${args.inputs.homebrew}/ ${prefix}
+            ${inputs'.homebrew}/ ${prefix}
 
         mkdir -p ${prefix}/.nix
-        cd ${args.inputs.homebrew}
-        echo ${args.inputs.homebrew.rev} > ${prefix}/.nix/rev
+        cd ${inputs'.homebrew}
+        echo ${inputs'.homebrew.rev} > ${prefix}/.nix/rev
         find . ! -type d > ${prefix}/.nix/files
       )
 
@@ -33,7 +35,7 @@ in
       )
 
       rev=$(cat ${prefix}/.nix/rev 2>/dev/null || :)
-      if [ "$rev" != ${args.inputs.homebrew.rev} ]; then
+      if [ "$rev" != ${inputs'.homebrew.rev} ]; then
         uninstall
         install
       fi

@@ -78,22 +78,6 @@
         "type": "github"
       }
     },
-    "homebrew-bundle_darwin": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1741906357,
-        "narHash": "sha256-IdskT6nLNj0WRPYGsWIluqBbRVE8LbI4k7vvkaIzR0c=",
-        "owner": "homebrew",
-        "repo": "homebrew-bundle",
-        "rev": "f3b381d58f4c42faf96e0a522c5b5b68f8ba1aca",
-        "type": "github"
-      },
-      "original": {
-        "owner": "homebrew",
-        "repo": "homebrew-bundle",
-        "type": "github"
-      }
-    },
     "homebrew-cask_darwin": {
       "flake": false,
       "locked": {
@@ -123,23 +107,6 @@
       "original": {
         "owner": "homebrew",
         "repo": "homebrew-core",
-        "type": "github"
-      }
-    },
-    "homebrew_darwin": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1738599444,
-        "narHash": "sha256-+XnjaVy5/wa5gCFLgBTt+tO/y3by5nTkElzv76mMjuI=",
-        "owner": "homebrew",
-        "repo": "brew",
-        "rev": "47ef1a3b0b742a78be35c016df6a0279d6035ebb",
-        "type": "github"
-      },
-      "original": {
-        "owner": "homebrew",
-        "ref": "4.4.20",
-        "repo": "brew",
         "type": "github"
       }
     },
@@ -257,10 +224,8 @@
       "inputs": {
         "home-manager_darwin": "home-manager_darwin",
         "home-manager_linux": "home-manager_linux",
-        "homebrew-bundle_darwin": "homebrew-bundle_darwin",
         "homebrew-cask_darwin": "homebrew-cask_darwin",
         "homebrew-core_darwin": "homebrew-core_darwin",
-        "homebrew_darwin": "homebrew_darwin",
         "nix-darwin_darwin": "nix-darwin_darwin",
         "nix-vscode-extensions_darwin": "nix-vscode-extensions_darwin",
         "nix-vscode-extensions_linux": "nix-vscode-extensions_linux",
