@@ -4,7 +4,10 @@ let
   GOROOT = "${pkgs.go}/share/go";
 in
 {
-  home.packages = [ pkgs.go ];
+  home.packages = with pkgs; [
+    go
+    graphviz
+  ];
 
   home.sessionVariables = {
     inherit GOPATH GOROOT;
