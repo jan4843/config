@@ -25,6 +25,7 @@
     monitorcontrol
     nix
     notunes
+    pdfdecrypt
     push
     python
     skalacolor
