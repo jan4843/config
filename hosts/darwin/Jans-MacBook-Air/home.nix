@@ -54,25 +54,25 @@
     watch
   ];
 
-  homeConfig.self.homebrew.casks = [
-    "homebrew/cask/appcleaner"
-    "homebrew/cask/docker"
-    "homebrew/cask/firefox"
-    "homebrew/cask/google-chrome"
-    "homebrew/cask/hex-fiend"
-    "homebrew/cask/imageoptim"
-    "homebrew/cask/librewolf"
-    "homebrew/cask/netnewswire"
-    "homebrew/cask/pdf-squeezer"
-    "homebrew/cask/proxyman"
-    "homebrew/cask/rapidapi"
-    "homebrew/cask/raspberry-pi-imager"
-    "homebrew/cask/sf-symbols"
-    "homebrew/cask/spotify"
-    "homebrew/cask/suspicious-package"
-    "homebrew/cask/telegram"
-    "homebrew/cask/tor-browser"
-    "homebrew/cask/utm"
-    "homebrew/cask/whatsapp"
-  ];
+  homeConfig.self.homebrew.casks =
+    with args.config.homeConfig.self.homebrew.taps."homebrew/cask".casks; [
+      appcleaner
+      firefox
+      google-chrome
+      hex-fiend
+      imageoptim
+      librewolf
+      netnewswire
+      pdf-squeezer
+      proxyman
+      rapidapi
+      raspberry-pi-imager
+      sf-symbols
+      spotify
+      suspicious-package
+      telegram
+      tor-browser
+      utm
+      whatsapp
+    ];
 }

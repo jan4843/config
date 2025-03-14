@@ -1,8 +1,11 @@
+{ config, ... }:
 let
   appPath = "/Applications/Middle.app";
 in
 {
-  self.homebrew.casks = [ "homebrew/cask/middle" ];
+  self.homebrew.casks = with config.self.homebrew.taps."homebrew/cask".casks; [
+    middle
+  ];
 
   self.tcc.Accessibility = [ appPath ];
 

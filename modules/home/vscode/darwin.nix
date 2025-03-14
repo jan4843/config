@@ -1,6 +1,14 @@
-{ lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 lib.mkIf pkgs.hostPlatform.isDarwin {
-  self.homebrew.casks = [ "homebrew/cask/visual-studio-code" ];
+  self.homebrew.casks = with config.self.homebrew.taps."homebrew/cask".casks; [
+    visual-studio-code
+  ];
+
   programs.vscode.package = {
     type = "derivation";
     inherit (pkgs.vscode) pname version;

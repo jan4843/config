@@ -30,6 +30,7 @@
       "security.workspace.trust.startupPrompt" = "never";
       "security.workspace.trust.untrustedFiles" = "open";
       "telemetry.telemetryLevel" = "off";
+      "terminal.integrated.scrollback" = 10000;
       "terminal.integrated.showExitAlert" = false;
       "update.showReleaseNotes" = false;
       "workbench.editor.empty.hint" = "hidden";

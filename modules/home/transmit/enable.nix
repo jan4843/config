@@ -1,6 +1,8 @@
 { config, ... }:
 {
-  self.homebrew.casks = [ "homebrew/cask/transmit" ];
+  self.homebrew.casks = with config.self.homebrew.taps."homebrew/cask".casks; [
+    transmit
+  ];
 
   targets.darwin.defaults."com.panic.transmit" = {
     SplitCollapsedIndex = 0;

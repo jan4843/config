@@ -8,7 +8,9 @@ let
   appPath = "/Applications/Hammerspoon.app";
 in
 lib.mkIf (config.self.hammerspoon.spoons != { }) {
-  self.homebrew.casks = [ "homebrew/cask/hammerspoon" ];
+  self.homebrew.casks = with config.self.homebrew.taps."homebrew/cask".casks; [
+    hammerspoon
+  ];
 
   self.tcc.Accessibility = [ appPath ];
 

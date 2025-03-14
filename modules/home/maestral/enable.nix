@@ -7,7 +7,9 @@ in
 {
   self.maestral.syncFolder = lib.mkDefault "${config.home.homeDirectory}/Library/Dropbox";
 
-  self.homebrew.casks = [ "homebrew/cask/maestral" ];
+  self.homebrew.casks = with config.self.homebrew.taps."homebrew/cask".casks; [
+    maestral
+  ];
 
   self.open-at-login.maestral = {
     inherit appPath;

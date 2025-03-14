@@ -1,5 +1,8 @@
+{ config, ... }:
 {
-  self.homebrew.casks = [ "homebrew/cask/launchcontrol" ];
+  self.homebrew.casks = with config.self.homebrew.taps."homebrew/cask".casks; [
+    launchcontrol
+  ];
 
   self.tcc.SystemPolicyAllFiles = [ "/Applications/LaunchControl.app" ];
 

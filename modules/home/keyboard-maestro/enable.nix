@@ -5,7 +5,9 @@ let
   engineAppPath = "${appPath}/Contents/MacOS/Keyboard Maestro Engine.app";
 in
 {
-  self.homebrew.casks = [ "homebrew/cask/keyboard-maestro" ];
+  self.homebrew.casks = with config.self.homebrew.taps."homebrew/cask".casks; [
+    keyboard-maestro
+  ];
 
   self.open-at-login.keyboard-maestro = {
     appPath = engineAppPath;

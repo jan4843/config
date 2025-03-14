@@ -1,8 +1,11 @@
+{ config, ... }:
 let
   appPath = "/Applications/MonitorControl.app";
 in
 {
-  self.homebrew.casks = [ "homebrew/cask/monitorcontrol" ];
+  self.homebrew.casks = with config.self.homebrew.taps."homebrew/cask".casks; [
+    monitorcontrol
+  ];
 
   self.tcc.Accessibility = [ appPath ];
 
