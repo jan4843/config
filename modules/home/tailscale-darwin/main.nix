@@ -1,8 +1,7 @@
-{ config, inputs, ... }:
-{
-  imports = [ inputs.self.homeModules.tailscale ];
+args: {
+  imports = [ args.inputs.self.homeModules.tailscale ];
 
-  self.homebrew.casks = with config.self.homebrew.taps."homebrew/cask".casks; [
+  self.homebrew.casks = with args.config.self.homebrew.taps."homebrew/cask".casks; [
     tailscale
   ];
 

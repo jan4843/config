@@ -1,6 +1,5 @@
-{ config, lib, ... }:
-{
-  self.scripts.write.plistbuddy.text = lib.concatMapStrings (x: ''
-    /usr/libexec/PlistBuddy -c ${lib.escapeShellArg x.command} ${lib.escapeShellArg x.file} || :
-  '') config.self.plistbuddy;
+args: {
+  self.scripts.write.plistbuddy.text = args.lib.concatMapStrings (x: ''
+    /usr/libexec/PlistBuddy -c ${args.lib.escapeShellArg x.command} ${args.lib.escapeShellArg x.file} || :
+  '') args.config.self.plistbuddy;
 }

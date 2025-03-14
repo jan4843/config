@@ -1,8 +1,7 @@
-{ config, lib, ... }:
-{
-  self.bash.profile = lib.concatLines (
-    lib.attrsets.mapAttrsToList (name: body: ''
-      alias -- ${lib.escapeShellArg name}=${lib.escapeShellArg body}
-    '') config.self.bash.aliases
+args: {
+  self.bash.profile = args.lib.concatLines (
+    args.lib.attrsets.mapAttrsToList (name: body: ''
+      alias -- ${args.lib.escapeShellArg name}=${args.lib.escapeShellArg body}
+    '') args.config.self.bash.aliases
   );
 }

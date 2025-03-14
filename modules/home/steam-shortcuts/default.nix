@@ -1,19 +1,19 @@
-{ lib, ... }:
+args:
 let
-  opts.asset = lib.mkOption {
-    type = lib.types.nullOr lib.types.path;
+  opts.asset = args.lib.mkOption {
+    type = args.lib.types.nullOr args.lib.types.path;
     default = null;
   };
 in
 {
-  options.self.steam-shortcuts = lib.mkOption {
-    type = lib.types.attrsOf (
-      lib.types.submodule (
+  options.self.steam-shortcuts = args.lib.mkOption {
+    type = args.lib.types.attrsOf (
+      args.lib.types.submodule (
         { name, ... }:
         {
           options = {
-            script = lib.mkOption {
-              type = lib.types.str;
+            script = args.lib.mkOption {
+              type = args.lib.types.str;
             };
 
             assets = {

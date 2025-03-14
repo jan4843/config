@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }:
+{ pkgs, ... }:
 {
   home.packages = [
     (pkgs.callPackage ./heredocker { })
@@ -32,7 +32,7 @@
     ];
 
     settings = {
-      "hadolint.hadolintPath" = lib.getExe pkgs.hadolint;
+      "hadolint.hadolintPath" = "${pkgs.hadolint}/bin/hadolint";
     };
   };
 }

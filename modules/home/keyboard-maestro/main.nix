@@ -1,18 +1,18 @@
-{ config, lib, ... }:
+args:
 let
-  syncFolder = "${config.self.maestral.syncFolder}/Keyboard Maestro";
+  syncFolder = "${args.config.self.maestral.syncFolder}/Keyboard Maestro";
   appPath = "/Applications/Keyboard Maestro.app";
   engineAppPath = "${appPath}/Contents/MacOS/Keyboard Maestro Engine.app";
 in
 {
-  self.homebrew.casks = with config.self.homebrew.taps."homebrew/cask".casks; [
+  self.homebrew.casks = with args.config.self.homebrew.taps."homebrew/cask".casks; [
     keyboard-maestro
   ];
 
   self.open-at-login.keyboard-maestro = {
     appPath = engineAppPath;
     preExec = ''
-      wait4path ${lib.strings.escapeShellArg "${syncFolder}/Keyboard Maestro Macros.kmsync"}
+      wait4path ${args.lib.strings.escapeShellArg "${syncFolder}/Keyboard Maestro Macros.kmsync"}
     '';
   };
 

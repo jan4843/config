@@ -1,23 +1,23 @@
-{ lib, pkgs, ... }:
+{ pkgs, ... }@args:
 {
   options.self.git = {
-    package = lib.mkOption {
-      type = lib.types.package;
+    package = args.lib.mkOption {
+      type = args.lib.types.package;
       default = pkgs.git;
     };
 
-    config = lib.mkOption {
-      type = lib.types.anything;
+    config = args.lib.mkOption {
+      type = args.lib.types.anything;
       default = [ ];
     };
 
-    ignore = lib.mkOption {
-      type = lib.types.listOf lib.types.str;
+    ignore = args.lib.mkOption {
+      type = args.lib.types.listOf args.lib.types.str;
       default = [ ];
     };
 
-    hooks = lib.mkOption {
-      type = lib.types.attrsOf (lib.types.attrsOf lib.types.path);
+    hooks = args.lib.mkOption {
+      type = args.lib.types.attrsOf (args.lib.types.attrsOf args.lib.types.path);
       default = { };
     };
   };

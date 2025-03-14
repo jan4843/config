@@ -1,6 +1,5 @@
-{ config, ... }:
-{
-  self.homebrew.casks = with config.self.homebrew.taps."homebrew/cask".casks; [
+args: {
+  self.homebrew.casks = with args.config.self.homebrew.taps."homebrew/cask".casks; [
     notunes
   ];
 

@@ -1,16 +1,16 @@
-{ config, lib, ... }:
+args:
 let
-  functions = lib.mapAttrs' (name: value: {
+  functions = args.lib.mapAttrs' (name: value: {
     name = "_command_not_found_${name}";
     inherit value;
-  }) config.self.bash.commandNotFound;
+  }) args.config.self.bash.commandNotFound;
 in
 {
-  self.bash = lib.mkIf (functions != { }) {
+  self.bash = args.lib.mkIf (functions != { }) {
     functions = functions // {
       command_not_found_handle = ''
         local f e
-        for f in ${lib.escapeShellArg (builtins.attrNames functions)}; do
+        for f in ${args.lib.escapeShellArg (builtins.attrNames functions)}; do
           "$f" "$@"
           e=$?
           if [ $e != 127 ]; then

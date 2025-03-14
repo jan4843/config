@@ -1,8 +1,8 @@
-{ inputs, pkgs, ... }:
+{ pkgs, ... }@args:
 {
   homeConfig.home.stateVersion = "24.11";
 
-  homeConfig.imports = with inputs.self.homeModules; [
+  homeConfig.imports = with args.inputs.self.homeModules; [
     default
 
     bash

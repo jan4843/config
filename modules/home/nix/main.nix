@@ -1,6 +1,6 @@
-{ lib, pkgs, ... }:
+{ pkgs, ... }@args:
 {
-  nix.package = lib.mkDefault pkgs.nix;
+  nix.package = args.lib.mkDefault pkgs.nix;
 
   nix.settings = {
     experimental-features = [
@@ -22,9 +22,9 @@
 
     settings = {
       "nix.enableLanguageServer" = true;
-      "nix.serverPath" = lib.getExe pkgs.nil;
+      "nix.serverPath" = args.lib.getExe pkgs.nil;
       "nix.serverSettings".nil = {
-        formatting.command = [ (lib.getExe pkgs.nixfmt-rfc-style) ];
+        formatting.command = [ (args.lib.getExe pkgs.nixfmt-rfc-style) ];
       };
 
       "[nix]" = {

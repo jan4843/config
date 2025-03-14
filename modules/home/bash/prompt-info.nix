@@ -1,9 +1,9 @@
-{ config, lib, ... }:
+args:
 let
-  functions = lib.mapAttrs' (name: value: {
+  functions = args.lib.mapAttrs' (name: value: {
     name = "_prompt_info_${name}";
     inherit value;
-  }) config.self.bash.promptInfo;
+  }) args.config.self.bash.promptInfo;
 in
 {
   self.bash.functions = {

@@ -1,12 +1,11 @@
-{ lib, ... }:
-{
+args: {
   options.self.alfred = {
-    syncFolder = lib.mkOption {
-      type = lib.types.path;
+    syncFolder = args.lib.mkOption {
+      type = args.lib.types.path;
     };
 
-    preferences = lib.mkOption {
-      type = lib.types.attrsOf lib.types.anything;
+    preferences = args.lib.mkOption {
+      type = args.lib.types.attrsOf args.lib.types.anything;
       default = { };
     };
   };

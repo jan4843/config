@@ -1,11 +1,6 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}:
-lib.mkIf pkgs.hostPlatform.isDarwin {
-  self.homebrew.casks = with config.self.homebrew.taps."homebrew/cask".casks; [
+{ pkgs, ... }@args:
+args.lib.mkIf pkgs.hostPlatform.isDarwin {
+  self.homebrew.casks = with args.config.self.homebrew.taps."homebrew/cask".casks; [
     visual-studio-code
   ];
 

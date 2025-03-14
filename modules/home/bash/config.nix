@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }:
+{ pkgs, ... }@args:
 let
   bold = ''\[\e[1m\]'';
   dim = ''\[\e[90m\]'';
@@ -31,7 +31,7 @@ in
       "." = ''
         if [ $# -eq 0 ]; then
           local root
-          if root=$(${lib.getExe pkgs.git} rev-parse --show-toplevel); then
+          if root=$(${args.lib.getExe pkgs.git} rev-parse --show-toplevel); then
             cd "$root" && pwd
           fi
         else

@@ -1,7 +1,7 @@
-{ config, ... }:
+args:
 let
   key = "AppleSymbolicHotKeys:64";
-  file = "${config.home.homeDirectory}/Library/Preferences/com.apple.symbolichotkeys.plist";
+  file = "${args.config.home.homeDirectory}/Library/Preferences/com.apple.symbolichotkeys.plist";
 in
 {
   self.plistbuddy = [

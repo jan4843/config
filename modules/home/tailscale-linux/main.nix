@@ -1,16 +1,10 @@
-{
-  config,
-  inputs,
-  lib,
-  pkgs,
-  ...
-}:
+{ pkgs, ... }@args:
 let
-  socketPath = "/tmp/tailscaled.${config.home.username}.sock";
+  socketPath = "/tmp/tailscaled.${args.config.home.username}.sock";
   proxyAddress = "127.0.0.1:1055";
 in
 {
-  imports = [ inputs.self.homeModules.tailscale ];
+  imports = [ args.inputs.self.homeModules.tailscale ];
 
   home.packages = [ pkgs.tailscale ];
 
@@ -30,7 +24,7 @@ in
       Type = "notify";
       Restart = "on-failure";
 
-      ExecStart = lib.escapeShellArgs [
+      ExecStart = args.lib.escapeShellArgs [
         "${pkgs.tailscale}/bin/tailscaled"
         "--socket=${socketPath}"
         "--tun=userspace-networking"

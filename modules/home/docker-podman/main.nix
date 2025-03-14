@@ -1,17 +1,11 @@
-{
-  config,
-  inputs,
-  lib,
-  pkgs,
-  ...
-}:
+{ pkgs, ... }@args:
 let
   pkgs'.docker = pkgs.writeScriptBin "docker" ''
     exec podman "$@"
   '';
 in
 {
-  imports = [ inputs.self.homeModules.docker ];
+  imports = [ args.inputs.self.homeModules.docker ];
 
   home.packages = with pkgs; [
     pkgs'.docker
@@ -26,7 +20,7 @@ in
     };
 
     Service = {
-      ExecStart = lib.escapeShellArgs [
+      ExecStart = args.lib.escapeShellArgs [
         "${pkgs.podman}/bin/podman"
         "system"
         "service"
@@ -45,7 +39,7 @@ in
   };
 
   self.backup.paths = [
-    "${config.home.homeDirectory}/.config/containers/registries.conf.d"
+    "${args.config.home.homeDirectory}/.config/containers/registries.conf.d"
   ];
 
   programs.bash.initExtra = ''

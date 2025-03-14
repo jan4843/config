@@ -1,14 +1,9 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}:
+{ pkgs, ... }@args:
 let
   appPath = "/Applications/Hammerspoon.app";
 in
-lib.mkIf (config.self.hammerspoon.spoons != { }) {
-  self.homebrew.casks = with config.self.homebrew.taps."homebrew/cask".casks; [
+args.lib.mkIf (args.config.self.hammerspoon.spoons != { }) {
+  self.homebrew.casks = with args.config.self.homebrew.taps."homebrew/cask".casks; [
     hammerspoon
   ];
 
@@ -24,8 +19,8 @@ lib.mkIf (config.self.hammerspoon.spoons != { }) {
 
   home.file.".hammerspoon" = {
     source = pkgs.runCommand ".hammerspoon" { } (
-      lib.strings.concatLines (
-        lib.attrsets.mapAttrsToList (name: lua: ''
+      args.lib.strings.concatLines (
+        args.lib.attrsets.mapAttrsToList (name: lua: ''
           mkdir -p $out/Spoons/${name}.spoon
 
           printf 'hs.loadSpoon("%s")\n' ${name} >> $out/init.lua
@@ -38,13 +33,13 @@ lib.mkIf (config.self.hammerspoon.spoons != { }) {
           end
           return obj
           EOF
-        '') config.self.hammerspoon.spoons
+        '') args.config.self.hammerspoon.spoons
       )
     );
 
     onChange = ''
       /usr/bin/open --background \
-        -a ${lib.escapeShellArg appPath} \
+        -a ${args.lib.escapeShellArg appPath} \
         --url hammerspoon://reload_configuration
     '';
   };

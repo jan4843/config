@@ -1,9 +1,9 @@
-{ lib, pkgs, ... }:
+{ pkgs, ... }@args:
 let
   script = pkgs.writeScript "push" ''
     #!/bin/sh
     export PATH=${
-      lib.makeBinPath [
+      args.lib.makeBinPath [
         pkgs.coreutils
         pkgs.curl
         pkgs.nettools

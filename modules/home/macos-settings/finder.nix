@@ -1,4 +1,4 @@
-{ config, ... }:
+args:
 let
   listView = "Nlsv";
   currentFolder = "SCcf";
@@ -29,7 +29,7 @@ in
   self.plistbuddy = [
     {
       command = "Set :DesktopViewSettings:IconViewSettings:arrangeBy grid";
-      file = "${config.home.homeDirectory}/Library/Preferences/com.apple.finder.plist";
+      file = "${args.config.home.homeDirectory}/Library/Preferences/com.apple.finder.plist";
     }
   ];
 }

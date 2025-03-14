@@ -1,18 +1,15 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}:
+{ pkgs, ... }@args:
 let
-  target = "${config.self.alfred.syncFolder}/Alfred.alfredpreferences/preferences/local";
+  target = "${args.config.self.alfred.syncFolder}/Alfred.alfredpreferences/preferences/local";
+
+  toPlist = args.lib.generators.toPlist { };
 
   preferences = pkgs.runCommand "alfred-preferences" { } (
     toString (
-      lib.mapAttrsToList (name: value: ''
+      args.lib.mapAttrsToList (name: value: ''
         mkdir -p $out/${name}
-        printf %s ${lib.escapeShellArg (lib.generators.toPlist { } value)} > $out/${name}/prefs.plist
-      '') config.self.alfred.preferences
+        printf %s ${args.lib.escapeShellArg (toPlist value)} > $out/${name}/prefs.plist
+      '') args.config.self.alfred.preferences
     )
   );
 
@@ -20,7 +17,7 @@ let
 in
 {
   home.file.${helper}.source = pkgs.writeShellScript "alfred-preferences" ''
-    for pref_dir in ${lib.escapeShellArg target}/*/; do
+    for pref_dir in ${args.lib.escapeShellArg target}/*/; do
       [ -e "$pref_dir" ] || continue
       ${pkgs.rsync}/bin/rsync \
         --archive --copy-links --delete \
@@ -33,7 +30,7 @@ in
     config = {
       RunAtLoad = true;
       WatchPaths = [ target ];
-      ProgramArguments = [ "${config.home.homeDirectory}/${helper}" ];
+      ProgramArguments = [ "${args.config.home.homeDirectory}/${helper}" ];
     };
   };
 }

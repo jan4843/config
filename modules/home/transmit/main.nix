@@ -1,6 +1,5 @@
-{ config, ... }:
-{
-  self.homebrew.casks = with config.self.homebrew.taps."homebrew/cask".casks; [
+args: {
+  self.homebrew.casks = with args.config.self.homebrew.taps."homebrew/cask".casks; [
     transmit
   ];
 
@@ -10,7 +9,7 @@
   };
 
   self.backup.paths = [
-    "${config.home.homeDirectory}/Library/Application Support/Transmit/Connections.transmitstore"
-    "${config.home.homeDirectory}/Library/Application Support/Transmit/Metadata"
+    "${args.config.home.homeDirectory}/Library/Application Support/Transmit/Connections.transmitstore"
+    "${args.config.home.homeDirectory}/Library/Application Support/Transmit/Metadata"
   ];
 }

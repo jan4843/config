@@ -1,15 +1,14 @@
-{ lib, ... }:
-{
-  options.self.plistbuddy = lib.mkOption {
-    type = lib.types.listOf (
-      lib.types.submodule {
+args: {
+  options.self.plistbuddy = args.lib.mkOption {
+    type = args.lib.types.listOf (
+      args.lib.types.submodule {
         options = {
-          command = lib.mkOption {
-            type = lib.types.str;
+          command = args.lib.mkOption {
+            type = args.lib.types.str;
           };
 
-          file = lib.mkOption {
-            type = lib.types.path;
+          file = args.lib.mkOption {
+            type = args.lib.types.path;
           };
         };
       }

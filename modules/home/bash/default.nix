@@ -1,51 +1,50 @@
-{ lib, ... }:
-{
+args: {
   options.self.bash = rec {
-    PS1 = lib.mkOption {
-      type = lib.types.nullOr lib.types.str;
+    PS1 = args.lib.mkOption {
+      type = args.lib.types.nullOr args.lib.types.str;
       default = null;
     };
     PS2 = PS1;
     PS3 = PS1;
     PS4 = PS1;
 
-    promptInfo = lib.mkOption {
-      type = lib.types.attrsOf lib.types.str;
+    promptInfo = args.lib.mkOption {
+      type = args.lib.types.attrsOf args.lib.types.str;
       default = { };
     };
 
-    commandNotFound = lib.mkOption {
-      type = lib.types.attrsOf lib.types.str;
+    commandNotFound = args.lib.mkOption {
+      type = args.lib.types.attrsOf args.lib.types.str;
       default = { };
     };
 
-    promptCommand = lib.mkOption {
-      type = lib.types.attrsOf lib.types.str;
+    promptCommand = args.lib.mkOption {
+      type = args.lib.types.attrsOf args.lib.types.str;
       default = { };
     };
 
-    preExec = lib.mkOption {
-      type = lib.types.attrsOf lib.types.str;
+    preExec = args.lib.mkOption {
+      type = args.lib.types.attrsOf args.lib.types.str;
       default = { };
     };
 
-    variables = lib.mkOption {
-      type = lib.types.attrs;
+    variables = args.lib.mkOption {
+      type = args.lib.types.attrs;
       default = { };
     };
 
-    aliases = lib.mkOption {
-      type = lib.types.attrsOf lib.types.str;
+    aliases = args.lib.mkOption {
+      type = args.lib.types.attrsOf args.lib.types.str;
       default = { };
     };
 
-    functions = lib.mkOption {
-      type = lib.types.attrsOf lib.types.str;
+    functions = args.lib.mkOption {
+      type = args.lib.types.attrsOf args.lib.types.str;
       default = { };
     };
 
-    profile = lib.mkOption {
-      type = lib.types.lines;
+    profile = args.lib.mkOption {
+      type = args.lib.types.lines;
       default = "";
     };
   };

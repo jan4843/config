@@ -1,5 +1,4 @@
-{ lib, ... }:
-{
+args: {
   dconf.settings = {
     "org/gnome/desktop/peripherals/mouse" = {
       natural-scroll = true;
@@ -7,8 +6,8 @@
     };
 
     "org/gnome/desktop/privacy" = {
-      recent-files-max-age = lib.hm.gvariant.mkUint32 30;
-      old-files-age = lib.hm.gvariant.mkUint32 30;
+      recent-files-max-age = args.lib.hm.gvariant.mkUint32 30;
+      old-files-age = args.lib.hm.gvariant.mkUint32 30;
       remove-old-temp-files = true;
       remove-old-trash-files = true;
     };
@@ -42,7 +41,7 @@
 
     "org/gnome/desktop/input-sources" = {
       sources = [
-        (lib.hm.gvariant.mkTuple [
+        (args.lib.hm.gvariant.mkTuple [
           "xkb"
           "us+mac"
         ])

@@ -1,6 +1,5 @@
-{ inputs, ... }:
-{
-  imports = [ "${inputs.nixpkgs}/nixos/modules/profiles/qemu-guest.nix" ];
+args: {
+  imports = [ "${args.inputs.nixpkgs}/nixos/modules/profiles/qemu-guest.nix" ];
 
   boot.loader = {
     systemd-boot.enable = true;

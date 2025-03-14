@@ -1,8 +1,7 @@
-{ lib, ... }:
-{
+args: {
   options.self.ssh-server = {
-    importID = lib.mkOption {
-      type = lib.types.str;
+    importID = args.lib.mkOption {
+      type = args.lib.types.str;
     };
   };
 }

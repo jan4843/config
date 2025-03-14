@@ -1,6 +1,5 @@
-{ inputs, ... }:
-{
-  imports = [ inputs.self.homeModules.backup ];
+args: {
+  imports = [ args.inputs.self.homeModules.backup ];
 
   self.backup = {
     repositoryFile = builtins.toFile "repo" "/run/media/mmcblk0p1/backup";

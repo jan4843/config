@@ -1,8 +1,7 @@
-{ lib, ... }:
-{
+args: {
   options.self.hammerspoon = {
-    spoons = lib.mkOption {
-      type = lib.types.attrsOf lib.types.str;
+    spoons = args.lib.mkOption {
+      type = args.lib.types.attrsOf args.lib.types.str;
       default = { };
     };
   };

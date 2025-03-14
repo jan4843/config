@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }@args:
 {
   self.steam-shortcuts.Yuzu = {
     script = ''
@@ -31,10 +31,10 @@
   };
 
   self.backup.paths = [
-    "${config.home.homeDirectory}/.config/yuzu"
-    "${config.home.homeDirectory}/.local/share/yuzu/keys"
-    "${config.home.homeDirectory}/.local/share/yuzu/load" # mods
-    "${config.home.homeDirectory}/.local/share/yuzu/nand"
-    "${config.home.homeDirectory}/.local/share/yuzu/sdmc"
+    "${args.config.home.homeDirectory}/.config/yuzu"
+    "${args.config.home.homeDirectory}/.local/share/yuzu/keys"
+    "${args.config.home.homeDirectory}/.local/share/yuzu/load" # mods
+    "${args.config.home.homeDirectory}/.local/share/yuzu/nand"
+    "${args.config.home.homeDirectory}/.local/share/yuzu/sdmc"
   ];
 }

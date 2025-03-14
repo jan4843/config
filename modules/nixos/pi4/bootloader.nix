@@ -1,16 +1,9 @@
-{
-  config,
-  extendModules,
-  inputs,
-  lib,
-  pkgs,
-  ...
-}:
+{ extendModules, pkgs, ... }@args:
 let
   installer = extendModules {
     modules = [
       { _overtakeInstallBootLoader = false; }
-      "${inputs.nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
+      "${args.inputs.nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
     ];
   };
 
@@ -26,9 +19,9 @@ let
   '';
 in
 {
-  options._overtakeInstallBootLoader = lib.mkOption { default = true; };
+  options._overtakeInstallBootLoader = args.lib.mkOption { default = true; };
 
-  config = lib.mkIf config._overtakeInstallBootLoader {
-    system.build.installBootLoader = lib.mkForce populateBootScript;
+  config = args.lib.mkIf args.config._overtakeInstallBootLoader {
+    system.build.installBootLoader = args.lib.mkForce populateBootScript;
   };
 }

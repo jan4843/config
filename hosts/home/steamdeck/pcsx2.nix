@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }@args:
 {
   self.steam-shortcuts.PCSX2 = {
     script = ''
@@ -30,11 +30,11 @@
   };
 
   self.backup.paths = [
-    "${config.home.homeDirectory}/.config/PCSX2/bios"
-    "${config.home.homeDirectory}/.config/PCSX2/gamesettings"
-    "${config.home.homeDirectory}/.config/PCSX2/inis"
-    "${config.home.homeDirectory}/.config/PCSX2/inputprofiles"
-    "${config.home.homeDirectory}/.config/PCSX2/memcards"
-    "${config.home.homeDirectory}/.config/PCSX2/sstates"
+    "${args.config.home.homeDirectory}/.config/PCSX2/bios"
+    "${args.config.home.homeDirectory}/.config/PCSX2/gamesettings"
+    "${args.config.home.homeDirectory}/.config/PCSX2/inis"
+    "${args.config.home.homeDirectory}/.config/PCSX2/inputprofiles"
+    "${args.config.home.homeDirectory}/.config/PCSX2/memcards"
+    "${args.config.home.homeDirectory}/.config/PCSX2/sstates"
   ];
 }

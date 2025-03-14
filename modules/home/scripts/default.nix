@@ -1,18 +1,19 @@
-{ lib, ... }:
-{
+args: {
   options.self.scripts = rec {
-    check = lib.mkOption {
-      type = lib.types.attrsOf (
-        lib.types.submodule (
+    check = args.lib.mkOption {
+      type = args.lib.types.attrsOf (
+        args.lib.types.submodule (
           { name, config, ... }:
           {
             options = {
-              path = lib.mkOption {
-                type = lib.types.listOf (lib.types.either lib.types.package (lib.types.enum [ "darwin" ]));
+              path = args.lib.mkOption {
+                type = args.lib.types.listOf (
+                  args.lib.types.either args.lib.types.package (args.lib.types.enum [ "darwin" ])
+                );
                 default = [ ];
               };
 
-              text = lib.mkOption { type = lib.types.lines; };
+              text = args.lib.mkOption { type = args.lib.types.lines; };
             };
           }
         )

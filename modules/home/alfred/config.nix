@@ -1,7 +1,6 @@
-{ config, ... }:
-{
+args: {
   self.alfred = {
-    syncFolder = "${config.self.maestral.syncFolder}/Alfred";
+    syncFolder = "${args.config.self.maestral.syncFolder}/Alfred";
     preferences = {
       "features/clipboard" = {
         enabled = true;

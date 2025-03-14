@@ -1,4 +1,4 @@
-{ inputs, pkgs, ... }:
+{ pkgs, ... }@args:
 {
   nixpkgs.hostPlatform = "x86_64-linux";
 
@@ -6,7 +6,7 @@
   home.homeDirectory = "/home/deck";
   home.stateVersion = "24.11";
 
-  imports = with inputs.self.homeModules; [
+  imports = with args.inputs.self.homeModules; [
     default
 
     bash

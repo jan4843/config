@@ -1,14 +1,9 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}:
+{ pkgs, ... }@args:
 {
   home.packages = with pkgs; [
     restic
     ncdu
   ];
 
-  home.shellAliases.restic = "RESTIC_REPOSITORY_FILE=${lib.escapeShellArg config.self.backup.repositoryFile} RESTIC_PASSWORD_FILE=${lib.escapeShellArg config.self.backup.passwordFile} restic";
+  home.shellAliases.restic = "RESTIC_REPOSITORY_FILE=${args.lib.escapeShellArg args.config.self.backup.repositoryFile} RESTIC_PASSWORD_FILE=${args.lib.escapeShellArg args.config.self.backup.passwordFile} restic";
 }

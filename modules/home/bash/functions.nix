@@ -1,10 +1,9 @@
-{ config, lib, ... }:
-{
-  self.bash.profile = lib.concatLines (
-    lib.attrsets.mapAttrsToList (name: body: ''
+args: {
+  self.bash.profile = args.lib.concatLines (
+    args.lib.attrsets.mapAttrsToList (name: body: ''
       function ${name} {
       ${body}
       }
-    '') config.self.bash.functions
+    '') args.config.self.bash.functions
   );
 }

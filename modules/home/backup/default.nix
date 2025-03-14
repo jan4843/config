@@ -1,27 +1,27 @@
-{ lib, ... }:
+args:
 let
-  opts.retention = lib.mkOption {
-    type = lib.types.nullOr lib.types.ints.unsigned;
+  opts.retention = args.lib.mkOption {
+    type = args.lib.types.nullOr args.lib.types.ints.unsigned;
     default = null;
   };
 in
 {
   options.self.backup = {
-    repositoryFile = lib.mkOption {
-      type = lib.types.path;
+    repositoryFile = args.lib.mkOption {
+      type = args.lib.types.path;
     };
 
-    passwordFile = lib.mkOption {
-      type = lib.types.path;
+    passwordFile = args.lib.mkOption {
+      type = args.lib.types.path;
     };
 
-    paths = lib.mkOption {
-      type = lib.types.nonEmptyListOf lib.types.path;
+    paths = args.lib.mkOption {
+      type = args.lib.types.nonEmptyListOf args.lib.types.path;
       default = [ ];
     };
 
-    exclude = lib.mkOption {
-      type = lib.types.listOf lib.types.str;
+    exclude = args.lib.mkOption {
+      type = args.lib.types.listOf args.lib.types.str;
       default = [ ];
     };
 

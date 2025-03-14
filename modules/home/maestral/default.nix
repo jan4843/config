@@ -1,8 +1,7 @@
-{ lib, ... }:
-{
+args: {
   options.self.maestral = {
-    syncFolder = lib.mkOption {
-      type = lib.types.path;
+    syncFolder = args.lib.mkOption {
+      type = args.lib.types.path;
     };
   };
 }

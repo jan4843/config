@@ -1,34 +1,28 @@
-{
-  config,
-  lib,
-  pkgs,
-  inputs,
-  ...
-}:
+{ pkgs, ... }@args:
 {
   programs.vscode = {
     enable = true;
 
-    keybindings = config.self.vscode.keybindings;
-    userSettings = config.self.vscode.settings;
-    globalSnippets = config.self.vscode.snippets.global;
-    languageSnippets = config.self.vscode.snippets.languages;
+    keybindings = args.config.self.vscode.keybindings;
+    userSettings = args.config.self.vscode.settings;
+    globalSnippets = args.config.self.vscode.snippets.global;
+    languageSnippets = args.config.self.vscode.snippets.languages;
     userTasks = {
       version = "2.0.0";
-      inherit (config.self.vscode) tasks;
+      inherit (args.config.self.vscode) tasks;
     };
 
     mutableExtensionsDir = false;
     extensions = map (
       name:
-      lib.attrByPath (lib.strings.splitString "." name)
+      args.lib.attrByPath (args.lib.strings.splitString "." name)
         (builtins.abort "vscode extension '${name}' not found")
-        inputs.nix-vscode-extensions.extensions.${pkgs.system}.vscode-marketplace
-    ) config.self.vscode.extensions;
+        args.inputs.nix-vscode-extensions.extensions.${pkgs.system}.vscode-marketplace
+    ) args.config.self.vscode.extensions;
   };
 
   home.sessionVariables = rec {
-    EDITOR = lib.mkOverride 800 "code --wait";
+    EDITOR = args.lib.mkOverride 800 "code --wait";
     VISUAL = EDITOR;
   };
 }

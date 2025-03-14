@@ -1,13 +1,13 @@
-{ config, lib, ... }:
+args:
 let
   appPath = "/Applications/Maestral.app";
   cli = "${appPath}/Contents/MacOS/maestral-cli";
-  path = lib.strings.escapeShellArg config.self.maestral.syncFolder;
+  path = args.lib.strings.escapeShellArg args.config.self.maestral.syncFolder;
 in
 {
-  self.maestral.syncFolder = lib.mkDefault "${config.home.homeDirectory}/Library/Dropbox";
+  self.maestral.syncFolder = args.lib.mkDefault "${args.config.home.homeDirectory}/Library/Dropbox";
 
-  self.homebrew.casks = with config.self.homebrew.taps."homebrew/cask".casks; [
+  self.homebrew.casks = with args.config.self.homebrew.taps."homebrew/cask".casks; [
     maestral
   ];
 

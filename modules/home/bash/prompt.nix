@@ -1,9 +1,9 @@
-{ config, lib, ... }:
+args:
 let
   setPS =
     ps:
-    lib.optionalString (config.self.bash.${ps} != null) ''
-      ${ps}='${lib.strings.escape [ "'" ] config.self.bash.${ps}}'
+    args.lib.optionalString (args.config.self.bash.${ps} != null) ''
+      ${ps}='${args.lib.strings.escape [ "'" ] args.config.self.bash.${ps}}'
     '';
 in
 {

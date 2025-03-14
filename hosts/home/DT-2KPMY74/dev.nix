@@ -1,4 +1,4 @@
-{ inputs, pkgs, ... }:
+{ pkgs, ... }@args:
 let
   pkgs' = {
     cmake-mold = pkgs.writeShellScriptBin "cmake-mold" ''
@@ -23,7 +23,7 @@ let
   };
 in
 {
-  imports = with inputs.self.homeModules; [
+  imports = with args.inputs.self.homeModules; [
     git
     go
     python

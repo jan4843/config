@@ -1,11 +1,6 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}:
+{ pkgs, ... }@args:
 let
-  authorizedKeysFile = "${config.self.persistence.path}/ssh/authorized_keys";
+  authorizedKeysFile = "${args.config.self.persistence.path}/ssh/authorized_keys";
 in
 {
   services.openssh = {
@@ -14,7 +9,7 @@ in
     hostKeys = [
       rec {
         type = "ed25519";
-        path = "${config.self.persistence.path}/ssh/ssh_host_${type}_key";
+        path = "${args.config.self.persistence.path}/ssh/ssh_host_${type}_key";
       }
     ];
   };
@@ -29,8 +24,8 @@ in
     ];
     script = ''
       ssh-import-id \
-        --output=${lib.escapeShellArg authorizedKeysFile} \
-        ${lib.escapeShellArg config.self.ssh-server.importID}
+        --output=${args.lib.escapeShellArg authorizedKeysFile} \
+        ${args.lib.escapeShellArg args.config.self.ssh-server.importID}
     '';
   };
 }

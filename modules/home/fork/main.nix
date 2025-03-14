@@ -1,11 +1,10 @@
-{ config, ... }:
-{
-  self.homebrew.casks = with config.self.homebrew.taps."homebrew/cask".casks; [
+args: {
+  self.homebrew.casks = with args.config.self.homebrew.taps."homebrew/cask".casks; [
     fork
   ];
 
   targets.darwin.defaults."com.DanPristupov.Fork" = {
-    defaultSourceFolder = "${config.home.homeDirectory}/Developer";
+    defaultSourceFolder = "${args.config.home.homeDirectory}/Developer";
     diffShowHiddenSymbols = true;
   };
 }

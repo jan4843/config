@@ -1,6 +1,6 @@
-{ config, lib, ... }:
+args:
 let
-  cfg = config.self.homebrew;
+  cfg = args.config.self.homebrew;
 
   taps = map (name: ''tap "${name}"'') (builtins.attrNames cfg.taps);
   brews = map (formula: ''brew "${formula.tap}/${formula.name}"'') cfg.brews;
@@ -10,18 +10,16 @@ in
 {
   xdg.configFile."homebrew/Brewfile".text = ''
     cask_args no_quarantine: true
-    ${lib.concatLines (taps ++ brews ++ casks ++ mas)}
+    ${args.lib.concatLines (taps ++ brews ++ casks ++ mas)}
   '';
 
-  self.homebrew.brews = lib.optional (
-    cfg.mas != { }
-  ) config.self.homebrew.taps."homebrew/core".formulae.mas;
+  self.homebrew.brews = args.lib.optional (cfg.mas != { }) cfg.taps."homebrew/core".formulae.mas;
 
   self.scripts.install."13-homebrew-bundle".text = ''
     HOMEBREW_NO_AUTO_UPDATE=1 \
     HOMEBREW_NO_INSTALL_FROM_API=1 \
     ${cfg.prefix}/bin/brew bundle \
-        --file ${config.xdg.configFile."homebrew/Brewfile".source} \
+        --file ${args.config.xdg.configFile."homebrew/Brewfile".source} \
         --cleanup --quiet
   '';
 }

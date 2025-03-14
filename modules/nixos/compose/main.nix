@@ -1,21 +1,16 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}:
+{ pkgs, ... }@args:
 let
   mkCompose = pkgs.callPackage ./mkCompose { };
 
   upServices =
     compose:
-    lib.pipe compose.services [
-      (lib.filterAttrs (_: service: service.restart or "no" != "no"))
+    args.lib.pipe compose.services [
+      (args.lib.filterAttrs (_: service: service.restart or "no" != "no"))
       builtins.attrNames
     ];
 in
 {
-  systemd.services = lib.mapAttrs' (project: compose: {
+  systemd.services = args.lib.mapAttrs' (project: compose: {
     name = "compose@${project}";
     value = {
       requires = [ "docker.socket" ];
@@ -28,12 +23,12 @@ in
           [
             "${pkgs.docker}/bin/docker compose create --build --quiet-pull --remove-orphans"
           ]
-          ++ (lib.optional ((upServices compose) != [ ])
-            "${pkgs.docker}/bin/docker compose up --detach --wait ${lib.escapeShellArgs (upServices compose)}"
+          ++ (args.lib.optional ((upServices compose) != [ ])
+            "${pkgs.docker}/bin/docker compose up --detach --wait ${args.lib.escapeShellArgs (upServices compose)}"
           );
 
         ExecStop = [ "${pkgs.docker}/bin/docker compose down" ];
       };
     };
-  }) config.self.compose.projects;
+  }) args.config.self.compose.projects;
 }

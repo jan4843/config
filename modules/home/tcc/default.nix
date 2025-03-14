@@ -1,12 +1,12 @@
-{ config, lib, ... }:
+args:
 let
-  services = import ./files/services.nix config.home.homeDirectory;
+  services = import ./files/services.nix args.config.home.homeDirectory;
 in
 {
   options.self.tcc = builtins.mapAttrs (
     _: _:
-    lib.mkOption {
-      type = lib.types.listOf lib.types.path;
+    args.lib.mkOption {
+      type = args.lib.types.listOf args.lib.types.path;
       default = [ ];
     }
   ) services;

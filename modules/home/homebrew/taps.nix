@@ -1,11 +1,6 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}:
+{ pkgs, ... }@args:
 let
-  taps = lib.pipe config.self.homebrew.taps [
+  taps = args.lib.pipe args.config.self.homebrew.taps [
     (builtins.mapAttrs (
       name: value: ''
         mkdir -p $out/${builtins.dirOf name}
@@ -13,7 +8,7 @@ let
       ''
     ))
     builtins.attrValues
-    lib.concatLines
+    args.lib.concatLines
     (pkgs.runCommand "Taps" { })
   ];
 in
@@ -29,7 +24,7 @@ in
         --archive --delete \
         --owner --group --chown=$(id -u):$(id -g) \
         --perms --chmod=u+w \
-        ${taps}/ ${config.self.homebrew.prefix}/Library/Taps
+        ${taps}/ ${args.config.self.homebrew.prefix}/Library/Taps
     '';
   };
 }

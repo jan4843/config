@@ -1,12 +1,12 @@
-{ lib, pkgs, ... }:
+{ pkgs, ... }@args:
 let
   driversDir = "${pkgs.mesa.drivers}/share/vulkan/icd.d";
-  drivers = lib.pipe driversDir [
+  drivers = args.lib.pipe driversDir [
     builtins.readDir
     builtins.attrNames
     (map (f: "${driversDir}/${f}"))
   ];
-  vars.VK_ADD_DRIVER_FILES = lib.concatStringsSep ":" drivers;
+  vars.VK_ADD_DRIVER_FILES = args.lib.concatStringsSep ":" drivers;
 in
 {
   home.sessionVariables = vars;

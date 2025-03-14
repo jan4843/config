@@ -1,11 +1,11 @@
-{ lib, pkgs, ... }:
+{ pkgs, ... }@args:
 {
   home.packages = with pkgs; [
     ffmpeg
     yt-dlp
   ];
 
-  home.shellAliases.dlp = lib.strings.escapeShellArgs [
+  home.shellAliases.dlp = args.lib.strings.escapeShellArgs [
     "yt-dlp"
     "--format=bestvideo+bestaudio/best"
     "--compat-options=multistreams"

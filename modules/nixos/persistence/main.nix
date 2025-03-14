@@ -1,17 +1,16 @@
-{ config, ... }:
-{
+args: {
   fileSystems = {
     "/".device = "/dev/disk/by-label/root";
     "/boot".device = "/dev/disk/by-label/boot";
     "/nix".device = "/dev/disk/by-label/nix";
 
     "/root" = {
-      device = "${config.self.persistence.path}/root";
+      device = "${args.config.self.persistence.path}/root";
       options = [ "bind" ];
     };
 
     "/home" = {
-      device = "${config.self.persistence.path}/home";
+      device = "${args.config.self.persistence.path}/home";
       options = [ "bind" ];
     };
   };

@@ -1,26 +1,21 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}:
+{ pkgs, ... }@args:
 let
   mkScript = target: name: cfg: ''
     set -e
     (
-      printf '\e[4m%s\e[0m\n' self.scripts.${target}.${lib.escapeShellArg name} >&2
+      printf '\e[4m%s\e[0m\n' self.scripts.${target}.${args.lib.escapeShellArg name} >&2
 
       PATH=
-      ${lib.optionalString (builtins.elem "darwin" cfg.path) ''
+      ${args.lib.optionalString (builtins.elem "darwin" cfg.path) ''
         eval "$(/usr/libexec/path_helper)"
       ''}
-      PATH=${lib.makeBinPath (lib.remove "darwin" cfg.path)}:''${PATH:+$PATH}
+      PATH=${args.lib.makeBinPath (args.lib.remove "darwin" cfg.path)}:''${PATH:+$PATH}
 
       cd
 
       ${pkgs.coreutils}/bin/env -i \
-      USER=${lib.escapeShellArg config.home.username} \
-      HOME=${lib.escapeShellArg config.home.homeDirectory} \
+      USER=${args.lib.escapeShellArg args.config.home.username} \
+      HOME=${args.lib.escapeShellArg args.config.home.homeDirectory} \
       PATH="$PATH" \
       ${pkgs.bash}/bin/bash \
       ${pkgs.writeScript name cfg.text} || {
@@ -35,19 +30,21 @@ let
     toString (
       pkgs.writeScript target (
         toString (
-          lib.attrsets.mapAttrsToList (name: cfg: mkScript target name cfg) config.self.scripts.${target}
+          args.lib.attrsets.mapAttrsToList (
+            name: cfg: mkScript target name cfg
+          ) args.config.self.scripts.${target}
         )
       )
     );
 in
 {
   home.activation = {
-    customChecks = lib.hm.dag.entryBefore [ "checkFilesChanged" ] (mkActivation "check");
+    customChecks = args.lib.hm.dag.entryBefore [ "checkFilesChanged" ] (mkActivation "check");
 
-    customInstalls = lib.hm.dag.entryBetween [ "linkGeneration" ] [ "installPackages" ] (
+    customInstalls = args.lib.hm.dag.entryBetween [ "linkGeneration" ] [ "installPackages" ] (
       mkActivation "install"
     );
 
-    customWrites = lib.hm.dag.entryAfter [ "linkGeneration" ] (mkActivation "write");
+    customWrites = args.lib.hm.dag.entryAfter [ "linkGeneration" ] (mkActivation "write");
   };
 }

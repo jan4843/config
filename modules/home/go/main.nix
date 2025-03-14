@@ -1,11 +1,6 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}:
+{ pkgs, ... }@args:
 let
-  GOPATH = "${config.home.homeDirectory}/.local/go";
+  GOPATH = "${args.config.home.homeDirectory}/.local/go";
   GOROOT = "${pkgs.go}/share/go";
 in
 {
@@ -28,7 +23,7 @@ in
       "go.showWelcome" = false;
       "go.survey.prompt" = false;
       "go.toolsManagement.autoUpdate" = true;
-      "go.toolsManagement.go" = lib.getExe pkgs.go;
+      "go.toolsManagement.go" = "${pkgs.go}/bin/go";
 
       "gopls" = {
         "ui.semanticTokens" = true;

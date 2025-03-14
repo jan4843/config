@@ -1,7 +1,7 @@
-{ lib, pkgs, ... }:
+{ pkgs, ... }@args:
 let
-  includeIf = cond: ''includeIf "${lib.escape [ "\"" ] cond}"'';
-  mkInclude = cfg: { path = pkgs.writeText "" (lib.generators.toGitINI cfg); };
+  includeIf = cond: ''includeIf "${args.lib.escape [ "\"" ] cond}"'';
+  mkInclude = cfg: { path = pkgs.writeText "" (args.lib.generators.toGitINI cfg); };
 in
 {
   self.git.config = {

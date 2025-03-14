@@ -1,7 +1,6 @@
-{ config, ... }:
-{
+args: {
   virtualisation.docker = {
     enable = true;
-    daemon.settings.data-root = "${config.self.persistence.path}/docker";
+    daemon.settings.data-root = "${args.config.self.persistence.path}/docker";
   };
 }

@@ -1,4 +1,1 @@
-{ config, lib, ... }:
-{
-  self.bash.profile = lib.strings.toShellVars config.self.bash.variables;
-}
+args: { self.bash.profile = args.lib.strings.toShellVars args.config.self.bash.variables; }

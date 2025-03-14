@@ -1,8 +1,7 @@
-{ lib, ... }:
-{
+args: {
   options.self.ssh-client = {
-    config = lib.mkOption {
-      type = lib.types.lines;
+    config = args.lib.mkOption {
+      type = args.lib.types.lines;
       default = "";
     };
   };

@@ -1,6 +1,5 @@
-{ inputs, ... }:
-{
-  imports = [ inputs.self.homeModules.vscode ];
+args: {
+  imports = [ args.inputs.self.homeModules.vscode ];
 
   self.vscode = {
     extensions = [

@@ -1,15 +1,14 @@
-{ config, lib, ... }:
-{
+args: {
   boot.supportedFilesystems = [ "zfs" ];
 
   boot.zfs = {
     forceImportAll = true;
-    extraPools = lib.pipe config.self.zfs.datasets [
+    extraPools = args.lib.pipe args.config.self.zfs.datasets [
       builtins.attrNames
       (map (x: builtins.head (builtins.split "/" x)))
-      lib.unique
+      args.lib.unique
     ];
   };
 
-  networking.hostId = lib.mkDefault "00000000";
+  networking.hostId = args.lib.mkDefault "00000000";
 }

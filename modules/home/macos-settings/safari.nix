@@ -1,11 +1,6 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}:
+{ pkgs, ... }@args:
 let
-  db = "${lib.escapeShellArg config.home.homeDirectory}/Library/Safari/PerSitePreferences.db";
+  db = "${args.lib.escapeShellArg args.config.home.homeDirectory}/Library/Safari/PerSitePreferences.db";
 in
 {
   targets.darwin.defaults."com.apple.Safari" = {

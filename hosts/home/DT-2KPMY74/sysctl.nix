@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }@args:
 {
   home.file.".nix/sysctl/nix.conf".text = ''
     fs.inotify.max_user_watches=1048576
@@ -12,7 +12,7 @@
     ];
     text = ''
       if ! [ -e /etc/sysctl.d/99-nix.conf ]; then
-        /usr/bin/sudo ln -fs ${config.home.homeDirectory}/.nix/sysctl/nix.conf /etc/sysctl.d/99-nix.${config.home.username}.conf
+        /usr/bin/sudo ln -fs ${args.config.home.homeDirectory}/.nix/sysctl/nix.conf /etc/sysctl.d/99-nix.${args.config.home.username}.conf
       fi
     '';
   };

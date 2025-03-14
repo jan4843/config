@@ -1,4 +1,4 @@
-{ inputs, pkgs, ... }:
+{ pkgs, ... }@args:
 {
   networking.hostName = "srv2";
   nixpkgs.hostPlatform = "x86_64-linux";
@@ -9,7 +9,7 @@
   time.timeZone = "CET";
   zramSwap.enable = true;
 
-  imports = with inputs.self.nixosModules; [
+  imports = with args.inputs.self.nixosModules; [
     default
 
     compose

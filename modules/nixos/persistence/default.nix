@@ -1,7 +1,6 @@
-{ lib, ... }:
-{
+args: {
   options.self.persistence = {
-    path = lib.mkOption {
+    path = args.lib.mkOption {
       default = "/nix/persist";
       readOnly = true;
     };

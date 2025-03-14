@@ -1,14 +1,9 @@
+{ pkgs, ... }@args:
 {
-  config,
-  lib,
-  pkgs,
-  ...
-}:
-{
-  home.file = lib.mapAttrs' (name: cfg: {
+  home.file = args.lib.mapAttrs' (name: cfg: {
     name = ".nix/steam-shortcuts/${name}";
-    value.source = pkgs.writeScript name cfg.script;
-  }) config.self.steam-shortcuts;
+    value.source = pkgs.writeShellScriptBin name cfg.script;
+  }) args.config.self.steam-shortcuts;
 
   self.scripts.write.steam-shortcuts = {
     path = [ (pkgs.python3.withPackages (p: [ p.vdf ])) ];
@@ -16,12 +11,12 @@
       "python"
       ./files/steam-shortcuts.py
       (pkgs.writers.writeJSON "shortcuts.json" (
-        lib.mapAttrs' (name: cfg: {
+        args.lib.mapAttrs' (name: cfg: {
           inherit name;
           value = cfg // {
-            script = "${config.home.homeDirectory}/.nix/steam-shortcuts/${name}";
+            script = "${args.config.home.homeDirectory}/.nix/steam-shortcuts/${name}";
           };
-        }) config.self.steam-shortcuts
+        }) args.config.self.steam-shortcuts
       ))
     ];
   };

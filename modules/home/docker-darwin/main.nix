@@ -1,8 +1,7 @@
-{ config, inputs, ... }:
-{
-  imports = [ inputs.self.homeModules.docker ];
+args: {
+  imports = [ args.inputs.self.homeModules.docker ];
 
-  self.homebrew.casks = with config.self.homebrew.taps."homebrew/cask".casks; [
+  self.homebrew.casks = with args.config.self.homebrew.taps."homebrew/cask".casks; [
     docker
   ];
 

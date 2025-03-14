@@ -1,9 +1,9 @@
-{ config, ... }:
+args:
 let
   appPath = "/Applications/MonitorControl.app";
 in
 {
-  self.homebrew.casks = with config.self.homebrew.taps."homebrew/cask".casks; [
+  self.homebrew.casks = with args.config.self.homebrew.taps."homebrew/cask".casks; [
     monitorcontrol
   ];
 

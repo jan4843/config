@@ -1,6 +1,5 @@
-{ inputs, ... }:
-{
-  imports = with inputs.self.homeModules; [
+args: {
+  imports = with args.inputs.self.homeModules; [
     hammerspoon
     homebrew
     open-at-login

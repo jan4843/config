@@ -1,38 +1,38 @@
-{ lib, pkgs, ... }:
+{ pkgs, ... }@args:
 let
   types.json = (pkgs.formats.json { }).type;
 in
 {
   options.self.vscode = {
-    keybindings = lib.mkOption {
-      type = lib.types.listOf types.json;
+    keybindings = args.lib.mkOption {
+      type = args.lib.types.listOf types.json;
       default = [ ];
     };
 
-    settings = lib.mkOption {
+    settings = args.lib.mkOption {
       type = types.json;
       default = { };
     };
 
-    tasks = lib.mkOption {
-      type = lib.types.listOf types.json;
+    tasks = args.lib.mkOption {
+      type = args.lib.types.listOf types.json;
       default = [ ];
     };
 
     snippets = {
-      global = lib.mkOption {
+      global = args.lib.mkOption {
         type = types.json;
         default = { };
       };
 
-      languages = lib.mkOption {
-        type = lib.types.attrsOf types.json;
+      languages = args.lib.mkOption {
+        type = args.lib.types.attrsOf types.json;
         default = { };
       };
     };
 
-    extensions = lib.mkOption {
-      type = lib.types.listOf lib.types.str;
+    extensions = args.lib.mkOption {
+      type = args.lib.types.listOf args.lib.types.str;
       default = [ ];
     };
   };

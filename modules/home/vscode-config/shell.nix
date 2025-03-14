@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }:
+{ pkgs, ... }:
 {
   self.vscode = {
     extensions = [ "timonwong.shellcheck" ];
@@ -8,7 +8,7 @@
         "editor.insertSpaces" = false;
       };
 
-      "shellcheck.executablePath" = lib.getExe pkgs.shellcheck;
+      "shellcheck.executablePath" = "${pkgs.shellcheck}/bin/shellcheck";
       "shellcheck.disableVersionCheck" = true;
     };
   };

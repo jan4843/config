@@ -1,15 +1,15 @@
-{ lib, ... }:
+args:
 let
-  opts.retention = lib.mkOption {
-    type = lib.types.nullOr lib.types.ints.unsigned;
+  opts.retention = args.lib.mkOption {
+    type = args.lib.types.nullOr args.lib.types.ints.unsigned;
     default = null;
   };
 in
 {
   options.self.zfs = {
-    datasets = lib.mkOption {
-      type = lib.types.attrsOf (
-        lib.types.submodule {
+    datasets = args.lib.mkOption {
+      type = args.lib.types.attrsOf (
+        args.lib.types.submodule {
           options = {
             snapshots = {
               hourly = opts.retention;

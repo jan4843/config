@@ -1,7 +1,6 @@
-{ config, ... }:
-{
+args: {
   programs.bash = {
     enable = true;
-    initExtra = config.self.bash.profile;
+    initExtra = args.config.self.bash.profile;
   };
 }

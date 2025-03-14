@@ -1,5 +1,4 @@
-{ config, ... }:
-{
+args: {
   services.sanoid = {
     enable = true;
     datasets = builtins.mapAttrs (
@@ -9,6 +8,6 @@
         autosnap = true;
         autoprune = true;
       }
-    ) config.self.zfs.datasets;
+    ) args.config.self.zfs.datasets;
   };
 }

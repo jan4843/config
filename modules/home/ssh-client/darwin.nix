@@ -1,14 +1,9 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}:
+{ pkgs, ... }@args:
 let
   type = "ed25519";
-  key = "${config.home.homeDirectory}/.ssh/id_${type}";
+  key = "${args.config.home.homeDirectory}/.ssh/id_${type}";
 in
-lib.mkIf pkgs.hostPlatform.isDarwin {
+args.lib.mkIf pkgs.hostPlatform.isDarwin {
   self.ssh-client.config = ''
     Host *
       IgnoreUnknown UseKeychain

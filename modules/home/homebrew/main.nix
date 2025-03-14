@@ -1,8 +1,7 @@
-{ inputs, ... }:
-{
+args: {
   self.homebrew.taps = {
-    "homebrew/core" = inputs.homebrew-core;
-    "homebrew/cask" = inputs.homebrew-cask;
-    "homebrew/bundle" = inputs.homebrew-bundle;
+    "homebrew/core" = args.inputs.homebrew-core;
+    "homebrew/cask" = args.inputs.homebrew-cask;
+    "homebrew/bundle" = args.inputs.homebrew-bundle;
   };
 }

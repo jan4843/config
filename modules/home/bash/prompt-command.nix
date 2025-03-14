@@ -1,12 +1,12 @@
-{ config, lib, ... }:
+args:
 let
-  functions = lib.mapAttrs' (name: value: {
+  functions = args.lib.mapAttrs' (name: value: {
     name = "_prompt_command_${name}";
     inherit value;
-  }) config.self.bash.promptCommand;
+  }) args.config.self.bash.promptCommand;
 in
 {
-  self.bash = lib.mkIf (functions != { }) {
+  self.bash = args.lib.mkIf (functions != { }) {
     inherit functions;
     profile = ''
       PROMPT_COMMAND="''${PROMPT_COMMAND:+$PROMPT_COMMAND; }${builtins.concatStringsSep "; " (builtins.attrNames functions)}"

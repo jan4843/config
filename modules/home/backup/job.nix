@@ -1,18 +1,12 @@
-{
-  config,
-  lib,
-  osConfig,
-  pkgs,
-  ...
-}:
+{ pkgs, ... }@args:
 let
   helper = ".local/nix/backup/backup";
 
   scheduleMinute =
-    lib.pipe
+    args.lib.pipe
       [
-        osConfig.networking.hostName or ""
-        config.home.homeDirectory
+        args.osConfig.networking.hostName or ""
+        args.config.home.homeDirectory
         pkgs.hostPlatform.system
       ]
       [
@@ -23,7 +17,7 @@ let
         (dec: dec - 60 * builtins.div dec 60)
       ];
 
-  script = lib.getExe (
+  script = args.lib.getExe (
     pkgs.writeShellApplication {
       name = "backup";
       runtimeInputs = with pkgs; [
@@ -32,11 +26,11 @@ let
       ];
       text = ''
         set -x
-        export RESTIC_REPOSITORY_FILE=${lib.escapeShellArg config.self.backup.repositoryFile}
-        export RESTIC_PASSWORD_FILE=${lib.escapeShellArg config.self.backup.passwordFile}
+        export RESTIC_REPOSITORY_FILE=${args.lib.escapeShellArg args.config.self.backup.repositoryFile}
+        export RESTIC_PASSWORD_FILE=${args.lib.escapeShellArg args.config.self.backup.passwordFile}
         restic init || :
-        ${lib.escapeShellArgs backupCmd}
-        ${lib.escapeShellArgs forgetCmd}
+        ${args.lib.escapeShellArgs backupCmd}
+        ${args.lib.escapeShellArgs forgetCmd}
         restic check
       '';
     }
@@ -45,8 +39,8 @@ let
   backupCmd = [
     "restic"
     "backup"
-    "--files-from=${pkgs.writeText "" (lib.concatLines config.self.backup.paths)}"
-    "--exclude-file=${pkgs.writeText "" (lib.concatLines config.self.backup.exclude)}"
+    "--files-from=${pkgs.writeText "" (args.lib.concatLines args.config.self.backup.paths)}"
+    "--exclude-file=${pkgs.writeText "" (args.lib.concatLines args.config.self.backup.exclude)}"
     "--exclude-caches"
     "--exclude-if-present=CACHEDIR.TAG"
     "--cleanup-cache"
@@ -57,11 +51,11 @@ let
     "forget"
     "--prune"
     "--group-by="
-  ] ++ lib.flatten retentionOpts;
+  ] ++ args.lib.flatten retentionOpts;
 
-  retentionOpts = lib.attrsets.mapAttrsToList (
-    i: n: lib.lists.optional (n != null) "--keep-${i}=${toString n}"
-  ) config.self.backup.retention;
+  retentionOpts = args.lib.attrsets.mapAttrsToList (
+    i: n: args.lib.lists.optional (n != null) "--keep-${i}=${toString n}"
+  ) args.config.self.backup.retention;
 in
 {
   home.file.${helper}.source = script;
@@ -69,7 +63,7 @@ in
   launchd.agents.backup = {
     enable = true;
     config = {
-      ProgramArguments = [ "${config.home.homeDirectory}/${helper}" ];
+      ProgramArguments = [ "${args.config.home.homeDirectory}/${helper}" ];
       StartCalendarInterval = [ { Minute = scheduleMinute; } ];
 
       ProcessType = "Background";
@@ -80,7 +74,7 @@ in
   systemd.user.services.backup = {
     Service = {
       Type = "oneshot";
-      ExecStart = "${config.home.homeDirectory}/${helper}";
+      ExecStart = "${args.config.home.homeDirectory}/${helper}";
 
       Nice = 10;
       IOSchedulingClass = "best-effort";
