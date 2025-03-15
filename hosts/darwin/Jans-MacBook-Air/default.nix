@@ -3,7 +3,6 @@ args: {
   system.stateVersion = 5;
 
   homeConfig.home.username = "jan";
-  users.users.jan.home = "/Users/jan";
 
   imports = with args.inputs.self.darwinModules; [
     default
@@ -13,5 +12,7 @@ args: {
     home-manager
   ];
 
-  security.pam.enableSudoTouchIdAuth = true;
+  security.sudo.extraConfig = ''
+    %admin ALL=(ALL) NOPASSWD: ALL
+  '';
 }

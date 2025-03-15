@@ -1,4 +1,4 @@
-{ extendModules, ... }@args:
+{ extendModules, pkgs, ... }@args:
 let
   username =
     (extendModules {
@@ -24,5 +24,9 @@ in
     extraSpecialArgs.inputs = args.inputs;
     useGlobalPkgs = true;
     useUserPackages = true;
+  };
+
+  users.users = args.lib.mkIf pkgs.hostPlatform.isDarwin {
+    ${username}.home = args.lib.mkDefault "/Users/${username}";
   };
 }
