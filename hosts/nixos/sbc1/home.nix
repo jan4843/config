@@ -1,7 +1,5 @@
 { pkgs, ... }@args:
 {
-  homeConfig.home.stateVersion = "24.11";
-
   homeConfig.imports = with args.inputs.self.homeModules; [
     default
 

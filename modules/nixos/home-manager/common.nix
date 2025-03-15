@@ -1,14 +1,14 @@
 { extendModules, pkgs, ... }@args:
 let
-  username =
-    (extendModules {
-      modules = [
-        {
-          disabledModules = [ { key = "_homeConfigAlias"; } ];
-          options.homeConfig = args.lib.mkOption { };
-        }
-      ];
-    }).config.homeConfig.home.username;
+  extended = extendModules {
+    modules = [
+      {
+        disabledModules = [ { key = "_homeConfigAlias"; } ];
+        options.homeConfig = args.lib.mkOption { };
+      }
+    ];
+  };
+  username = extended.config.homeConfig.home.username;
 in
 {
   imports = [
@@ -29,4 +29,6 @@ in
   users.users = args.lib.mkIf pkgs.hostPlatform.isDarwin {
     ${username}.home = args.lib.mkDefault "/Users/${username}";
   };
+
+  homeConfig.home.stateVersion = args.lib.mkIf pkgs.hostPlatform.isLinux args.config.system.stateVersion;
 }
