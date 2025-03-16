@@ -19,6 +19,5 @@ args: {
     tailscale
   ];
 
-  networking.firewall.enable = false;
   zramSwap.enable = true;
 }

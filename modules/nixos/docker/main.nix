@@ -6,7 +6,6 @@ args: {
 
   virtualisation.docker.autoPrune = {
     enable = true;
-    dates = args.config.nix.gc.dates;
     flags = [
       "--all"
       "--volumes"
