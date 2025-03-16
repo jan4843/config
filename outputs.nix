@@ -46,18 +46,30 @@ let
   mkModules =
     root:
     let
-      modules = lib.mapDir (name: path: { imports = lib.collectFiles path; }) root;
+      modules = lib.mapDir (name: path: {
+        __toString = _: toString path;
+        imports = lib.collectFiles path;
+      }) root;
     in
     modules
     // {
-      default.imports =
-        modules.default.imports or [ ]
-        ++ lib.pipe modules [
-          builtins.attrValues
-          (map (x: x.imports))
-          lib.flatten
-          (builtins.filter (x: builtins.baseNameOf x == "default.nix"))
-        ];
+      default = {
+        __toString = modules.default.__toString;
+        imports =
+          modules.default.imports or [ ]
+          ++ lib.pipe modules [
+            builtins.attrValues
+            (map (x: x.imports))
+            lib.flatten
+            (builtins.filter (x: builtins.baseNameOf x == "default.nix"))
+          ]
+          ++ [
+            (args: {
+              options.__toString = args.lib.mkOption { };
+              config.__toString = args.lib.mkForce null;
+            })
+          ];
+      };
     };
 in
 {
