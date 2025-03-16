@@ -4,8 +4,6 @@ args: {
   homeConfig.self.backup = {
     repositoryFile = "/nix/secrets/backup.repository";
     passwordFile = "/nix/secrets/backup.password";
-    paths = [ args.config.homeConfig.home.homeDirectory ];
-    exclude = [ "${args.config.homeConfig.home.homeDirectory}/.*" ];
     retention = {
       hourly = 24 * 7;
       daily = 365;

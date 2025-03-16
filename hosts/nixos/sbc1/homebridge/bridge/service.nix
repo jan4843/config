@@ -27,7 +27,7 @@ args: {
       volumes = [
         {
           type = "bind";
-          source = "${args.config.homeConfig.home.homeDirectory}/homebridge/data/homebridge";
+          source = "${args.config.self.freeform.homebridge.dataDir}/homebridge";
           target = "/data";
           bind.create_host_path = true;
         }

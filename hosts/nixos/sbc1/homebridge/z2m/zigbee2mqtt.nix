@@ -29,7 +29,7 @@ args: {
         volumes = [
           {
             type = "bind";
-            source = "${args.config.homeConfig.home.homeDirectory}/homebridge/data/zigbee2mqtt";
+            source = "${args.config.self.freeform.homebridge.dataDir}/zigbee2mqtt";
             target = "/app/data";
             bind.create_host_path = true;
           }
