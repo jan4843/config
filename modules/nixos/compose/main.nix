@@ -21,7 +21,7 @@ in
         RemainAfterExit = true;
         ExecStart =
           [
-            "${pkgs.docker}/bin/docker compose create --build --quiet-pull --remove-orphans"
+            "${pkgs.docker}/bin/docker compose create --build --pull=build --quiet-pull --remove-orphans"
           ]
           ++ (args.lib.optional ((upServices compose) != [ ])
             "${pkgs.docker}/bin/docker compose up --detach --wait ${args.lib.escapeShellArgs (upServices compose)}"
