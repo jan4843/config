@@ -9,7 +9,7 @@ args: {
       ip_source ${args.config.self.freeform.caddy.ddns.ipSource}
       versions ipv4
       domains {
-        ${args.config.networking.domain} *.${args.config.networking.hostName}
+        ${args.config.networking.domain} ${args.config.networking.hostName} *.${args.config.networking.hostName}
       }
     }
   '';
