@@ -48,7 +48,11 @@ for steam_dir in [
     with open(shortcuts_vdf_path, 'wb') as f:
         vdf.binary_dump({'shortcuts': shortcuts}, f)
 
-    for f in [f.path for f in os.scandir(grid_dir_path) if f.is_symlink()]:
+    for f in [
+        f.path
+        for f in os.scandir(grid_dir_path)
+        if f.is_symlink() and os.readlink(f).startswith('/nix/store/')
+    ]:
         os.remove(f)
 
     for name, shortcut in SHORTCUTS.items():
