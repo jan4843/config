@@ -57,7 +57,12 @@ in
       healthcheck = {
         start_interval = "1s";
         start_period = "30s";
-        test = "wget -O /dev/null http://127.0.0.1";
+        test = ''
+          wget \
+            -T 30 \
+            -O /dev/null \
+            http://127.0.0.1
+        '';
       };
 
       volumes = [

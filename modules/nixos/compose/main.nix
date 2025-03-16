@@ -10,19 +10,24 @@ let
     ];
 in
 {
+  environment.etc = args.lib.mapAttrs' (project: compose: {
+    name = "compose/${project}/compose.yaml";
+    value.source = "${mkCompose project compose}/compose.yaml";
+  }) args.config.self.compose.projects;
+
   systemd.services = args.lib.mapAttrs' (project: compose: {
     name = "compose@${project}";
     value = {
       requires = [ "docker.socket" ];
       wantedBy = [ "multi-user.target" ];
-      environment.COMPOSE_FILE = "${mkCompose project compose}/compose.yaml";
+      restartTriggers = [ args.config.environment.etc."compose/${project}/compose.yaml".source ];
       serviceConfig = {
         Type = "oneshot";
         RemainAfterExit = true;
+        WorkingDirectory = "/etc/compose/${project}";
+
         ExecStart =
-          [
-            "${pkgs.docker}/bin/docker compose create --build --quiet-pull --remove-orphans"
-          ]
+          [ "${pkgs.docker}/bin/docker compose create --build --quiet-pull --remove-orphans" ]
           ++ (args.lib.optional ((upServices compose) != [ ])
             "${pkgs.docker}/bin/docker compose up --detach --wait ${args.lib.escapeShellArgs (upServices compose)}"
           );
