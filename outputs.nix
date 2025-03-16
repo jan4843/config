@@ -3,7 +3,7 @@ let
   lib = {
     pipe = builtins.foldl' (x: f: f x);
 
-    flatten = x: if builtins.isList x then builtins.concatMap (y: lib.flatten y) x else [ x ];
+    flatten = x: if builtins.isList x then builtins.concatMap lib.flatten x else [ x ];
 
     contains = infix: content: builtins.length (builtins.split infix content) > 1;
 
