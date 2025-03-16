@@ -3,6 +3,8 @@ let
   lib = {
     pipe = builtins.foldl' (x: f: f x);
 
+    flatten = x: if builtins.isList x then builtins.concatMap (y: lib.flatten y) x else [ x ];
+
     contains = infix: content: builtins.length (builtins.split infix content) > 1;
 
     mapDir =
@@ -17,14 +19,15 @@ let
         builtins.listToAttrs
       ];
 
-    listFiles =
+    collectFiles =
       dir:
       lib.pipe dir [
         builtins.readDir
-        (builtins.mapAttrs (name: value: { inherit name value; }))
-        builtins.attrValues
-        (builtins.filter (x: x.value == "regular"))
-        (map (x: /.${dir}/${x.name}))
+        builtins.attrNames
+        (builtins.filter (x: !lib.contains "^_" x))
+        (map (x: /.${dir}/${x}))
+        (map (x: if builtins.pathExists "${x}/" then lib.collectFiles x else x))
+        lib.flatten
       ];
   };
 
@@ -42,28 +45,27 @@ let
 
   mkModules =
     root:
-    lib.mapDir (name: path: {
-      imports =
-        lib.listFiles path
-        ++ (
-          if name == "default" then
-            lib.pipe root [
-              builtins.readDir
-              builtins.attrNames
-              (map (x: /.${root}/${x}/default.nix))
-              (builtins.filter builtins.pathExists)
-            ]
-          else
-            [ ]
-        );
-    }) root;
+    let
+      modules = lib.mapDir (name: path: { imports = lib.collectFiles path; }) root;
+    in
+    modules
+    // {
+      default.imports =
+        modules.default.imports or [ ]
+        ++ lib.pipe modules [
+          builtins.attrValues
+          (map (x: x.imports))
+          lib.flatten
+          (builtins.filter (x: builtins.baseNameOf x == "default.nix"))
+        ];
+    };
 in
 {
   darwinConfigurations = lib.mapDir (
     name: path:
     inputs.nix-darwin_darwin.lib.darwinSystem {
       specialArgs.inputs = mkInputs "darwin";
-      modules = lib.listFiles path;
+      modules = lib.collectFiles path;
     }
   ) ./hosts/darwin;
 
@@ -71,7 +73,7 @@ in
     name: path:
     inputs.nixpkgs_linux.lib.nixosSystem {
       specialArgs.inputs = mkInputs "linux";
-      modules = lib.listFiles path;
+      modules = lib.collectFiles path;
     }
   ) ./hosts/nixos;
 
@@ -85,7 +87,7 @@ in
     inputs.home-manager_linux.lib.homeManagerConfiguration {
       extraSpecialArgs.inputs = mkInputs "linux";
       pkgs = inputs.nixpkgs_linux.legacyPackages.${system};
-      modules = lib.listFiles path ++ [
+      modules = lib.collectFiles path ++ [
         {
           options.nixpkgs.hostPlatform = inputs.nixpkgs_linux.lib.mkOption {
             apply = inputs.nixpkgs_linux.lib.systems.elaborate;

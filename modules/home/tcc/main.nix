@@ -1,6 +1,6 @@
 { pkgs, ... }@args:
 let
-  services = import ./files/services.nix args.config.home.homeDirectory;
+  services = import ./_files/services.nix args.config.home.homeDirectory;
 in
 {
   self.scripts.check.tcc = {

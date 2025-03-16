@@ -16,6 +16,7 @@
   homeConfig.home.packages = with pkgs; [
     file
     htop
+    lazydocker
     lsscsi
     ncdu
     parted

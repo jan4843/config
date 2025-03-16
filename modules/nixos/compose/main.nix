@@ -1,6 +1,6 @@
 { pkgs, ... }@args:
 let
-  mkCompose = pkgs.callPackage ./mkCompose { };
+  mkCompose = pkgs.callPackage ./_lib/mkCompose.nix { };
 
   upServices =
     compose:

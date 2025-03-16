@@ -9,7 +9,7 @@
     path = [ (pkgs.python3.withPackages (p: [ p.vdf ])) ];
     text = toString [
       "python"
-      ./files/steam-shortcuts.py
+      ./_bin/steam-shortcuts.py
       (pkgs.writers.writeJSON "shortcuts.json" (
         args.lib.mapAttrs' (name: cfg: {
           inherit name;

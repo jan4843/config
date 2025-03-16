@@ -1,6 +1,6 @@
 { pkgs, ... }@args:
 let
-  inputs' = import ./inputs;
+  inputs' = import ./_inputs;
 
   prefix = args.lib.escapeShellArg args.config.self.homebrew.prefix;
 in

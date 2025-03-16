@@ -11,7 +11,7 @@ in
 
     path = [
       pkgs.gnugrep
-      (pkgs.callPackage ./files/smc.nix { })
+      (pkgs.callPackage ./_pkgs/smc.nix { })
     ];
 
     script = ''

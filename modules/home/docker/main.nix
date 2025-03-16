@@ -1,8 +1,8 @@
 { pkgs, ... }:
 {
   home.packages = [
-    (pkgs.callPackage ./heredocker { })
-    (pkgs.callPackage ./shelldocker { })
+    (pkgs.callPackage ./_pkgs/heredocker { })
+    (pkgs.callPackage ./_pkgs/shelldocker { })
   ];
 
   self.bash = {

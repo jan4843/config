@@ -3,7 +3,9 @@ project: compose:
 pkgs.runCommand "${project}.yaml"
   {
     COMPOSE_PROJECT_NAME = project;
-    COMPOSE_FILE = pkgs.writers.writeJSON "" compose;
+    COMPOSE_FILE = pkgs.writeText "compose.yaml" (
+      builtins.replaceStrings [ "$" ] [ "$$" ] (builtins.toJSON compose)
+    );
 
     nativeBuildInputs = with pkgs; [
       docker

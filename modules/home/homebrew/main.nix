@@ -1,6 +1,6 @@
 args:
 let
-  inputs' = import ./inputs;
+  inputs' = import ./_inputs;
 in
 {
   self.homebrew.taps = {
