@@ -14,7 +14,7 @@ args: {
 
     compose = {
       services.zigbee2mqtt = {
-        image = "koenkk/zigbee2mqtt:1.36.0";
+        image = "ghcr.io/koenkk/zigbee2mqtt:1.36.0";
 
         restart = "unless-stopped";
 

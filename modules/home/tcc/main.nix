@@ -21,7 +21,7 @@ in
         TCC_DATABASE=${args.lib.escapeShellArg service.database} \
         TCC_SERVICE=kTCCService${args.lib.escapeShellArg name} \
         PREFPANE=${args.lib.escapeShellArg service.prefpane} \
-        ${args.lib.getExe pkgs.bash} ${./files/tcc.bash} \
+        ${args.lib.getExe pkgs.bash} ${./_files/tcc.bash} \
         ${args.lib.escapeShellArgs args.config.self.tcc.${name}}
       '';
     };
