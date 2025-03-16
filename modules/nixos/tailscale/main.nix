@@ -6,4 +6,7 @@ args: {
       "--state=${args.config.self.persistence.path}/tailscale/tailscaled.state"
     ];
   };
+
+  self.freeform.caddy.ddns.ipSource =
+    args.lib.mkDefault "interface ${args.config.services.tailscale.interfaceName}";
 }

@@ -1,6 +1,8 @@
 {
   self.freeform.homebridge.compose = {
     services.mosquitto = {
+      container_name = "mosquitto";
+
       image = "eclipse-mosquitto:2.0.18";
       restart = "unless-stopped";
       ports = [ "127.0.0.1:1883:1883" ];

@@ -15,13 +15,13 @@ in
     value = {
       requires = [ "docker.socket" ];
       wantedBy = [ "multi-user.target" ];
-      environment.COMPOSE_FILE = mkCompose project compose;
+      environment.COMPOSE_FILE = "${mkCompose project compose}/compose.yaml";
       serviceConfig = {
         Type = "oneshot";
         RemainAfterExit = true;
         ExecStart =
           [
-            "${pkgs.docker}/bin/docker compose create --build --pull=build --quiet-pull --remove-orphans"
+            "${pkgs.docker}/bin/docker compose create --build --quiet-pull --remove-orphans"
           ]
           ++ (args.lib.optional ((upServices compose) != [ ])
             "${pkgs.docker}/bin/docker compose up --detach --wait ${args.lib.escapeShellArgs (upServices compose)}"

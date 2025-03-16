@@ -14,11 +14,13 @@ args: {
 
     compose = {
       services.zigbee2mqtt = {
+        container_name = "zigbee2mqtt";
+
         image = "ghcr.io/koenkk/zigbee2mqtt:1.36.0";
 
         restart = "unless-stopped";
 
-        ports = [ "5277:8080" ];
+        ports = [ "127.0.0.1:5277:8080" ];
 
         environment = {
           ZIGBEE2MQTT_CONFIG_ADVANCED_LOG_OUTPUT = builtins.toJSON [ "console" ];
@@ -52,4 +54,8 @@ args: {
       services.homebridge.depends_on.zigbee2mqtt.condition = "service_healthy";
     };
   };
+
+  self.freeform.caddy.subsites.zigbee2mqtt = ''
+    reverse_proxy http://127.0.0.1:5277
+  '';
 }

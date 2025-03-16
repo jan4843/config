@@ -1,6 +1,6 @@
 { pkgs, ... }:
 project: compose:
-pkgs.runCommand "${project}.yaml"
+pkgs.runCommand project
   {
     COMPOSE_PROJECT_NAME = project;
     COMPOSE_FILE = pkgs.writeText "compose.yaml" (
@@ -15,6 +15,9 @@ pkgs.runCommand "${project}.yaml"
   }
   ''
     test "$(docker compose config --variables | wc -l)" = 1
+
+    mkdir $out
+    out=$out/compose.yaml
 
     mkdir ensure-no-relative-path; cd $_
     docker compose config --output=$out
