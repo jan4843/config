@@ -5,5 +5,9 @@
     ncdu
   ];
 
-  home.shellAliases.restic = "RESTIC_REPOSITORY_FILE=${args.lib.escapeShellArg args.config.self.backup.repositoryFile} RESTIC_PASSWORD_FILE=${args.lib.escapeShellArg args.config.self.backup.passwordFile} restic";
+  home.shellAliases.restic = toString [
+    "RESTIC_REPOSITORY_FILE=${args.lib.escapeShellArg args.config.self.backup.repositoryFile}"
+    "RESTIC_PASSWORD_FILE=${args.lib.escapeShellArg args.config.self.backup.passwordFile}"
+    "restic"
+  ];
 }

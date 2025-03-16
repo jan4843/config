@@ -17,24 +17,23 @@ let
         (dec: dec - 60 * builtins.div dec 60)
       ];
 
-  script = args.lib.getExe (
-    pkgs.writeShellApplication {
-      name = "backup";
-      runtimeInputs = with pkgs; [
-        rclone
-        restic
-      ];
-      text = ''
-        set -x
-        export RESTIC_REPOSITORY_FILE=${args.lib.escapeShellArg args.config.self.backup.repositoryFile}
-        export RESTIC_PASSWORD_FILE=${args.lib.escapeShellArg args.config.self.backup.passwordFile}
-        restic init || :
-        ${args.lib.escapeShellArgs backupCmd}
-        ${args.lib.escapeShellArgs forgetCmd}
-        restic check
-      '';
-    }
-  );
+  pkgs'.backup = pkgs.writeShellApplication {
+    name = "backup";
+    runtimeInputs = with pkgs; [
+      rclone
+      restic
+    ];
+    text = ''
+      set -x
+      export RESTIC_REPOSITORY_FILE=${args.lib.escapeShellArg args.config.self.backup.repositoryFile}
+      export RESTIC_PASSWORD_FILE=${args.lib.escapeShellArg args.config.self.backup.passwordFile}
+      restic init || :
+      restic unlock || :
+      ${args.lib.escapeShellArgs backupCmd}
+      ${args.lib.escapeShellArgs forgetCmd}
+      restic check
+    '';
+  };
 
   backupCmd = [
     "restic"
@@ -58,7 +57,7 @@ let
   ) args.config.self.backup.retention;
 in
 {
-  home.file.${helper}.source = script;
+  home.file.${helper}.source = args.lib.getExe pkgs'.backup;
 
   launchd.agents.backup = {
     enable = true;
@@ -71,25 +70,27 @@ in
     };
   };
 
-  systemd.user.services.backup = {
-    Service = {
-      Type = "oneshot";
-      ExecStart = "${args.config.home.homeDirectory}/${helper}";
+  systemd.user = {
+    services.backup = {
+      Service = {
+        Type = "oneshot";
+        ExecStart = "${args.config.home.homeDirectory}/${helper}";
 
-      Nice = 10;
-      IOSchedulingClass = "best-effort";
-      IOSchedulingPriority = 7;
-    };
-  };
-
-  systemd.user.timers.backup = {
-    Timer = {
-      OnCalendar = "*:${toString scheduleMinute}";
-      Unit = "backup.service";
+        Nice = 10;
+        IOSchedulingClass = "best-effort";
+        IOSchedulingPriority = 7;
+      };
     };
 
-    Install = {
-      WantedBy = [ "timers.target" ];
+    timers.backup = {
+      Timer = {
+        OnCalendar = "*:${toString scheduleMinute}";
+        Unit = "backup.service";
+      };
+
+      Install = {
+        WantedBy = [ "timers.target" ];
+      };
     };
   };
 }
