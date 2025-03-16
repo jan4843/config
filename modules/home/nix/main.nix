@@ -17,10 +17,13 @@
 
   self.git.ignore = [ "/result" ];
 
-  self.vscode = {
-    extensions = [ "jnoortheen.nix-ide" ];
+  programs.vscode = {
+    extensions =
+      with args.inputs.nix-vscode-extensions.extensions.${pkgs.hostPlatform.system}.vscode-marketplace; [
+        jnoortheen.nix-ide
+      ];
 
-    settings = {
+    userSettings = {
       "nix.enableLanguageServer" = true;
       "nix.serverPath" = args.lib.getExe pkgs.nil;
       "nix.serverSettings".nil = {

@@ -3,12 +3,15 @@
   programs.vscode = {
     extensions =
       with args.inputs.nix-vscode-extensions.extensions.${pkgs.hostPlatform.system}.vscode-marketplace; [
-        tailscale.vscode-tailscale
+        redhat.vscode-yaml
       ];
 
     userSettings = {
-      "tailscale.portDiscovery.enabled" = false;
-      "tailscale.ssh.defaultUsername" = "root";
+      "[yaml]" = {
+        "editor.tabSize" = 2;
+      };
+
+      "redhat.telemetry.enabled" = false;
     };
   };
 }

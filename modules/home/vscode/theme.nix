@@ -3,12 +3,11 @@
   programs.vscode = {
     extensions =
       with args.inputs.nix-vscode-extensions.extensions.${pkgs.hostPlatform.system}.vscode-marketplace; [
-        tailscale.vscode-tailscale
+        zhuangtongfa.material-theme
       ];
 
     userSettings = {
-      "tailscale.portDiscovery.enabled" = false;
-      "tailscale.ssh.defaultUsername" = "root";
+      "workbench.colorTheme" = "One Dark Pro";
     };
   };
 }

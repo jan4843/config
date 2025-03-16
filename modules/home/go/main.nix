@@ -10,10 +10,13 @@ in
     inherit GOPATH GOROOT;
   };
 
-  self.vscode = {
-    extensions = [ "golang.go" ];
+  programs.vscode = {
+    extensions =
+      with args.inputs.nix-vscode-extensions.extensions.${pkgs.hostPlatform.system}.vscode-marketplace; [
+        golang.go
+      ];
 
-    settings = {
+    userSettings = {
       "[go]" = {
         "editor.formatOnSave" = true;
       };

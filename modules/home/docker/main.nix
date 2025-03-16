@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, ... }@args:
 {
   home.packages = [
     (pkgs.callPackage ./_pkgs/heredocker { })
@@ -25,13 +25,14 @@
     profile = "complete -F _docker_compose compose";
   };
 
-  self.vscode = {
-    extensions = [
-      "exiasr.hadolint"
-      "ms-azuretools.vscode-docker"
-    ];
+  programs.vscode = {
+    extensions =
+      with args.inputs.nix-vscode-extensions.extensions.${pkgs.hostPlatform.system}.vscode-marketplace; [
+        exiasr.hadolint
+        ms-azuretools.vscode-docker
+      ];
 
-    settings = {
+    userSettings = {
       "hadolint.hadolintPath" = "${pkgs.hadolint}/bin/hadolint";
     };
   };

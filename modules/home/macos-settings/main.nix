@@ -1,3 +1,4 @@
+{ pkgs, ... }@args:
 {
   home.shellAliases = {
     zap = "brew uninstall --zap --force --cask";
@@ -18,5 +19,8 @@
 
   self.git.ignore = [ ".DS_Store" ];
 
-  self.vscode.extensions = [ "dnicolson.binary-plist" ];
+  programs.vscode.extensions =
+    with args.inputs.nix-vscode-extensions.extensions.${pkgs.hostPlatform.system}.vscode-marketplace; [
+      dnicolson.binary-plist
+    ];
 }

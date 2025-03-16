@@ -19,7 +19,7 @@ args.lib.mkIf pkgs.hostPlatform.isDarwin {
     '';
   };
 
-  self.vscode.settings = {
+  programs.vscode.userSettings = {
     "terminal.integrated.defaultProfile.osx" = "bash";
     "terminal.integrated.profiles.osx".bash = {
       "source" = shellPath;

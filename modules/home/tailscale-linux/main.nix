@@ -38,5 +38,5 @@ in
     };
   };
 
-  self.vscode.settings."tailscale.socketPath" = socketPath;
+  programs.vscode.userSettings."tailscale.socketPath" = socketPath;
 }

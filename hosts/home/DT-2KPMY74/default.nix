@@ -18,7 +18,7 @@
     nix
     tree
     vim
-    vscode-config
+    vscode
     wget
   ];
 

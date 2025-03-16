@@ -38,7 +38,7 @@ in
     trash
     tree
     vim
-    vscode-config
+    vscode
     wget
     yt-dlp
   ];
