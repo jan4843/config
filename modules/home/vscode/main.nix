@@ -1,15 +1,14 @@
-{ pkgs, ... }@args:
+{ vscode-marketplace, ... }:
 {
   programs.vscode = {
     enable = true;
     mutableExtensionsDir = false;
 
-    extensions =
-      with args.inputs.nix-vscode-extensions.extensions.${pkgs.hostPlatform.system}.vscode-marketplace; [
-        dotjoshjohnson.xml
-        ms-vscode.sublime-keybindings
-        waderyan.gitblame
-      ];
+    extensions = with vscode-marketplace; [
+      dotjoshjohnson.xml
+      ms-vscode.sublime-keybindings
+      waderyan.gitblame
+    ];
 
     userSettings = {
       "chat.commandCenter.enabled" = false;

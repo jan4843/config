@@ -1,10 +1,9 @@
-{ pkgs, ... }@args:
+{ vscode-marketplace, ... }:
 {
   programs.vscode = {
-    extensions =
-      with args.inputs.nix-vscode-extensions.extensions.${pkgs.hostPlatform.system}.vscode-marketplace; [
-        tailscale.vscode-tailscale
-      ];
+    extensions = with vscode-marketplace; [
+      tailscale.vscode-tailscale
+    ];
 
     userSettings = {
       "tailscale.portDiscovery.enabled" = false;

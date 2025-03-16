@@ -1,4 +1,4 @@
-{ pkgs, ... }@args:
+{ pkgs, vscode-marketplace, ... }:
 {
   home.packages = [
     (pkgs.callPackage ./_pkgs/heredocker { })
@@ -26,11 +26,10 @@
   };
 
   programs.vscode = {
-    extensions =
-      with args.inputs.nix-vscode-extensions.extensions.${pkgs.hostPlatform.system}.vscode-marketplace; [
-        exiasr.hadolint
-        ms-azuretools.vscode-docker
-      ];
+    extensions = with vscode-marketplace; [
+      exiasr.hadolint
+      ms-azuretools.vscode-docker
+    ];
 
     userSettings = {
       "hadolint.hadolintPath" = "${pkgs.hadolint}/bin/hadolint";

@@ -1,4 +1,4 @@
-{ pkgs, ... }@args:
+{ pkgs, vscode-marketplace, ... }@args:
 let
   GOPATH = "${args.config.home.homeDirectory}/.local/go";
   GOROOT = "${pkgs.go}/share/go";
@@ -11,10 +11,9 @@ in
   };
 
   programs.vscode = {
-    extensions =
-      with args.inputs.nix-vscode-extensions.extensions.${pkgs.hostPlatform.system}.vscode-marketplace; [
-        golang.go
-      ];
+    extensions = with vscode-marketplace; [
+      golang.go
+    ];
 
     userSettings = {
       "[go]" = {

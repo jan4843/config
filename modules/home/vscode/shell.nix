@@ -1,4 +1,4 @@
-{ pkgs, ... }@args:
+{ pkgs, vscode-marketplace, ... }@args:
 {
   home.sessionVariables = rec {
     EDITOR = args.lib.mkOverride 800 "code --wait";
@@ -6,10 +6,9 @@
   };
 
   programs.vscode = {
-    extensions =
-      with args.inputs.nix-vscode-extensions.extensions.${pkgs.hostPlatform.system}.vscode-marketplace; [
-        timonwong.shellcheck
-      ];
+    extensions = with vscode-marketplace; [
+      timonwong.shellcheck
+    ];
 
     userSettings = {
       "[shellscript]" = {

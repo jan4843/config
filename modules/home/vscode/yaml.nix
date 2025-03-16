@@ -1,10 +1,9 @@
-{ pkgs, ... }@args:
+{ vscode-marketplace, ... }:
 {
   programs.vscode = {
-    extensions =
-      with args.inputs.nix-vscode-extensions.extensions.${pkgs.hostPlatform.system}.vscode-marketplace; [
-        redhat.vscode-yaml
-      ];
+    extensions = with vscode-marketplace; [
+      redhat.vscode-yaml
+    ];
 
     userSettings = {
       "[yaml]" = {

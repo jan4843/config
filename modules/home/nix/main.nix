@@ -1,4 +1,4 @@
-{ pkgs, ... }@args:
+{ pkgs, vscode-marketplace, ... }@args:
 {
   nix.package = args.lib.mkDefault pkgs.nix;
 
@@ -18,10 +18,9 @@
   self.git.ignore = [ "/result" ];
 
   programs.vscode = {
-    extensions =
-      with args.inputs.nix-vscode-extensions.extensions.${pkgs.hostPlatform.system}.vscode-marketplace; [
-        jnoortheen.nix-ide
-      ];
+    extensions = with vscode-marketplace; [
+      jnoortheen.nix-ide
+    ];
 
     userSettings = {
       "nix.enableLanguageServer" = true;
