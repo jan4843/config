@@ -1,18 +1,20 @@
 { pkgs, ... }@args:
+let
+  src = ".nix/sysctl/nix.conf";
+  dest = "/etc/sysctl.d/99-nix.${args.config.home.username}.conf";
+in
 {
-  home.file.".nix/sysctl/nix.conf".text = ''
+  home.file.${src}.text = ''
     fs.inotify.max_user_watches=1048576
     kernel.apparmor_restrict_unprivileged_userns=0
     kernel.yama.ptrace_scope=0
   '';
 
   self.scripts.install.sysctl = {
-    path = with pkgs; [
-      coreutils
-    ];
+    path = [ pkgs.coreutils ];
     text = ''
-      if ! [ -e /etc/sysctl.d/99-nix.conf ]; then
-        /usr/bin/sudo ln -fs ${args.config.home.homeDirectory}/.nix/sysctl/nix.conf /etc/sysctl.d/99-nix.${args.config.home.username}.conf
+      if ! [ -e ${dest} ]; then
+        /usr/bin/sudo ln -fs ${args.config.home.homeDirectory}/${src} ${dest}
       fi
     '';
   };

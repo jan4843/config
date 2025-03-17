@@ -1,7 +1,7 @@
 { pkgs, ... }:
 let
   conf = ''
-      [ids]
+    [ids]
 
     046d:b377
 
