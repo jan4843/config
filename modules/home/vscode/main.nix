@@ -11,6 +11,10 @@
     ];
 
     userSettings = {
+      "extensions.autoCheckUpdates" = false;
+      "extensions.autoUpdate" = false;
+      "update.mode" = "none";
+
       "chat.commandCenter.enabled" = false;
       "editor.accessibilitySupport" = "off";
       "editor.guides.bracketPairs" = "active";
