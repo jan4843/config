@@ -17,6 +17,7 @@
 
       "chat.commandCenter.enabled" = false;
       "editor.accessibilitySupport" = "off";
+      "editor.copyWithSyntaxHighlighting" = false;
       "editor.guides.bracketPairs" = "active";
       "editor.inlineSuggest.enabled" = true;
       "editor.lightbulb.enabled" = "off";
