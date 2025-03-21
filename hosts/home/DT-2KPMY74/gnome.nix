@@ -47,9 +47,5 @@ args: {
         ])
       ];
     };
-
-    "org/gnome/settings-daemon/plugins/power" = {
-      ambient-enabled = false;
-    };
   };
 }

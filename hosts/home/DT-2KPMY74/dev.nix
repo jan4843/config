@@ -37,6 +37,7 @@ in
     pkgs'.gxx-cross
 
     ccache
+    clang-tools
     cmake
     gcc9
     glibc
