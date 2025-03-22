@@ -1,0 +1,3 @@
+{
+  networking.domain = "jan.pm";
+}

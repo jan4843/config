@@ -1,6 +1,5 @@
 args: {
   networking.hostName = "sbc1";
-  networking.domain = "jan.pm";
 
   system.stateVersion = "24.11";
 
@@ -8,6 +7,8 @@ args: {
 
   imports = with args.inputs.self.nixosModules; [
     default
+
+    profile-server
 
     caddy
     compose

@@ -10,6 +10,8 @@
   imports = with args.inputs.self.nixosModules; [
     default
 
+    profile-server
+
     compose
     docker
     persistence
