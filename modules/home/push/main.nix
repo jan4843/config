@@ -1,14 +1,15 @@
 { pkgs, ... }@args:
 let
-  script = pkgs.writeScript "push" ''
-    #!/bin/sh
-    export PATH=${
-      args.lib.makeBinPath [
-        pkgs.coreutils
-        pkgs.curl
-        pkgs.nettools
-      ]
-    }
+  helper = ".local/nix/push";
+
+  path = with pkgs; [
+    coreutils
+    curl
+    nettools
+  ];
+  script = pkgs.writeShellScript "push" ''
+    export PATH=${args.lib.makeBinPath path}
+    export SSL_CERT_FILE=${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt
     while :; do
       KEY=$(cat /nix/secrets/push.key)
       SLUG=$(hostname | tr '[:upper:]' '[:lower:]')
@@ -21,6 +22,8 @@ let
   '';
 in
 {
+  home.file.${helper}.source = script;
+
   systemd.user.services.push = {
     Install = {
       WantedBy = [ "default.target" ];
@@ -28,7 +31,7 @@ in
 
     Service = {
       Restart = "always";
-      ExecStart = script;
+      ExecStart = "${args.config.home.homeDirectory}/${helper}";
     };
   };
 
@@ -37,7 +40,7 @@ in
     config = {
       RunAtLoad = true;
       KeepAlive = true;
-      ProgramArguments = [ "${script}" ];
+      ProgramArguments = [ "${args.config.home.homeDirectory}/${helper}" ];
     };
   };
 }
