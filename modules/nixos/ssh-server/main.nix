@@ -5,6 +5,7 @@ in
 {
   services.openssh = {
     enable = true;
+    settings.PasswordAuthentication = false;
     authorizedKeysFiles = [ authorizedKeysFile ];
     hostKeys = [
       rec {
