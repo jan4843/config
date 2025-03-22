@@ -9,6 +9,7 @@
     lazydocker
     nix
     push
+    python
     tree
     vim
     wget

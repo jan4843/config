@@ -15,6 +15,7 @@ args: {
     home-manager
     persistence
     pi4
+    sonos-joiner
     ssh-server
     tailscale
   ];
