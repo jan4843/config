@@ -1,14 +1,14 @@
 { pkgs, ... }@args:
 let
-  src = ".nix/sysctl/nix.conf";
+  src = ".local/nix/sysctl/nix.conf";
   dest = "/etc/sysctl.d/99-nix.${args.config.home.username}.conf";
 in
 {
-  home.file.${src}.text = ''
-    fs.inotify.max_user_watches=1048576
-    kernel.apparmor_restrict_unprivileged_userns=0
-    kernel.yama.ptrace_scope=0
-  '';
+  home.file.${src}.text = args.lib.generators.toKeyValue { } {
+    "fs.inotify.max_user_watches" = 1048576;
+    "kernel.apparmor_restrict_unprivileged_userns" = 0;
+    "kernel.yama.ptrace_scope" = 0;
+  };
 
   self.scripts.install.sysctl = {
     path = [ pkgs.coreutils ];

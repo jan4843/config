@@ -1,10 +1,11 @@
-{ pkgs, ... }@args:
-{
+args: {
   nixpkgs.hostPlatform = "x86_64-linux";
 
-  home.username = "janvitturi";
-  home.homeDirectory = "/home/janvitturi";
-  home.stateVersion = "24.11";
+  home = rec {
+    username = "janvitturi";
+    homeDirectory = "/home/${username}";
+    stateVersion = "24.11";
+  };
 
   imports = with args.inputs.self.homeModules; [
     default
