@@ -1,16 +1,13 @@
 { pkgs, ... }@args:
 let
-  launcher = ".nix/heroic/launcher";
+  launcher = ".local/nix/heroic/launcher";
 in
 {
   # https://github.com/Heroic-Games-Launcher/HeroicGamesLauncher/blob/v2.15.2/src/backend/shortcuts/nonesteamgame/nonesteamgame.ts#L271-L272
-  home.file.${launcher} = {
-    executable = true;
-    text = ''
-      LD_PRELOAD= \
-      exec ${pkgs.heroic-unwrapped}/bin/heroic "$@"
-    '';
-  };
+  home.file.${launcher}.source = pkgs.writeShellScriptBin "heroic-launcher" ''
+    LD_PRELOAD= \
+    exec ${pkgs.heroic-unwrapped}/bin/heroic "$@"
+  '';
 
   self.steam-shortcuts.Heroic = {
     script = ''
