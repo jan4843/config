@@ -6,14 +6,11 @@ args: {
   homeConfig.imports = with args.inputs.self.homeModules; [
     default
 
+    profile-base
+
     bash
-    gnu-utils
-    ips
     nix
     push
-    tree
-    vim
-    wget
     yt-dlp
   ];
 }

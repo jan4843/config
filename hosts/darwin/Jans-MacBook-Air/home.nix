@@ -8,6 +8,8 @@ in
   homeConfig.imports = with args.inputs.self.homeModules; [
     default
 
+    profile-base
+
     alfred
     asdf
     bash
@@ -16,10 +18,8 @@ in
     force-macbook-mic
     fork
     git
-    gnu-utils
     go
     iina
-    ips
     keyboard-maestro
     launchcontrol
     macos-settings
@@ -35,27 +35,14 @@ in
     ssh-client
     tailscale-darwin
     transmit
-    trash
-    tree
-    vim
     vscode
-    wget
     yt-dlp
   ];
 
   homeConfig.home.packages = with pkgs; [
-    curl
     curlie
-    file
-    fswatch
-    htop
-    jq
     magic-wormhole
     pdfgrep
-    pv
-    rsync
-    unar
-    watch
   ];
 
   homeConfig.self.homebrew.casks = with casks; [

@@ -6,18 +6,15 @@
   imports = with args.inputs.self.homeModules; [
     default
 
+    profile-base
+
     bash
     docker-podman
     git
-    gnu-utils
-    ips
     nix
     push
     steam-shortcuts
     tailscale-linux
-    tree
-    vim
-    wget
   ];
 
   home.packages = with pkgs; [
@@ -25,6 +22,5 @@
     magic-wormhole
     mame-tools
     protontricks
-    unar
   ];
 }

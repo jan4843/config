@@ -9,22 +9,13 @@
   imports = with args.inputs.self.homeModules; [
     default
 
+    profile-base
+
     asdf
     bash
     docker-podman
     git
-    gnu-utils
-    ips
     nix
-    tree
-    vim
     vscode
-    wget
-  ];
-
-  home.packages = with pkgs; [
-    htop
-    ncdu
-    unar
   ];
 }
