@@ -7,10 +7,10 @@ args: {
     default
 
     profile-base
+    profile-extra
 
     bash
     nix
     push
-    yt-dlp
   ];
 }

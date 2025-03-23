@@ -1,21 +1,12 @@
-{ pkgs, ... }@args:
-{
+args: {
   homeConfig.imports = with args.inputs.self.homeModules; [
     default
 
     profile-base
+    profile-extra
 
     bash
     nix
     push
-    yt-dlp
-  ];
-
-  homeConfig.home.packages = with pkgs; [
-    curlie
-    magic-wormhole
-    mame-tools
-    pdfgrep
-    usbutils
   ];
 }

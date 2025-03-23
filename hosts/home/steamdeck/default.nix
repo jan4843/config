@@ -7,6 +7,7 @@
     default
 
     profile-base
+    profile-extra
 
     bash
     docker-podman
@@ -19,8 +20,6 @@
 
   home.packages = with pkgs; [
     librewolf-bin
-    magic-wormhole
-    mame-tools
     protontricks
   ];
 }

@@ -1,4 +1,4 @@
-{ pkgs, ... }@args:
+args:
 let
   casks = args.config.homeConfig.self.homebrew.taps."homebrew/cask".casks;
 in
@@ -9,6 +9,7 @@ in
     default
 
     profile-base
+    profile-extra
 
     alfred
     asdf
@@ -36,13 +37,6 @@ in
     tailscale-darwin
     transmit
     vscode
-    yt-dlp
-  ];
-
-  homeConfig.home.packages = with pkgs; [
-    curlie
-    magic-wormhole
-    pdfgrep
   ];
 
   homeConfig.self.homebrew.casks = with casks; [
