@@ -1,44 +1,22 @@
 args:
 let
-  version = "2.9.1";
-
   buildOpts = args.lib.pipe args.config.self.freeform.caddy.plugins [
     args.lib.naturalSort
+    args.lib.unique
     (map (x: "--with=${x}"))
     args.lib.escapeShellArgs
   ];
-
-  config = args.lib.pipe args.config.self.freeform.caddy.config [
-    builtins.attrValues
-    args.lib.concatLines
-  ];
-
-  sites = args.lib.pipe args.config.self.freeform.caddy.sites [
-    (builtins.mapAttrs (
-      name: value: ''
-        ${name} {
-          log
-          ${value}
-        }
-      ''
-    ))
-    builtins.attrValues
-    args.lib.concatLines
-  ];
 in
 {
-  self.freeform.caddy.config.main = ''
-    auto_https disable_redirects
-  '';
-
   self.compose.projects.caddy = {
     services.caddy = {
       container_name = "caddy";
+
       pull_policy = "build";
       build.dockerfile_inline = ''
-        FROM caddy:${version}-builder AS builder
+        FROM caddy:${args.config.self.freeform.caddy.version}-builder AS builder
         RUN xcaddy build ${buildOpts}
-        FROM caddy:${version}
+        FROM caddy:${args.config.self.freeform.caddy.version}
         COPY --from=builder /usr/bin/caddy /usr/bin/caddy
       '';
 
@@ -79,11 +57,17 @@ in
 
     secrets.caddy.file = "/nix/secrets/caddy";
 
-    configs.Caddyfile.content = ''
-      {
-        ${config}
-      }
-      ${sites}
-    '';
+    configs.Caddyfile.content = args.lib.pipe args.config.self.freeform.caddy.sections [
+      (builtins.mapAttrs (
+        name: value: ''
+          ${name} {
+            ${args.lib.optionalString (name != "" && !args.lib.hasPrefix "(" name) "import default"}
+            ${args.lib.concatLines value}
+          }
+        ''
+      ))
+      builtins.attrValues
+      args.lib.concatLines
+    ];
   };
 }

@@ -27,7 +27,10 @@ in
         WorkingDirectory = "/etc/compose/${project}";
 
         ExecStart =
-          [ "${pkgs.docker}/bin/docker compose create --build --quiet-pull --remove-orphans" ]
+          [
+            "-${pkgs.docker}/bin/docker compose down --remove-orphans --rmi"
+            "${pkgs.docker}/bin/docker compose create --build --quiet-pull"
+          ]
           ++ (args.lib.optional ((upServices compose) != [ ])
             "${pkgs.docker}/bin/docker compose up --detach --wait ${args.lib.escapeShellArgs (upServices compose)}"
           );

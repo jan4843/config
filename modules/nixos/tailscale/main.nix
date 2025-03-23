@@ -7,6 +7,7 @@ args: {
     ];
   };
 
-  self.freeform.caddy.ddns.ipSource =
-    args.lib.mkDefault "interface ${args.config.services.tailscale.interfaceName}";
+  self.freeform.caddy.ddns.ipSource = args.lib.mkBefore [
+    "interface ${args.config.services.tailscale.interfaceName}"
+  ];
 }

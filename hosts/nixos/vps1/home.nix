@@ -1,5 +1,4 @@
-{ pkgs, ... }@args:
-{
+args: {
   imports = [ args.inputs.self.nixosModules.home-manager ];
 
   homeConfig.home.username = "root";

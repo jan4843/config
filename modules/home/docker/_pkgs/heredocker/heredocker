@@ -181,16 +181,6 @@ if [ -t 0 ]; then
 		"$@"
 fi
 
-if [ -d ~/.ssh ]; then
-	set -- \
-		--volume="$HOME/.ssh:/root/.ssh:ro" \
-		"$@"
-fi
-if [ -L ~/.ssh/config ]; then
-	set -- \
-		--volume="$(realpath ~/.ssh/config):/root/.ssh/config:ro" \
-		"$@"
-fi
 if [ -n "$SSH_AUTH_SOCK" ]; then
 	if grep -q '"credsStore":\s*"desktop"' ~/.docker/config.json 2>/dev/null; then
 		# https://docs.docker.com/desktop/networking/#ssh-agent-forwarding

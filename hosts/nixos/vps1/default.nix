@@ -1,5 +1,4 @@
-{ pkgs, ... }@args:
-{
+args: {
   networking.hostName = "vps1";
   nixpkgs.hostPlatform = "aarch64-linux";
   system.stateVersion = "24.11";
