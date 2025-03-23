@@ -28,7 +28,7 @@ in
       "go.showWelcome" = false;
       "go.survey.prompt" = false;
       "go.toolsManagement.autoUpdate" = true;
-      "go.toolsManagement.go" = "${pkgs.go}/bin/go";
+      "go.toolsManagement.go" = args.lib.getExe pkgs.go;
 
       "gopls" = {
         "ui.semanticTokens" = true;

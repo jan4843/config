@@ -15,7 +15,7 @@
         "editor.insertSpaces" = false;
       };
 
-      "shellcheck.executablePath" = "${pkgs.shellcheck}/bin/shellcheck";
+      "shellcheck.executablePath" = args.lib.getExe pkgs.shellcheck;
       "shellcheck.disableVersionCheck" = true;
     };
   };
