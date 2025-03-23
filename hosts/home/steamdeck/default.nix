@@ -1,9 +1,6 @@
 { pkgs, ... }@args:
 {
   nixpkgs.hostPlatform = "x86_64-linux";
-
-  home.username = "deck";
-  home.homeDirectory = "/home/deck";
   home.stateVersion = "24.11";
 
   imports = with args.inputs.self.homeModules; [
@@ -16,12 +13,10 @@
     ips
     nix
     push
-    steamos
+    steam-shortcuts
     tailscale-linux
     tree
     vim
-    vkbasalt
-    vulkan
     wget
   ];
 
@@ -29,6 +24,7 @@
     librewolf-bin
     magic-wormhole
     mame-tools
+    protontricks
     unar
   ];
 }
