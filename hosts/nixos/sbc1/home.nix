@@ -6,7 +6,6 @@ args: {
     profile-extra
 
     bash
-    lazydocker
     nix
     push
     python
