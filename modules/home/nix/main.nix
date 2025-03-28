@@ -13,6 +13,8 @@
 
   nix.gc.automatic = true;
 
+  nix.registry.nixpkgs.flake = args.inputs.nixpkgs;
+
   nixpkgs.config.allowUnfree = true;
 
   self.git.ignore = [ "/result" ];
