@@ -23,10 +23,10 @@ pkgs.caddy.overrideAttrs (
     src =
       pkgs.runCommand "caddy-src"
         {
-          nativeBuildInputs = [ pkgs.go ];
-          outputHashMode = "recursive";
           outputHash = modulesHash;
           outputHashAlgo = lib.optional (modulesHash == "") "sha256";
+          outputHashMode = "recursive";
+          nativeBuildInputs = [ pkgs.go ];
         }
         ''
           export GOCACHE=$TMPDIR/go-cache GOPATH=$TMPDIR/go
