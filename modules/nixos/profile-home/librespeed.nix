@@ -6,7 +6,7 @@
     ports = [ "127.0.0.1:8077:80" ];
   };
 
-  self.freeform.caddy.subsites.librespeed = ''
+  self.caddy.sites.librespeed = ''
     reverse_proxy http://127.0.0.1:8077
   '';
 }

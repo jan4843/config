@@ -8,6 +8,7 @@ args: {
   imports = with args.inputs.self.nixosModules; [
     default
 
+    profile-home
     profile-server
 
     caddy
