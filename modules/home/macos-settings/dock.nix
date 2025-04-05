@@ -9,9 +9,9 @@ in
     size-immutable = true;
     mineffect = "scale";
 
-    orientation = "left";
+    orientation = "bottom";
 
-    autohide = false;
+    autohide = true;
     autohide-delay = 0;
     autohide-time-modifier = 0.3;
 
