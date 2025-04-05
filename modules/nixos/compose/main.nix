@@ -12,7 +12,7 @@ in
 {
   environment.etc = args.lib.mapAttrs' (project: compose: {
     name = "compose/${project}/compose.yaml";
-    value.source = "${mkCompose project compose}/compose.yaml";
+    value.source = mkCompose project compose;
   }) args.config.self.compose.projects;
 
   systemd.services = args.lib.mapAttrs' (project: compose: {
