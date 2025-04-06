@@ -11,7 +11,6 @@ args: {
     profile-home
     profile-server
 
-    caddy
     compose
     docker
     home-manager
@@ -23,4 +22,13 @@ args: {
   ];
 
   zramSwap.enable = true;
+
+  services.avahi = {
+    enable = true;
+    openFirewall = true;
+    publish = {
+      enable = true;
+      userServices = true;
+    };
+  };
 }
