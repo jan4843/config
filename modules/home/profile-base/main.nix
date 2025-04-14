@@ -6,6 +6,8 @@
     fswatch
     htop
     jq
+    lazygit
+    lazydocker
     ncdu
     pv
     rsync
