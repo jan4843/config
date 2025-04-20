@@ -1,5 +1,4 @@
-{ pkgs, ... }@args:
-{
+args: {
   networking.hostName = "srv2";
   nixpkgs.hostPlatform = "x86_64-linux";
   system.stateVersion = "24.11";
@@ -8,10 +7,5 @@
     default
 
     profile-srv
-  ];
-
-  hardware.firmware = with pkgs; [
-    linux-firmware
-    libreelec-dvb-firmware
   ];
 }

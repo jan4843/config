@@ -18,6 +18,7 @@ in
     Unit = rec {
       After = [ "network-online.target" ];
       Wants = After;
+      X-SwitchMethod = "keep-old";
     };
 
     Service = {
