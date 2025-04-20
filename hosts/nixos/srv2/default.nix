@@ -4,26 +4,14 @@
   nixpkgs.hostPlatform = "x86_64-linux";
   system.stateVersion = "24.11";
 
-  homeConfig.home.username = "root";
-
-  time.timeZone = "CET";
-  zramSwap.enable = true;
-
   imports = with args.inputs.self.nixosModules; [
     default
 
-    compose
-    docker
-    home-manager
-    persistence
-    qemu-guest
-    ssh-server
-    tailscale
+    profile-srv
   ];
 
   hardware.firmware = with pkgs; [
     linux-firmware
     libreelec-dvb-firmware
   ];
-  nixpkgs.config.allowUnfree = true;
 }

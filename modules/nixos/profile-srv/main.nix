@@ -3,8 +3,6 @@ args: {
     profile-lan
     profile-server
 
-    raspberry-pi-4
+    qemu-guest
   ];
-
-  zramSwap.enable = true;
 }

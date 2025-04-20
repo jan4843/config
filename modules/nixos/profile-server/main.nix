@@ -1,6 +1,7 @@
 args: {
+  time.timeZone = "CET";
+
   imports = with args.inputs.self.nixosModules; [
-    docker
     home-manager
     persistence
     ssh-server
