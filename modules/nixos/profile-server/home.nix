@@ -1,4 +1,6 @@
 args: {
+  homeConfig.home.username = "root";
+
   homeConfig.imports = with args.inputs.self.homeModules; [
     default
 
