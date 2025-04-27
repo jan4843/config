@@ -2,7 +2,7 @@
 {
   home.file = args.lib.mapAttrs' (name: cfg: {
     name = ".nix/steam-shortcuts/${name}";
-    value.source = pkgs.writeShellScriptBin name cfg.script;
+    value.source = pkgs.writeScript name cfg.script;
   }) args.config.self.steam-shortcuts;
 
   self.scripts.write.steam-shortcuts = {
