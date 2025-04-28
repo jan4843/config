@@ -21,6 +21,11 @@ let
       exec g++ "$@"
     '';
   };
+
+  pkgs-unstable = import args.inputs.nixpkgs-unstable {
+    system = pkgs.hostPlatform.system;
+    config = args.nixpkgs.config;
+  };
 in
 {
   imports = with args.inputs.self.homeModules; [
@@ -29,23 +34,28 @@ in
     python
   ];
 
-  home.packages = with pkgs; [
-    pkgs'.cmake-mold
-    pkgs'.gcc-ccache
-    pkgs'.gxx-ccache
-    pkgs'.gcc-cross
-    pkgs'.gxx-cross
+  home.packages =
+    [ ]
+    ++ (with pkgs; [
+      pkgs'.cmake-mold
+      pkgs'.gcc-ccache
+      pkgs'.gxx-ccache
+      pkgs'.gcc-cross
+      pkgs'.gxx-cross
 
-    ccache
-    clang-tools
-    cmake
-    gcc9
-    glibc
-    gnumake
-    mold
-
-    jetbrains.clion
-    jetbrains.goland
-    jetbrains.idea-community
-  ];
+      ccache
+      clang-tools
+      cmake
+      gcc9
+      glibc
+      gnumake
+      mold
+      ruby
+    ])
+    ++ (with pkgs-unstable; [
+      jetbrains.clion
+      jetbrains.goland
+      jetbrains.idea-community
+      jetbrains.ruby-mine
+    ]);
 }

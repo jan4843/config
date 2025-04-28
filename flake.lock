@@ -188,6 +188,22 @@
         "type": "github"
       }
     },
+    "nixpkgs-unstable": {
+      "locked": {
+        "lastModified": 1745377448,
+        "narHash": "sha256-jhZDfXVKdD7TSEGgzFJQvEEZ2K65UMiqW5YJ2aIqxMA=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "507b63021ada5fee621b6ca371c4fca9ca46f52c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixpkgs-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs_darwin": {
       "locked": {
         "lastModified": 1744492897,
@@ -230,6 +246,7 @@
         "nix-vscode-extensions_darwin": "nix-vscode-extensions_darwin",
         "nix-vscode-extensions_linux": "nix-vscode-extensions_linux",
         "nixos-hardware_linux": "nixos-hardware_linux",
+        "nixpkgs-unstable": "nixpkgs-unstable",
         "nixpkgs_darwin": "nixpkgs_darwin",
         "nixpkgs_linux": "nixpkgs_linux"
       }
