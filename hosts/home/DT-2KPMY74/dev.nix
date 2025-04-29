@@ -24,7 +24,7 @@ let
 
   pkgs-unstable = import args.inputs.nixpkgs-unstable {
     system = pkgs.hostPlatform.system;
-    config = args.nixpkgs.config;
+    config = args.config.nixpkgs.config;
   };
 in
 {
@@ -36,13 +36,14 @@ in
 
   home.packages =
     [ ]
+    ++ (with pkgs'; [
+      cmake-mold
+      gcc-ccache
+      gxx-ccache
+      gcc-cross
+      gxx-cross
+    ])
     ++ (with pkgs; [
-      pkgs'.cmake-mold
-      pkgs'.gcc-ccache
-      pkgs'.gxx-ccache
-      pkgs'.gcc-cross
-      pkgs'.gxx-cross
-
       ccache
       clang-tools
       cmake
