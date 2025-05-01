@@ -10,6 +10,7 @@
     lazydocker
     ncdu
     pv
+    rclone
     rsync
     unar
     watch
