@@ -14,7 +14,7 @@ let
   '';
 
   populateBootScript = pkgs.writeShellScript "populate-boot" ''
-    ${pkgs.coreutils}/bin/cp -R ${firmware} /boot
+    ${pkgs.coreutils}/bin/cp -R ${firmware}/* /boot
     ${installer.config.system.build.installBootLoader} "$@"
   '';
 in
