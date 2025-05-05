@@ -9,6 +9,4 @@ args: {
     profile-server
     qemu-guest
   ];
-
-  zramSwap.enable = true;
 }

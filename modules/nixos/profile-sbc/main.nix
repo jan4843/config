@@ -5,6 +5,4 @@ args: {
 
     raspberry-pi-4
   ];
-
-  zramSwap.enable = true;
 }

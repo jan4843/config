@@ -8,6 +8,8 @@ args: {
 
   time.timeZone = "CET";
 
+  zramSwap.enable = true;
+
   networking.firewall = {
     allowedTCPPorts = [
       80
