@@ -5,4 +5,6 @@ args: {
     systemd-boot.enable = true;
     efi.canTouchEfiVariables = true;
   };
+
+  services.qemuGuest.enable = true;
 }
