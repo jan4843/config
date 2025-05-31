@@ -28,7 +28,7 @@
   programs.vscode = {
     extensions = with vscode-marketplace; [
       exiasr.hadolint
-      ms-azuretools.vscode-docker
+      ms-azuretools.vscode-containers
     ];
 
     userSettings = {
