@@ -15,11 +15,9 @@
 
   nix.registry.nixpkgs.flake = args.inputs.nixpkgs;
 
-  nixpkgs.config.allowUnfree = true;
-
   self.git.ignore = [ "/result" ];
 
-  programs.vscode = {
+  programs.vscode.profiles.default = {
     extensions = with vscode-marketplace; [
       jnoortheen.nix-ide
     ];

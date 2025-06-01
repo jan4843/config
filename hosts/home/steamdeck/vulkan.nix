@@ -1,6 +1,6 @@
 { pkgs, ... }@args:
 let
-  driversDir = "${pkgs.mesa.drivers}/share/vulkan/icd.d";
+  driversDir = "${pkgs.mesa}/share/vulkan/icd.d";
   drivers = args.lib.pipe driversDir [
     builtins.readDir
     builtins.attrNames

@@ -25,7 +25,7 @@
     profile = "complete -F _docker_compose compose";
   };
 
-  programs.vscode = {
+  programs.vscode.profiles.default = {
     extensions = with vscode-marketplace; [
       exiasr.hadolint
       ms-azuretools.vscode-containers

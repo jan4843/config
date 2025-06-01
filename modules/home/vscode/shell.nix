@@ -5,7 +5,7 @@
     VISUAL = EDITOR;
   };
 
-  programs.vscode = {
+  programs.vscode.profiles.default = {
     extensions = with vscode-marketplace; [
       timonwong.shellcheck
     ];

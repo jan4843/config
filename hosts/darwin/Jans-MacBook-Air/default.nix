@@ -1,6 +1,7 @@
 args: {
   nixpkgs.hostPlatform = "aarch64-darwin";
   system.stateVersion = 5;
+  ids.gids.nixbld = 30000;
 
   homeConfig.home.username = "jan";
 

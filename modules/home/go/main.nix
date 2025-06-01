@@ -13,7 +13,7 @@ in
     inherit GOPATH GOROOT;
   };
 
-  programs.vscode = {
+  programs.vscode.profiles.default = {
     extensions = with vscode-marketplace; [
       golang.go
     ];

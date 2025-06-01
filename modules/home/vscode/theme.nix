@@ -1,6 +1,6 @@
 { vscode-marketplace, ... }:
 {
-  programs.vscode = {
+  programs.vscode.profiles.default = {
     extensions = with vscode-marketplace; [
       zhuangtongfa.material-theme
     ];

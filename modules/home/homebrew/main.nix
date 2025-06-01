@@ -1,11 +1,6 @@
-args:
-let
-  inputs' = import ./_inputs;
-in
-{
+args: {
   self.homebrew.taps = {
     "homebrew/core" = args.inputs.homebrew-core;
     "homebrew/cask" = args.inputs.homebrew-cask;
-    "homebrew/bundle" = inputs'.homebrew-bundle;
   };
 }

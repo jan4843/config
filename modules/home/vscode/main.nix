@@ -3,7 +3,9 @@
   programs.vscode = {
     enable = true;
     mutableExtensionsDir = false;
+  };
 
+  programs.vscode.profiles.default = {
     extensions = with vscode-marketplace; [
       dotjoshjohnson.xml
       ms-vscode.sublime-keybindings

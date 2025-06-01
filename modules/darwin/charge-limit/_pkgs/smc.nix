@@ -6,8 +6,6 @@ pkgs.stdenv.mkDerivation rec {
 
   src = (builtins.fetchTree "github:hholtmann/smcFanControl/${commit}") + /smc-command;
 
-  buildInputs = [ pkgs.darwin.IOKit ];
-
   hardeningDisable = [ "format" ];
 
   patchPhase = "sed -i '/^CC = gcc/d' Makefile";

@@ -1,5 +1,5 @@
 {
-  programs.vscode.userSettings = {
+  programs.vscode.profiles.default.userSettings = {
     "files.associations" = {
       "*.service" = "ini";
       "*.socket" = "ini";

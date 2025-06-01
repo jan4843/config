@@ -21,11 +21,6 @@ let
       exec g++ "$@"
     '';
   };
-
-  pkgs-unstable = import args.inputs.nixpkgs-unstable {
-    system = pkgs.hostPlatform.system;
-    config = args.config.nixpkgs.config;
-  };
 in
 {
   imports = with args.inputs.self.homeModules; [
@@ -50,13 +45,11 @@ in
       gcc9
       glibc
       gnumake
-      mold
-      ruby
-    ])
-    ++ (with pkgs-unstable; [
       jetbrains.clion
       jetbrains.goland
       jetbrains.idea-community
       jetbrains.ruby-mine
+      mold
+      ruby
     ]);
 }

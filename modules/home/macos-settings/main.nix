@@ -19,7 +19,7 @@
 
   self.git.ignore = [ ".DS_Store" ];
 
-  programs.vscode.extensions = with vscode-marketplace; [
+  programs.vscode.profiles.default.extensions = with vscode-marketplace; [
     dnicolson.binary-plist
   ];
 }

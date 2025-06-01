@@ -5,23 +5,22 @@
 
     # common
 
+    # https://nixos.org/manual/nixos/stable/release-notes
+    # https://nixos.org/manual/nixpkgs/stable/release-notes
     nixpkgs_darwin = {
-      url = "github:NixOS/nixpkgs/nixpkgs-24.11-darwin";
+      url = "github:NixOS/nixpkgs/nixpkgs-25.05-darwin";
     };
     nixpkgs_linux = {
-      url = "github:NixOS/nixpkgs/nixos-24.11";
+      url = "github:NixOS/nixpkgs/nixos-25.05";
     };
 
-    nixpkgs-unstable = {
-      url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    };
-
+    # https://nix-community.github.io/home-manager/release-notes.xhtml
     home-manager_darwin = {
-      url = "github:nix-community/home-manager/release-24.11";
+      url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs_darwin";
     };
     home-manager_linux = {
-      url = "github:nix-community/home-manager/release-24.11";
+      url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs_linux";
     };
 
@@ -37,10 +36,14 @@
     # darwin
 
     nix-darwin_darwin = {
-      url = "github:LnL7/nix-darwin/nix-darwin-24.11";
+      url = "github:LnL7/nix-darwin/nix-darwin-25.05";
       inputs.nixpkgs.follows = "nixpkgs_darwin";
     };
 
+    homebrew = {
+      url = "github:homebrew/brew/4.5.3";
+      flake = false;
+    };
     homebrew-core_darwin = {
       url = "github:homebrew/homebrew-core";
       flake = false;

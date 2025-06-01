@@ -17,7 +17,6 @@ in
   disabledModules = [ original.path ];
   imports = [ patched.path ];
 
-  systemd.user.startServices = true;
   news.display = "silent";
 
   targets.genericLinux.enable = pkgs.hostPlatform.isLinux;
