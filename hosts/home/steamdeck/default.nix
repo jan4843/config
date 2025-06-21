@@ -14,6 +14,8 @@
     git
     nix
     push
+    python
+    steam-grid
     steam-shortcuts
     tailscale-linux
   ];

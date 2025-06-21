@@ -9,7 +9,7 @@ in
     exec ${pkgs.heroic-unwrapped}/bin/heroic "$@"
   '';
 
-  self.steam-shortcuts.Heroic = {
+  self.steam-shortcuts."Heroic Games Launcher" = {
     script = ''
       LD_PRELOAD= \
       APPIMAGE=${args.lib.escapeShellArg args.config.home.homeDirectory}/${launcher} \
