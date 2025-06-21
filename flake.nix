@@ -41,7 +41,7 @@
     };
 
     homebrew = {
-      url = "github:homebrew/brew/4.5.3";
+      url = "github:homebrew/brew/4.5.7";
       flake = false;
     };
     homebrew-core_darwin = {
