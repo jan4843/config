@@ -6,8 +6,8 @@
     fswatch
     htop
     jq
-    lazygit
     lazydocker
+    lazygit
     ncdu
     pv
     rclone
