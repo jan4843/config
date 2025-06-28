@@ -39,6 +39,8 @@ in
   ];
 
   homeConfig.self.homebrew.casks = with casks; [
+    casks."logi-options+"
+
     appcleaner
     firefox
     google-chrome
