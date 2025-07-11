@@ -14,7 +14,7 @@ args: {
 
     asdf
     bash
-    docker-podman
+    docker
     git
     nix
     vscode

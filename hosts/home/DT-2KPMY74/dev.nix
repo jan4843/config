@@ -50,6 +50,6 @@ in
       jetbrains.idea-community
       jetbrains.ruby-mine
       mold
-      ruby
+      ruby_3_4
     ]);
 }
