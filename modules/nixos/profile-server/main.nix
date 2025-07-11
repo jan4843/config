@@ -10,6 +10,13 @@ args: {
 
   zramSwap.enable = true;
 
+  systemd.oomd = {
+    enable = true;
+    enableRootSlice = true;
+    enableSystemSlice = true;
+    enableUserSlices = true;
+  };
+
   networking.firewall = {
     allowedTCPPorts = [
       80
