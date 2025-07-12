@@ -13,7 +13,6 @@ args: {
 
     bash
     nix
-    push
     python
   ];
 }

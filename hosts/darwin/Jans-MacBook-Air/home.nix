@@ -29,7 +29,6 @@ in
     monitorcontrol
     nix
     notunes
-    push
     python
     skalacolor
     ssh-client

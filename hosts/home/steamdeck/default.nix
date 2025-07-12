@@ -13,7 +13,6 @@
     docker-podman
     git
     nix
-    push
     python
     steam-grid
     steam-shortcuts
