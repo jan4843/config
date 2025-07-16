@@ -4,5 +4,6 @@
     curlie
     magic-wormhole
     pdfgrep
+    speedtest-go
   ];
 }
