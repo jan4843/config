@@ -1,10 +1,8 @@
 {
   outputs = inputs: import ./outputs.nix inputs;
 
+  # common
   inputs = {
-
-    # common
-
     # https://nixos.org/manual/nixos/stable/release-notes
     # https://nixos.org/manual/nixpkgs/stable/release-notes
     nixpkgs_darwin = {
@@ -32,9 +30,10 @@
       url = "github:nix-community/nix-vscode-extensions";
       inputs.nixpkgs.follows = "nixpkgs_linux";
     };
+  };
 
-    # darwin
-
+  # darwin
+  inputs = {
     nix-darwin_darwin = {
       url = "github:LnL7/nix-darwin/nix-darwin-25.05";
       inputs.nixpkgs.follows = "nixpkgs_darwin";
@@ -52,12 +51,12 @@
       url = "github:homebrew/homebrew-cask";
       flake = false;
     };
+  };
 
-    # linux
-
+  # linux
+  inputs = {
     nixos-hardware_linux = {
       url = "github:NixOS/nixos-hardware";
     };
-
   };
 }
