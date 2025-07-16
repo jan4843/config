@@ -5,6 +5,6 @@ args: {
   imports = with args.inputs.self.nixosModules; [
     default
 
-    profile-sbc
+    _sbc
   ];
 }

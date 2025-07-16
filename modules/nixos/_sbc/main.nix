@@ -4,9 +4,8 @@ let
 in
 {
   imports = with args.inputs.self.nixosModules; [
-    profile-lan
-    profile-server
-
+    _lan
+    _server
     raspberry-pi-4
   ];
 

@@ -10,8 +10,7 @@ args: {
   imports = with args.inputs.self.homeModules; [
     default
 
-    profile-base
-
+    _base
     asdf
     bash
     docker

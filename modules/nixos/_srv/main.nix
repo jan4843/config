@@ -1,8 +1,7 @@
 args: {
   imports = with args.inputs.self.nixosModules; [
-    profile-lan
-    profile-server
-
+    _lan
+    _server
     qemu-guest
   ];
 }

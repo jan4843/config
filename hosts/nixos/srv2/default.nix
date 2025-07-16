@@ -6,6 +6,6 @@ args: {
   imports = with args.inputs.self.nixosModules; [
     default
 
-    profile-srv
+    _srv
   ];
 }

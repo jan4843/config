@@ -6,9 +6,8 @@
   imports = with args.inputs.self.homeModules; [
     default
 
-    profile-base
-    profile-extra
-
+    _base
+    _extra
     bash
     docker-podman
     git

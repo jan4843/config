@@ -8,9 +8,8 @@ in
   homeConfig.imports = with args.inputs.self.homeModules; [
     default
 
-    profile-base
-    profile-extra
-
+    _base
+    _extra
     alfred
     asdf
     bash

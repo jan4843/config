@@ -6,7 +6,7 @@ args: {
   imports = with args.inputs.self.nixosModules; [
     default
 
-    profile-server
+    _server
     qemu-guest
   ];
 }
