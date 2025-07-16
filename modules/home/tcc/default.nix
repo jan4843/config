@@ -1,6 +1,6 @@
 args:
 let
-  services = import ./_files/services.nix args.config.home.homeDirectory;
+  services = import ./.files/services.nix args.config.home.homeDirectory;
 in
 {
   options.self.tcc = builtins.mapAttrs (

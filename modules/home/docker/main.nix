@@ -1,8 +1,8 @@
 { pkgs, vscode-marketplace, ... }:
 {
   home.packages = [
-    (pkgs.callPackage ./_pkgs/heredocker { })
-    (pkgs.callPackage ./_pkgs/shelldocker { })
+    (pkgs.callPackage ./.pkgs/heredocker { })
+    (pkgs.callPackage ./.pkgs/shelldocker { })
   ];
 
   self.bash = {

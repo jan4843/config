@@ -1,6 +1,6 @@
 { pkgs, ... }@args:
 let
-  services = import ./_files/services.nix args.config.home.homeDirectory;
+  services = import ./.files/services.nix args.config.home.homeDirectory;
 in
 {
   self.scripts.check.tcc = {
@@ -21,7 +21,7 @@ in
         TCC_DATABASE=${args.lib.escapeShellArg service.database} \
         TCC_SERVICE=kTCCService${args.lib.escapeShellArg name} \
         PREFPANE=${args.lib.escapeShellArg service.prefpane} \
-        ${args.lib.getExe pkgs.bash} ${./_files/tcc.bash} \
+        ${args.lib.getExe pkgs.bash} ${./.files/tcc.bash} \
         ${args.lib.escapeShellArgs args.config.self.tcc.${name}}
       '';
     };

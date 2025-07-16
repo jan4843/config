@@ -24,7 +24,7 @@ let
       lib.pipe dir [
         builtins.readDir
         builtins.attrNames
-        (builtins.filter (x: !lib.contains "^_" x))
+        (builtins.filter (x: !lib.contains "^[.]" x))
         (map (x: /.${dir}/${x}))
         (map (x: if builtins.pathExists "${x}/" then lib.collectFiles x else x))
         lib.flatten

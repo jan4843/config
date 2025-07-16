@@ -6,7 +6,7 @@
         Type = "oneshot";
         ExecStart = toString [
           "${(pkgs.python3.withPackages (p: [ p.vdf ]))}/bin/python"
-          ./_bin/steam-grid.py
+          ./.src/steam-grid.py
         ];
       };
     };
