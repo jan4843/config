@@ -35,15 +35,19 @@ for steam_dir in [
             shortcuts[str(len(shortcuts))] = shortcut
 
     for name, shortcut in SHORTCUTS.items():
-        shortcuts[str(len(shortcuts))] = managed.get(sid(name), {}) | {
+        defaults = {
+            'StartDir': '',
+            'LaunchOptions': '%command%',
+        }
+        current = managed.get(sid(name), {})
+        overrides = {
             'appid': sid(name),
             'AppName': name,
             'icon': shortcut['assets']['icon'] or '',
-            'StartDir': '',
             'Exe': shlex.quote(shortcut['script']),
-            'LaunchOptions': '',
             'FlatpakAppID': 'managed-by-nix',
         }
+        shortcuts[str(len(shortcuts))] = defaults | current | overrides
 
     with open(shortcuts_vdf_path, 'wb') as f:
         vdf.binary_dump({'shortcuts': shortcuts}, f)

@@ -78,23 +78,6 @@
         "type": "github"
       }
     },
-    "homebrew": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1749887690,
-        "narHash": "sha256-x/1IGjwKd9FC3MqF0nagUfift1nu8qrztlUNfHidDhA=",
-        "owner": "homebrew",
-        "repo": "brew",
-        "rev": "6301c2d31f8dc07d2d16ddaa33711cf5a41d4e17",
-        "type": "github"
-      },
-      "original": {
-        "owner": "homebrew",
-        "ref": "4.5.7",
-        "repo": "brew",
-        "type": "github"
-      }
-    },
     "homebrew-cask_darwin": {
       "flake": false,
       "locked": {
@@ -124,6 +107,44 @@
       "original": {
         "owner": "homebrew",
         "repo": "homebrew-core",
+        "type": "github"
+      }
+    },
+    "homebrew_darwin": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1749887690,
+        "narHash": "sha256-x/1IGjwKd9FC3MqF0nagUfift1nu8qrztlUNfHidDhA=",
+        "owner": "homebrew",
+        "repo": "brew",
+        "rev": "6301c2d31f8dc07d2d16ddaa33711cf5a41d4e17",
+        "type": "github"
+      },
+      "original": {
+        "owner": "homebrew",
+        "ref": "4.5.7",
+        "repo": "brew",
+        "type": "github"
+      }
+    },
+    "lsfg-vk_linux": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs_linux"
+        ]
+      },
+      "locked": {
+        "lastModified": 1753576548,
+        "narHash": "sha256-gnV9xY7BMHrao4QroJveGUexssBwXtyawmjoDqjO7zk=",
+        "owner": "pabloaul",
+        "repo": "lsfg-vk-flake",
+        "rev": "0fa0918ada267e177274af61dd1875ef1b5a0a8e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "pabloaul",
+        "ref": "unstable-2025-07-26-3c77bad",
+        "repo": "lsfg-vk-flake",
         "type": "github"
       }
     },
@@ -241,9 +262,10 @@
       "inputs": {
         "home-manager_darwin": "home-manager_darwin",
         "home-manager_linux": "home-manager_linux",
-        "homebrew": "homebrew",
         "homebrew-cask_darwin": "homebrew-cask_darwin",
         "homebrew-core_darwin": "homebrew-core_darwin",
+        "homebrew_darwin": "homebrew_darwin",
+        "lsfg-vk_linux": "lsfg-vk_linux",
         "nix-darwin_darwin": "nix-darwin_darwin",
         "nix-vscode-extensions_darwin": "nix-vscode-extensions_darwin",
         "nix-vscode-extensions_linux": "nix-vscode-extensions_linux",

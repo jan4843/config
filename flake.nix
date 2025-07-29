@@ -39,7 +39,7 @@
       inputs.nixpkgs.follows = "nixpkgs_darwin";
     };
 
-    homebrew = {
+    homebrew_darwin = {
       url = "github:homebrew/brew/4.5.7";
       flake = false;
     };
@@ -57,6 +57,11 @@
   inputs = {
     nixos-hardware_linux = {
       url = "github:NixOS/nixos-hardware";
+    };
+
+    lsfg-vk_linux = {
+      url = "github:pabloaul/lsfg-vk-flake/unstable-2025-07-26-3c77bad";
+      inputs.nixpkgs.follows = "nixpkgs_linux";
     };
   };
 }
