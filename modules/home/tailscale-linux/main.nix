@@ -8,6 +8,10 @@ in
 
   home.packages = [ pkgs.tailscale ];
 
+  home.sessionVariables = {
+    XDG_RUNTIME_DIR = "/run/user/$(id -u)";
+  };
+
   home.shellAliases = {
     tailscale = "tailscale --socket=${socketPath}";
     curl = "http_proxy=http://${proxyAddress} curl";

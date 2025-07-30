@@ -4,7 +4,6 @@ let
   layer = "share/vulkan/implicit_layer.d/VkLayer_LS_frame_generation.json";
   vars = {
     # https://github.com/PancakeTAS/lsfg-vk/wiki/Configuring-lsfg%E2%80%90vk
-    ENABLE_LSFG = "1";
     LSFG_LEGACY = "1";
     LSFG_DLL_PATH = "${args.config.home.homeDirectory}/.local/share/lsfg-vk/Lossless.dll";
     LSFG_MULTIPLIER = "1";
