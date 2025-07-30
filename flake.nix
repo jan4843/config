@@ -40,7 +40,7 @@
     };
 
     homebrew_darwin = {
-      url = "github:homebrew/brew/4.5.7";
+      url = "github:homebrew/brew/4.5.13";
       flake = false;
     };
     homebrew-core_darwin = {
@@ -60,7 +60,7 @@
     };
 
     lsfg-vk_linux = {
-      url = "github:pabloaul/lsfg-vk-flake/unstable-2025-07-26-3c77bad";
+      url = "github:pabloaul/lsfg-vk-flake/unstable-2025-07-30-b4f2833";
       inputs.nixpkgs.follows = "nixpkgs_linux";
     };
   };
