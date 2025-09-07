@@ -1,0 +1,90 @@
+name: Update
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: 0 0 * * FRI
+
+jobs:
+  update-flake:
+    name: Update flake
+    outputs:
+      derivations: ${{ steps.derivations.outputs.derivations }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v5
+
+      - name: Install Nix
+        uses: cachix/install-nix-action@v31
+
+      - name: Update flake
+        run: |
+          nix flake update
+
+      - name: Upload flake lock
+        uses: actions/upload-artifact@v4
+        with:
+          name: flake.lock
+          path: flake.lock
+
+      - name: Evaluate flake outputs
+        id: derivations
+        run: |
+          exec >> "$GITHUB_OUTPUT"
+          printf derivations=
+          nix eval --json --file .github/workflows/outputs.nix
+
+  build-derivations:
+    name: Build ${{ matrix.name }}
+    needs: [update-flake]
+    runs-on: ${{ matrix.runner }}
+    strategy:
+      max-parallel: 1
+      matrix:
+        include: ${{ fromJSON(needs.update-flake.outputs.derivations) }}
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v5
+
+      - name: Download flake lock
+        uses: actions/download-artifact@v5
+        with:
+          name: flake.lock
+
+      - name: Install Nix
+        uses: cachix/install-nix-action@v31
+
+      - name: Configure Cachix
+        uses: cachix/cachix-action@v15
+        with:
+          name: ${{ vars.CACHIX_NAME }}
+          authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
+
+      - name: Build derivation
+        run: |
+          nix build ${{ matrix.closure }} --no-link --print-build-logs --show-trace
+
+  commit-update:
+    name: Commit update
+    permissions:
+      contents: write
+    needs: [build-derivations]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v5
+
+      - name: Download flake lock
+        uses: actions/download-artifact@v5
+        with:
+          name: flake.lock
+
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .
+          test -n "$(git status --porcelain)" || exit 0
+          git commit --allow-empty-message --message=
+          git push
