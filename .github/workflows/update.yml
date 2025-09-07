@@ -52,6 +52,10 @@ jobs:
         with:
           name: flake.lock
 
+      - name: Free up disk space
+        if: runner.os == 'Linux'
+        uses: wimpysworld/nothing-but-nix@10c936d9e46521bf923f75458e0cbd4fa309300d
+
       - name: Install Nix
         uses: cachix/install-nix-action@v31
 
