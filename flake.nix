@@ -35,12 +35,12 @@
   # darwin
   inputs = {
     nix-darwin_darwin = {
-      url = "github:LnL7/nix-darwin/nix-darwin-25.05";
+      url = "github:nix-darwin/nix-darwin/nix-darwin-25.05";
       inputs.nixpkgs.follows = "nixpkgs_darwin";
     };
 
     homebrew_darwin = {
-      url = "github:homebrew/brew/4.5.13";
+      url = "github:homebrew/brew/4.6.9";
       flake = false;
     };
     homebrew-core_darwin = {
@@ -60,7 +60,7 @@
     };
 
     lsfg-vk_linux = {
-      url = "github:pabloaul/lsfg-vk-flake/unstable-2025-07-30-b4f2833";
+      url = "github:pabloaul/lsfg-vk-flake/1.0.0";
       inputs.nixpkgs.follows = "nixpkgs_linux";
     };
   };
