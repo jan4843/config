@@ -6,7 +6,12 @@ in
 {
   imports = [ args.inputs.self.homeModules.tailscale ];
 
-  home.packages = [ pkgs.tailscale ];
+  # TODO: https://github.com/NixOS/nixpkgs/issues/438765
+  home.packages = [
+    (pkgs.tailscale.overrideAttrs (old: {
+      doCheck = false;
+    }))
+  ];
 
   home.sessionVariables = {
     XDG_RUNTIME_DIR = "/run/user/$(id -u)";
