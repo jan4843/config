@@ -18,6 +18,7 @@
       "update.mode" = "none";
 
       "chat.commandCenter.enabled" = false;
+      "diffEditor.ignoreTrimWhitespace" = false;
       "editor.accessibilitySupport" = "off";
       "editor.copyWithSyntaxHighlighting" = false;
       "editor.guides.bracketPairs" = "active";
