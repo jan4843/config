@@ -40,6 +40,7 @@ in
     casks."logi-options+"
 
     appcleaner
+    brave-browser
     firefox
     google-chrome
     hex-fiend
