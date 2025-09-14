@@ -2,16 +2,11 @@
 let
   socketPath = "/tmp/tailscaled.${args.config.home.username}.sock";
   proxyAddress = "127.0.0.1:1055";
-
-  # TODO: https://github.com/NixOS/nixpkgs/issues/438765
-  pkgs'.tailscale = pkgs.tailscale.overrideAttrs (old: {
-    doCheck = false;
-  });
 in
 {
   imports = [ args.inputs.self.homeModules.tailscale ];
 
-  home.packages = [ pkgs'.tailscale ];
+  home.packages = [ pkgs.tailscale ];
 
   home.sessionVariables = {
     XDG_RUNTIME_DIR = "/run/user/$(id -u)";
@@ -35,7 +30,7 @@ in
       Restart = "on-failure";
 
       ExecStart = args.lib.escapeShellArgs [
-        "${pkgs'.tailscale}/bin/tailscaled"
+        "${pkgs.tailscale}/bin/tailscaled"
         "--socket=${socketPath}"
         "--tun=userspace-networking"
         "--outbound-http-proxy-listen=${proxyAddress}"
