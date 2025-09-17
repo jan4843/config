@@ -21,14 +21,6 @@ let
       exec g++ "$@"
     '';
   };
-
-  flags =
-    fn: list:
-    args.lib.pipe list [
-      (map fn)
-      (args.lib.concatStringsSep " ")
-      args.lib.strings.escapeShellArg
-    ];
 in
 {
   imports = with args.inputs.self.homeModules; [
@@ -62,24 +54,30 @@ in
     ]);
 
   home.sessionVariables = {
-    JAVA_TOOL_OPTIONS = "-Djava.library.path=${
-      args.lib.makeLibraryPath [
-        pkgs.stdenv.cc.libc
-      ]
-    }";
+    JAVA_TOOL_OPTIONS = "-Djava.library.path=${args.lib.makeLibraryPath [ pkgs.stdenv.cc.libc ]}";
 
-    BUNDLE_BUILD__ALL = "--with-cflags=${
-      flags (p: "-I${p}/include") [
-        pkgs.libyaml.dev
-      ]
-    } --with-ldflags=${
-      flags (p: "-L${p}/lib") [
-        pkgs.openssl
-        pkgs.zlib
-        pkgs.libffi
-        pkgs.zlib
-        pkgs.libxcrypt
-      ]
-    }";
+    BUNDLE_BUILD__ALL =
+      with pkgs;
+      let
+        flags =
+          fn: list:
+          args.lib.pipe list [
+            (map fn)
+            (args.lib.concatStringsSep " ")
+            args.lib.strings.escapeShellArg
+          ];
+
+        cflags = flags (p: "-I${p}/include") [
+          libyaml.dev
+        ];
+        ldflags = flags (p: "-L${p}/lib") [
+          openssl
+          zlib
+          libffi
+          zlib
+          libxcrypt
+        ];
+      in
+      "--with-cflags=${cflags} --with-ldflags=${ldflags}";
   };
 }
