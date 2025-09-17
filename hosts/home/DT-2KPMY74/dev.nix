@@ -21,6 +21,14 @@ let
       exec g++ "$@"
     '';
   };
+
+  flags =
+    fn: list:
+    args.lib.pipe list [
+      (map fn)
+      (args.lib.concatStringsSep " ")
+      args.lib.strings.escapeShellArg
+    ];
 in
 {
   imports = with args.inputs.self.homeModules; [
@@ -52,4 +60,26 @@ in
       mold
       ruby_3_4
     ]);
+
+  home.sessionVariables = {
+    JAVA_TOOL_OPTIONS = "-Djava.library.path=${
+      args.lib.makeLibraryPath [
+        pkgs.stdenv.cc.libc
+      ]
+    }";
+
+    BUNDLE_BUILD__ALL = "--with-cflags=${
+      flags (p: "-I${p}/include") [
+        pkgs.libyaml.dev
+      ]
+    } --with-ldflags=${
+      flags (p: "-L${p}/lib") [
+        pkgs.openssl
+        pkgs.zlib
+        pkgs.libffi
+        pkgs.zlib
+        pkgs.libxcrypt
+      ]
+    }";
+  };
 }
