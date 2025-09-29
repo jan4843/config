@@ -42,7 +42,7 @@ in
       ccache
       clang-tools
       cmake
-      gcc9
+      gcc15
       glibc
       gnumake
       jetbrains.clion
