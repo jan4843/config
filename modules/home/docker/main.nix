@@ -1,6 +1,7 @@
 { pkgs, vscode-marketplace, ... }:
 {
   home.packages = [
+    (pkgs.callPackage ./.pkgs/c { })
     (pkgs.callPackage ./.pkgs/heredocker { })
     (pkgs.callPackage ./.pkgs/shelldocker { })
   ];

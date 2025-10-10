@@ -1,0 +1,62 @@
+#!/bin/sh -e
+
+SELF=$(basename "$0")
+
+u=$(printf "\e[4m")
+r=$(printf "\e[0m")
+
+usage() {
+	cat <<-EOF >&2
+	usage:
+	$SELF ${u}d${r}own [SERVICE...]
+	$SELF ${u}u${r}p [SERVICE...]
+	$SELF ${u}r${r}estart [SERVICE...]
+	$SELF ${u}e${r}xec [SERVICE] [CMD...]
+	$SELF ${u}l${r}ogs [SERVICE...]
+	$SELF ${u}p${r}s [SERVICE...]
+	EOF
+	exit 64
+}
+
+case $1 in
+	d|down)
+		shift
+		docker compose down "$@"
+		;;
+	u|up)
+		shift
+		start=$(date +%s); : $(( start -=1 ))
+		docker compose up --detach "$@"
+		docker compose logs --follow --since="$start" "$@"
+		;;
+	r|restart)
+		shift
+		"$0" down "$@"
+		"$0" up "$@"
+		;;
+	e|exec|s|sh|shell)
+		shift
+		container=$(docker compose ps --quiet | head -1)
+		if [ $# != 0 ]; then
+			if match=$(docker compose ps --quiet -- "$1" 2>/dev/null); then
+				container=$match
+				shift
+			fi
+		fi
+		if [ $# = 0 ]; then
+			set -- sh -c 'command -v bash >/dev/null && exec bash || exec sh'
+		fi
+		docker exec --interactive --tty "$container" "$@"
+		;;
+	l|log)
+		shift
+		docker compose logs --follow --tail=100 "$@"
+		;;
+	p|ps)
+		shift
+		docker compose ps --all --format='table {{.ID}}\t{{.Label "com.docker.compose.service"}}\t{{.Status}}' "$@"
+		;;
+	*)
+		usage
+		;;
+esac
