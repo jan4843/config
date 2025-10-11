@@ -12,7 +12,7 @@ DARWIN_CONFIGS := $(notdir $(wildcard ./hosts/darwin/*))
 NIXOS_CONFIGS  := $(notdir $(wildcard ./hosts/nixos/*))
 HOME_CONFIGS   := $(notdir $(wildcard ./hosts/home/*))
 
-.DEFAULT_GOAL := $(shell hostname)
+.DEFAULT_GOAL := $(shell hostname -s)
 
 # darwin remote
 $(filter-out $(.DEFAULT_GOAL),$(DARWIN_CONFIGS)):
