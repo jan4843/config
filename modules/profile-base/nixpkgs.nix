@@ -32,7 +32,7 @@ in
       }))
       {
         home.shellAliases = {
-          nixpkgs = ''_nixpkgs() { NIXPKGS_ALLOW_UNFREE=1 nix shell --impure "nixpkgs#$1"; }; _nixpkgs'';
+          nixpkgs = ''_nixpkgs() { history -a; NIXPKGS_ALLOW_UNFREE=1 nix shell --impure "nixpkgs#$1"; }; _nixpkgs'';
         };
 
         nix.registry.nixpkgs.flake = inputs.nixpkgs;

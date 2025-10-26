@@ -1,4 +1,10 @@
-{
+rec {
+  nixos = nix-darwin;
+
+  nix-darwin = {
+    nix.gc.automatic = true;
+  };
+
   home-manager =
     { lib, pkgs, ... }:
     {
@@ -12,6 +18,8 @@
         show-trace = true;
         warn-dirty = false;
       };
+
+      nix.gc.automatic = true;
 
       self.git.ignore = [ "/result" ];
     };
