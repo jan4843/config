@@ -8,7 +8,7 @@
         swap
       ];
       homeConfig.imports = with inputs.self.homeModules; [
-        profile-base
+        profiles.shared.base
       ];
     };
 
@@ -20,7 +20,7 @@
         home-manager
       ];
       homeConfig.imports = with inputs.self.homeModules; [
-        profile-base
+        profiles.shared.base
       ];
     };
 

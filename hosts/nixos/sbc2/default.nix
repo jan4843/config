@@ -1,7 +1,7 @@
 { inputs, ... }:
 {
   imports = with inputs.self.nixosModules; [
-    profile-class-sbc
+    profiles.class.sbc
   ];
 
   system.stateVersion = "24.11";

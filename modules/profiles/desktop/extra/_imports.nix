@@ -3,11 +3,11 @@
     { inputs, ... }:
     {
       imports = with inputs.self.nixosModules; [
-        profile-desktop-base
-        profile-extra
+        profiles.desktop.base
+        profiles.shared.extra
       ];
       homeConfig.imports = with inputs.self.homeModules; [
-        profile-desktop-extra
+        profiles.desktop.extra
       ];
     };
 
@@ -15,11 +15,11 @@
     { inputs, ... }:
     {
       imports = with inputs.self.darwinModules; [
-        profile-desktop-base
-        profile-extra
+        profiles.desktop.base
+        profiles.shared.extra
       ];
       homeConfig.imports = with inputs.self.homeModules; [
-        profile-desktop-extra
+        profiles.desktop.extra
       ];
     };
 
@@ -27,8 +27,8 @@
     { inputs, ... }:
     {
       imports = with inputs.self.homeModules; [
-        profile-desktop-base
-        profile-extra
+        profiles.desktop.base
+        profiles.shared.extra
       ];
     };
 }

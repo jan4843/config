@@ -1,8 +1,8 @@
 { inputs, ... }:
 {
   imports = with inputs.self.nixosModules; [
-    profile-hardware-qemu
-    profile-server
+    profiles.hardware.qemu
+    profiles.server
   ];
 
   nixpkgs.hostPlatform = "aarch64-linux";

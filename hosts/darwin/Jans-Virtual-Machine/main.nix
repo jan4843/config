@@ -1,7 +1,7 @@
 { config, inputs, ... }:
 {
   imports = with inputs.self.darwinModules; [
-    profile-desktop-extra
+    profiles.desktop.extra
   ];
 
   nixpkgs.hostPlatform = "aarch64-darwin";

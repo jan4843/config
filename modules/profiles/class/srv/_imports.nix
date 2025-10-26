@@ -3,8 +3,9 @@
     { inputs, ... }:
     {
       imports = with inputs.self.nixosModules; [
-        profile-extra
+        profiles.hardware.qemu
+        profiles.lan
+        profiles.server
       ];
-      homeConfig.imports = [ inputs.self.homeModules.profile-server ];
     };
 }

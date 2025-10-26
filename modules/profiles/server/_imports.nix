@@ -3,9 +3,8 @@
     { inputs, ... }:
     {
       imports = with inputs.self.nixosModules; [
-        profile-hardware-pi4
-        profile-lan
-        profile-server
+        profiles.shared.extra
       ];
+      homeConfig.imports = [ inputs.self.homeModules.profiles.server ];
     };
 }
