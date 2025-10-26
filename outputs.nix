@@ -29,9 +29,9 @@ let
         (map (
           file:
           if builtins.pathExists "${dir}/${file}/" then
-            lib'.findNixFilesRec /.${dir}/${file}
+            lib'.findNixFilesRec "${dir}/${file}"
           else
-            /.${dir}/${file}
+            "${dir}/${file}"
         ))
         lib'.flatten
         (builtins.filter (path: lib'.contains "\.nix$" (builtins.baseNameOf path)))
@@ -81,30 +81,45 @@ let
       {
         _file = file;
         key = file;
-        imports = [ expr.${type} or { } ];
+        imports = if expr ? ${type} then [ expr.${type} ] else [ ];
       };
 
   mkModules =
-    type:
-    lib'.pipe ./modules [
+    type: root:
+    lib'.pipe root [
       builtins.readDir
       builtins.attrNames
-      (map (module: {
-        name = module;
-        value.imports = lib'.pipe ./modules/${module} [
-          lib'.findNixFilesRec
-          (map (mkModule type))
-          (builtins.filter (x: x.imports != [ { } ]))
-        ];
-      }))
-      (builtins.filter (x: x.value.imports != [ ]))
+      (map (
+        dir:
+        let
+          nixFiles = lib'.pipe "${root}/${dir}" [
+            builtins.readDir
+            builtins.attrNames
+            (builtins.filter (name: lib'.contains "\.nix$" name))
+          ];
+        in
+        {
+          name = dir;
+          value =
+            if nixFiles == [ ] then
+              mkModules type "${root}/${dir}"
+            else
+              {
+                imports = lib'.pipe "${root}/${dir}" [
+                  lib'.findNixFilesRec
+                  (map (mkModule type))
+                  (builtins.filter (x: x.imports != [ ]))
+                ];
+              };
+        }
+      ))
       builtins.listToAttrs
     ];
 in
 {
-  nixosModules = mkModules "nixos";
-  darwinModules = mkModules "nix-darwin";
-  homeModules = mkModules "home-manager";
+  nixosModules = mkModules "nixos" ./modules;
+  darwinModules = mkModules "nix-darwin" ./modules;
+  homeModules = mkModules "home-manager" ./modules;
 
   nixosConfigurations = lib'.mapDir (
     host: path:
