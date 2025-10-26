@@ -2,6 +2,7 @@
 {
   imports = with inputs.self.homeModules; [
     profile-desktop-extra
+    steam-autogrid
     steam-shortcuts
     tailscale-userspace
   ];
