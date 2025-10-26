@@ -1,4 +1,4 @@
-{ pkgs, ... }@args:
+{ config, pkgs, ... }:
 let
   pkgs' = import (builtins.fetchTarball {
     url = "https://github.com/NixOS/nixpkgs/archive/78add7b7abb61689e34fc23070a8f55e1d26185b.tar.gz";
@@ -37,10 +37,10 @@ in
   };
 
   self.backup.paths = [
-    "${args.config.home.homeDirectory}/.config/yuzu"
-    "${args.config.home.homeDirectory}/.local/share/yuzu/keys"
-    "${args.config.home.homeDirectory}/.local/share/yuzu/load" # mods
-    "${args.config.home.homeDirectory}/.local/share/yuzu/nand"
-    "${args.config.home.homeDirectory}/.local/share/yuzu/sdmc"
+    "${config.home.homeDirectory}/.config/yuzu"
+    "${config.home.homeDirectory}/.local/share/yuzu/keys"
+    "${config.home.homeDirectory}/.local/share/yuzu/load" # mods
+    "${config.home.homeDirectory}/.local/share/yuzu/nand"
+    "${config.home.homeDirectory}/.local/share/yuzu/sdmc"
   ];
 }

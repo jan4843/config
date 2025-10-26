@@ -7,7 +7,7 @@ OPTIONS ?= --print-build-logs --show-trace
 COMMAND ?= switch
 SSH_DESTINATION ?= $@
 
-FLAKE := $(shell git add --intent-to-add . && $(NIX) flake metadata --json | jq -r .path)
+FLAKE := $(shell git add --intent-to-add . 2>/dev/null; $(NIX) flake metadata --json | jq -r .path)
 DARWIN_CONFIGS := $(notdir $(wildcard ./hosts/darwin/*))
 NIXOS_CONFIGS  := $(notdir $(wildcard ./hosts/nixos/*))
 HOME_CONFIGS   := $(notdir $(wildcard ./hosts/home/*))

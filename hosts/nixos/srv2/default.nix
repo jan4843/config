@@ -1,11 +1,8 @@
-args: {
-  networking.hostName = "srv2";
-  nixpkgs.hostPlatform = "x86_64-linux";
-  system.stateVersion = "24.11";
-
-  imports = with args.inputs.self.nixosModules; [
-    default
-
-    _srv
+{ inputs, ... }:
+{
+  imports = with inputs.self.nixosModules; [
+    profile-class-srv
   ];
+
+  system.stateVersion = "24.11";
 }

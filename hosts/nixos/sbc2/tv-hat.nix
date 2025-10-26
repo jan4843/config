@@ -1,1 +1,3 @@
-{ hardware.raspberry-pi."4".tv-hat.enable = true; }
+{
+  hardware.raspberry-pi."4".tv-hat.enable = true;
+}

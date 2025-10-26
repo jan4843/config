@@ -1,10 +1,8 @@
-args: {
-  networking.hostName = "sbc1";
-  system.stateVersion = "24.11";
-
-  imports = with args.inputs.self.nixosModules; [
-    default
-
-    _sbc
+{ inputs, ... }:
+{
+  imports = with inputs.self.nixosModules; [
+    profile-class-sbc
   ];
+
+  system.stateVersion = "24.11";
 }

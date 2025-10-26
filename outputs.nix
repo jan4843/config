@@ -1,15 +1,16 @@
 inputs:
 let
-  lib = {
+  lib' = {
     pipe = builtins.foldl' (x: f: f x);
 
-    flatten = x: if builtins.isList x then builtins.concatMap lib.flatten x else [ x ];
+    flatten =
+      xs: builtins.foldl' (acc: x: acc ++ (if builtins.isList x then lib'.flatten x else [ x ])) [ ] xs;
 
-    contains = infix: content: builtins.length (builtins.split infix content) > 1;
+    contains = infix: string: builtins.length (builtins.split infix string) > 1;
 
     mapDir =
       fn: dir:
-      lib.pipe dir [
+      lib'.pipe dir [
         builtins.readDir
         builtins.attrNames
         (map (name: {
@@ -19,129 +20,135 @@ let
         builtins.listToAttrs
       ];
 
-    collectFiles =
+    findNixFilesRec =
       dir:
-      lib.pipe dir [
+      lib'.pipe dir [
         builtins.readDir
         builtins.attrNames
-        (builtins.filter (x: !lib.contains "^[.]" x))
-        (map (x: /.${dir}/${x}))
-        (map (x: if builtins.pathExists "${x}/" then lib.collectFiles x else x))
-        lib.flatten
+        (builtins.filter (file: !lib'.contains "^\\." file))
+        (map (
+          file:
+          if builtins.pathExists "${dir}/${file}/" then
+            lib'.findNixFilesRec /.${dir}/${file}
+          else
+            /.${dir}/${file}
+        ))
+        lib'.flatten
+        (builtins.filter (path: lib'.contains "\.nix$" (builtins.baseNameOf path)))
       ];
   };
 
-  mkInputs =
-    platform:
-    lib.pipe inputs [
-      builtins.attrNames
-      (builtins.filter (x: lib.contains "_${platform}" x || !lib.contains "_" x))
-      (map (name: {
-        name = builtins.replaceStrings [ "_${platform}" ] [ "" ] name;
-        value = inputs.${name};
-      }))
-      builtins.listToAttrs
-    ];
+  inputs' =
+    let
+      filter =
+        platform:
+        lib'.pipe inputs [
+          builtins.attrNames
+          (builtins.filter (name: lib'.contains "_${platform}$" name || !lib'.contains "_" name))
+          (map (name: {
+            name = builtins.replaceStrings [ "_${platform}" ] [ "" ] name;
+            value = inputs.${name};
+          }))
+          builtins.listToAttrs
+        ];
+    in
+    {
+      darwin = filter "darwin";
+      linux = filter "linux";
+    };
+
+  mkModule =
+    type: file:
+    let
+      expr = import file;
+    in
+    if
+      builtins.attrNames (
+        {
+          nixos = { };
+          nix-darwin = { };
+          home-manager = { };
+        }
+        // expr
+      ) != [
+        "home-manager"
+        "nix-darwin"
+        "nixos"
+      ]
+    then
+      abort "Invalid attributes (${toString (builtins.attrNames expr)}) in module ${file}"
+    else
+      {
+        _file = file;
+        key = file;
+        imports = [ expr.${type} or { } ];
+      };
 
   mkModules =
-    root:
-    let
-      modules = lib.mapDir (name: path: {
-        __toString = _: toString path;
-        imports = lib.collectFiles path;
-      }) root;
-    in
-    modules
-    // {
-      default = {
-        __toString = modules.default.__toString;
-        imports =
-          modules.default.imports or [ ]
-          ++ lib.pipe modules [
-            builtins.attrValues
-            (map (x: x.imports))
-            lib.flatten
-            (builtins.filter (x: builtins.baseNameOf x == "default.nix"))
-          ]
-          ++ [
-            (args: {
-              options.__toString = args.lib.mkOption { };
-              config.__toString = args.lib.mkForce null;
-            })
-          ];
-      };
-    };
+    type:
+    lib'.pipe ./modules [
+      builtins.readDir
+      builtins.attrNames
+      (map (module: {
+        name = module;
+        value.imports = lib'.pipe ./modules/${module} [
+          lib'.findNixFilesRec
+          (map (mkModule type))
+          (builtins.filter (x: x.imports != [ { } ]))
+        ];
+      }))
+      (builtins.filter (x: x.value.imports != [ ]))
+      builtins.listToAttrs
+    ];
 in
 {
-  darwinConfigurations = lib.mapDir (
-    name: path:
-    inputs.nix-darwin_darwin.lib.darwinSystem {
-      specialArgs.inputs = mkInputs "darwin";
-      modules = lib.collectFiles path;
-    }
-  ) ./hosts/darwin;
+  nixosModules = mkModules "nixos";
+  darwinModules = mkModules "nix-darwin";
+  homeModules = mkModules "home-manager";
 
-  nixosConfigurations = lib.mapDir (
-    name: path:
-    inputs.nixpkgs_linux.lib.nixosSystem {
-      specialArgs.inputs = mkInputs "linux";
-      modules = lib.collectFiles path;
+  nixosConfigurations = lib'.mapDir (
+    host: path:
+    inputs'.linux.nixpkgs.lib.nixosSystem {
+      specialArgs.inputs = inputs'.linux;
+      modules = lib'.findNixFilesRec path ++ [ { networking.hostName = host; } ];
     }
   ) ./hosts/nixos;
 
-  homeConfigurations = lib.mapDir (
+  darwinConfigurations = lib'.mapDir (
+    host: path:
+    inputs'.darwin.nix-darwin.lib.darwinSystem {
+      specialArgs.inputs = inputs'.darwin;
+      modules = lib'.findNixFilesRec path ++ [ { networking.hostName = host; } ];
+    }
+  ) ./hosts/darwin;
+
+  homeConfigurations = lib'.mapDir (
     name: path:
     let
       expr = import path;
       eval = if builtins.isFunction expr then expr (builtins.functionArgs expr) else expr;
       system = eval.nixpkgs.hostPlatform;
     in
-    inputs.home-manager_linux.lib.homeManagerConfiguration {
-      extraSpecialArgs.inputs = mkInputs "linux";
-      pkgs = inputs.nixpkgs_linux.legacyPackages.${system};
-      modules = lib.collectFiles path ++ [
+    inputs'.linux.home-manager.lib.homeManagerConfiguration {
+      extraSpecialArgs.inputs = inputs'.linux;
+      pkgs = inputs'.linux.nixpkgs.legacyPackages.${system};
+      modules = lib'.findNixFilesRec path ++ [
         {
-          options.nixpkgs.hostPlatform = inputs.nixpkgs_linux.lib.mkOption {
-            apply = inputs.nixpkgs_linux.lib.systems.elaborate;
+          options.nixpkgs.hostPlatform = inputs'.linux.nixpkgs.lib.mkOption {
+            apply = inputs'.linux.nixpkgs.lib.systems.elaborate;
           };
         }
       ];
     }
   ) ./hosts/home;
 
-  darwinModules = mkModules ./modules/darwin;
-  nixosModules = mkModules ./modules/nixos;
-  homeModules = mkModules ./modules/home;
-
   packages = {
-    aarch64-darwin.darwin-rebuild = inputs.nix-darwin_darwin.packages.aarch64-darwin.darwin-rebuild;
-    x86_64-darwin.darwin-rebuild = inputs.nix-darwin_darwin.packages.x86_64-darwin.darwin-rebuild;
-
     aarch64-linux.nixos-rebuild = inputs.nixpkgs_linux.legacyPackages.aarch64-linux.nixos-rebuild;
     x86_64-linux.nixos-rebuild = inputs.nixpkgs_linux.legacyPackages.x86_64-linux.nixos-rebuild;
+
+    aarch64-darwin.darwin-rebuild = inputs.nix-darwin_darwin.packages.aarch64-darwin.darwin-rebuild;
 
     aarch64-linux.home-manager = inputs.home-manager_linux.packages.aarch64-linux.home-manager;
     x86_64-linux.home-manager = inputs.home-manager_linux.packages.x86_64-linux.home-manager;
   };
-
-  checks =
-    let
-      _ = builtins.deepSeq (
-        { }
-        // (builtins.mapAttrs (
-          name: value:
-          builtins.trace "checking Darwin configuration ${name}" value.config.system.build.toplevel.type
-        ) inputs.self.darwinConfigurations)
-        // (builtins.mapAttrs (
-          name: value: builtins.trace "checking home configuration ${name}" value.activationPackage.type
-        ) inputs.self.homeConfigurations)
-      ) { };
-    in
-    {
-      aarch64-darwin = _;
-      x86_64-darwin = _;
-
-      aarch64-linux = _;
-      x86_64-linux = _;
-    };
 }

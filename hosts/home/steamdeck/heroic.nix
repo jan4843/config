@@ -1,4 +1,9 @@
-{ pkgs, ... }@args:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   launcher = ".local/nix/heroic/launcher";
 in
@@ -12,7 +17,7 @@ in
   self.steam-shortcuts."Heroic Games Launcher" = {
     script = ''
       LD_PRELOAD= \
-      APPIMAGE=${args.lib.escapeShellArg args.config.home.homeDirectory}/${launcher} \
+      APPIMAGE=${lib.escapeShellArg config.home.homeDirectory}/${launcher} \
       exec ${pkgs.heroic-unwrapped}/bin/heroic
     '';
     assets = {
@@ -40,6 +45,6 @@ in
   };
 
   self.backup.paths = [
-    "${args.config.home.homeDirectory}/Games/Heroic/Prefixes/*/*/drive_c/users"
+    "${config.home.homeDirectory}/Games/Heroic/Prefixes/*/*/drive_c/users"
   ];
 }

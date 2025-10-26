@@ -1,4 +1,4 @@
-{ pkgs, ... }@args:
+{ config, pkgs, ... }:
 {
   self.steam-shortcuts.CEMU = {
     script = ''
@@ -30,7 +30,7 @@
   };
 
   self.backup.paths = [
-    "${args.config.home.homeDirectory}/.config/Cemu"
-    "${args.config.home.homeDirectory}/.local/share/Cemu/mlc01"
+    "${config.home.homeDirectory}/.config/Cemu"
+    "${config.home.homeDirectory}/.local/share/Cemu/mlc01"
   ];
 }

@@ -1,12 +1,10 @@
-args: {
-  networking.hostName = "vps1";
+{ inputs, ... }:
+{
+  imports = with inputs.self.nixosModules; [
+    profile-hardware-qemu
+    profile-server
+  ];
+
   nixpkgs.hostPlatform = "aarch64-linux";
   system.stateVersion = "24.11";
-
-  imports = with args.inputs.self.nixosModules; [
-    default
-
-    _server
-    qemu-guest
-  ];
 }
