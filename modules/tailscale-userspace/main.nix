@@ -2,7 +2,6 @@
   home-manager =
     {
       config,
-      inputs,
       lib,
       pkgs,
       ...
