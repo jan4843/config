@@ -23,7 +23,6 @@
         imports = [ patched.path ];
 
         home.stateVersion = config.system.stateVersion;
-        targets.genericLinux.enable = true;
       };
     };
 }
