@@ -18,6 +18,7 @@
           watch
         ]
         ++ lib.optionals pkgs.hostPlatform.isLinux [
+          dnsutils
           iptables
           lsscsi
           parted
