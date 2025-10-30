@@ -20,13 +20,15 @@ jobs:
 
       - name: Update flake
         run: |
-          nix flake update
+          nix run .#update
 
-      - name: Upload flake lock
+      - name: Upload flake inputs
         uses: actions/upload-artifact@v4
         with:
-          name: flake.lock
-          path: flake.lock
+          name: flake-inputs
+          path: |
+            flake.nix
+            flake.lock
 
       - name: Evaluate flake outputs
         id: derivations
@@ -47,10 +49,10 @@ jobs:
       - name: Clone repository
         uses: actions/checkout@v5
 
-      - name: Download flake lock
+      - name: Download flake inputs
         uses: actions/download-artifact@v5
         with:
-          name: flake.lock
+          name: flake-inputs
 
       - name: Free up disk space
         if: runner.os == 'Linux'
@@ -82,7 +84,7 @@ jobs:
       - name: Download flake lock
         uses: actions/download-artifact@v5
         with:
-          name: flake.lock
+          name: flake-inputs
 
       - name: Commit changes
         run: |

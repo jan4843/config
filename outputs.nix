@@ -57,6 +57,42 @@ let
       linux = filter "linux";
     };
 
+  mkApps =
+    fn:
+    lib'.pipe
+      [
+        "aarch64-darwin"
+        "aarch64-linux"
+        "x86_64-linux"
+      ]
+      [
+        (map (
+          system:
+          let
+            input = "nixpkgs_${if lib'.contains "darwin" system then "darwin" else "linux"}";
+            pkgs = inputs.${input}.legacyPackages.${system};
+            args = {
+              inherit pkgs;
+              inherit (pkgs) lib;
+            };
+          in
+          {
+            name = system;
+            value = builtins.mapAttrs (name: out: {
+              type = "app";
+              program = "${
+                pkgs.writeShellApplication {
+                  inherit name;
+                  runtimeInputs = out.path;
+                  text = out.text;
+                }
+              }/bin/${name}";
+            }) (fn args);
+          }
+        ))
+        builtins.listToAttrs
+      ];
+
   mkModule =
     type: file:
     let
@@ -156,6 +192,38 @@ in
       ];
     }
   ) ./hosts/home;
+
+  apps = mkApps (
+    { pkgs, ... }:
+    {
+      update = {
+        path = with pkgs; [
+          coreutils
+          curl
+          gawk
+          gnugrep
+          gnused
+        ];
+        text = ''
+          { grep -Eo 'github:.+latest=true' flake.nix || :; } |
+          while read -r old; do
+            user=''${old#"github:"}; user=''${user%%"/"*}
+            repo=''${old#"github:$user/"}; repo=''${repo%%"/"*}
+            query=''${old#*"?"}
+            version=$(
+              curl -sI "https://github.com/$user/$repo/releases/latest" |
+              awk -F/ '/^[Ll]ocation:/{print $NF}' |
+              tr -d '\r'
+            )
+            new="github:$user/$repo/$version?$query"
+            sed -i.bak "s|$old|$new|g" flake.nix
+            rm flake.nix.bak
+          done
+          nix flake update
+        '';
+      };
+    }
+  );
 
   packages = {
     aarch64-linux.nixos-rebuild = inputs.nixpkgs_linux.legacyPackages.aarch64-linux.nixos-rebuild;
