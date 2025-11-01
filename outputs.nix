@@ -8,21 +8,9 @@ let
 
     contains = infix: string: builtins.length (builtins.split infix string) > 1;
 
-    singleton = xs: if builtins.length xs == 1 then builtins.head xs else abort "List not singleton";
+    singleton = xs: if (builtins.length xs) == 1 then builtins.head xs else abort "List not singleton";
 
     mapDir =
-      fn: dir:
-      lib'.pipe dir [
-        builtins.readDir
-        builtins.attrNames
-        (map (name: {
-          inherit name;
-          value = fn name /.${dir}/${name};
-        }))
-        builtins.listToAttrs
-      ];
-
-    mapDir' =
       root: fn:
       if builtins.pathExists root then
         lib'.pipe root [
@@ -32,7 +20,7 @@ let
             file:
             let
               isRoot = builtins.pathExists "${root}/${file}/default.nix";
-              isNixFile = lib'.contains "^[^.].+\.nix$" "${root}/${file}";
+              isNixFile = lib'.contains ''^[^.].+\.nix$'' "${root}/${file}";
               nixFileName = builtins.substring 0 (builtins.stringLength file - 4) file;
               mapFiles = name: files: fn { inherit name files; };
             in
@@ -40,17 +28,13 @@ let
               name = if isNixFile then nixFileName else file;
               value =
                 if isNixFile then
-                  if builtins.pathExists "${root}/${nixFileName}/" then
-                    abort "Mapping conflict between ${root}/${file} and ${root}/${nixFileName}"
-                  else
-                    mapFiles nixFileName [ "${root}/${file}" ]
+                  mapFiles nixFileName [ "${root}/${file}" ]
                 else if isRoot then
                   mapFiles file (lib'.findNixFilesRec "${root}/${file}")
                 else
-                  lib'.mapDir' "${root}/${file}" fn;
+                  lib'.mapDir "${root}/${file}" fn;
             }
           ))
-          (x: builtins.deepSeq x x)
           builtins.listToAttrs
         ]
       else
@@ -61,7 +45,7 @@ let
       lib'.pipe dir [
         builtins.readDir
         builtins.attrNames
-        (builtins.filter (file: !lib'.contains "^\\." file))
+        (builtins.filter (file: !lib'.contains ''^\.'' file))
         (map (
           file:
           if builtins.pathExists "${dir}/${file}/" then
@@ -70,7 +54,7 @@ let
             "${dir}/${file}"
         ))
         lib'.flatten
-        (builtins.filter (path: lib'.contains "\.nix$" (builtins.baseNameOf path)))
+        (builtins.filter (path: lib'.contains ''\.nix$'' (builtins.baseNameOf path)))
       ];
 
     genSystems =
@@ -142,40 +126,17 @@ let
 
   mkModules =
     type: root:
-    lib'.pipe root [
-      builtins.readDir
-      builtins.attrNames
-      (map (
-        dir:
-        let
-          nixFiles = lib'.pipe "${root}/${dir}" [
-            builtins.readDir
-            builtins.attrNames
-            (builtins.filter (name: lib'.contains "\.nix$" name))
-          ];
-        in
-        {
-          name = dir;
-          value =
-            if nixFiles == [ ] then
-              mkModules type "${root}/${dir}"
-            else
-              {
-                imports = lib'.pipe "${root}/${dir}" [
-                  lib'.findNixFilesRec
-                  (map (mkModule type))
-                  (builtins.filter (x: x.imports != [ ]))
-                ];
-              };
-        }
-      ))
-      builtins.listToAttrs
-    ];
+    lib'.mapDir root (
+      { files, ... }:
+      {
+        imports = map (mkModule type) files;
+      }
+    );
 in
 {
   apps = lib'.genSystems (
     { lib, pkgs, ... }:
-    lib.mapDir' ./apps (
+    lib'.mapDir ./apps (
       { files, ... }:
       {
         type = "app";
@@ -188,33 +149,33 @@ in
   darwinModules = mkModules "nix-darwin" ./modules;
   homeModules = mkModules "home-manager" ./modules;
 
-  nixosConfigurations = lib'.mapDir (
-    host: path:
+  nixosConfigurations = lib'.mapDir ./hosts/nixos (
+    { name, files, ... }:
     inputs'.linux.nixpkgs.lib.nixosSystem {
       specialArgs.inputs = inputs'.linux;
-      modules = lib'.findNixFilesRec path ++ [ { networking.hostName = host; } ];
+      modules = files ++ [ { networking.hostName = name; } ];
     }
-  ) ./hosts/nixos;
+  );
 
-  darwinConfigurations = lib'.mapDir (
-    host: path:
+  darwinConfigurations = lib'.mapDir ./hosts/darwin (
+    { name, files, ... }:
     inputs'.darwin.nix-darwin.lib.darwinSystem {
       specialArgs.inputs = inputs'.darwin;
-      modules = lib'.findNixFilesRec path ++ [ { networking.hostName = host; } ];
+      modules = files ++ [ { networking.hostName = name; } ];
     }
-  ) ./hosts/darwin;
+  );
 
-  homeConfigurations = lib'.mapDir (
-    name: path:
+  homeConfigurations = lib'.mapDir ./hosts/home (
+    { name, files, ... }:
     let
-      expr = import path;
+      expr = import (lib'.singleton (builtins.filter (lib'.contains ''/default\.nix$'') files));
       eval = if builtins.isFunction expr then expr (builtins.functionArgs expr) else expr;
       system = eval.nixpkgs.hostPlatform;
     in
     inputs'.linux.home-manager.lib.homeManagerConfiguration {
       extraSpecialArgs.inputs = inputs'.linux;
       pkgs = inputs'.linux.nixpkgs.legacyPackages.${system};
-      modules = lib'.findNixFilesRec path ++ [
+      modules = files ++ [
         {
           options.nixpkgs.hostPlatform = inputs'.linux.nixpkgs.lib.mkOption {
             apply = inputs'.linux.nixpkgs.lib.systems.elaborate;
@@ -222,7 +183,7 @@ in
         }
       ];
     }
-  ) ./hosts/home;
+  );
 
   packages = {
     aarch64-linux.nixos-rebuild = inputs.nixpkgs_linux.legacyPackages.aarch64-linux.nixos-rebuild;
