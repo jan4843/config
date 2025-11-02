@@ -23,6 +23,7 @@ pkgs.writeShellApplication {
       sed -i.bak "s|$old|$new|g" flake.nix
       rm flake.nix.bak
     done
-    nix flake update
+    set -x
+    nix --extra-experimental-features nix-command --extra-experimental-features flakes flake update
   '';
 }
