@@ -21,8 +21,9 @@ let
 in
 {
   home.packages = with pkgs; [
-    ruby
     jetbrains.ruby-mine
+    jruby
+    ruby
   ];
 
   home.sessionVariables = {
