@@ -29,7 +29,6 @@
           Wants = After;
           X-SwitchMethod = "keep-old";
         };
-
         Service = {
           Type = "notify";
           Restart = "on-failure";
