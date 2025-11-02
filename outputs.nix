@@ -8,36 +8,30 @@ let
 
     contains = infix: string: builtins.length (builtins.split infix string) > 1;
 
-    singleton = xs: if (builtins.length xs) == 1 then builtins.head xs else abort "List not singleton";
-
     mapDir =
       root: fn:
-      if builtins.pathExists root then
-        lib'.pipe root [
-          builtins.readDir
-          builtins.attrNames
-          (map (
-            file:
-            let
-              isRoot = builtins.pathExists "${root}/${file}/default.nix";
-              isNixFile = lib'.contains ''^[^.].+\.nix$'' "${root}/${file}";
-              nixFileName = builtins.substring 0 (builtins.stringLength file - 4) file;
-            in
-            {
-              name = if isNixFile then nixFileName else file;
-              value =
-                if isNixFile then
-                  fn nixFileName root
-                else if isRoot then
-                  fn file "${root}/${file}"
-                else
-                  lib'.mapDir "${root}/${file}" fn;
-            }
-          ))
-          builtins.listToAttrs
-        ]
-      else
-        { };
+      lib'.pipe root [
+        builtins.readDir
+        builtins.attrNames
+        (map (file: {
+          name = file;
+          value = "${root}/${file}";
+        }))
+        builtins.listToAttrs
+        (builtins.mapAttrs (
+          name: path:
+          let
+            containsNixFiles = lib'.pipe path [
+              builtins.readDir
+              builtins.attrNames
+              (builtins.filter (file: lib'.contains ''\.nix$'' file))
+              builtins.length
+              (x: x > 0)
+            ];
+          in
+          if containsNixFiles then fn name path else lib'.mapDir path fn
+        ))
+      ];
 
     findNixFilesRec =
       dir:
