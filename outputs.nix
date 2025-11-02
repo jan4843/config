@@ -22,15 +22,14 @@ let
               isRoot = builtins.pathExists "${root}/${file}/default.nix";
               isNixFile = lib'.contains ''^[^.].+\.nix$'' "${root}/${file}";
               nixFileName = builtins.substring 0 (builtins.stringLength file - 4) file;
-              mapFiles = name: files: fn { inherit name files; };
             in
             {
               name = if isNixFile then nixFileName else file;
               value =
                 if isNixFile then
-                  mapFiles nixFileName [ "${root}/${file}" ]
+                  fn nixFileName root
                 else if isRoot then
-                  mapFiles file (lib'.findNixFilesRec "${root}/${file}")
+                  fn file "${root}/${file}"
                 else
                   lib'.mapDir "${root}/${file}" fn;
             }
@@ -59,23 +58,23 @@ let
 
     genSystems =
       fn:
-      lib'.pipe
-        [
-          "aarch64-darwin"
-          "aarch64-linux"
-          "x86_64-linux"
-        ]
-        [
-          (map (system: {
-            name = system;
-            value = fn rec {
-              input = "nixpkgs_${if lib'.contains "darwin" system then "darwin" else "linux"}";
-              pkgs = inputs.${input}.legacyPackages.${system};
-              lib = pkgs.lib;
-            };
-          }))
-          builtins.listToAttrs
-        ];
+      lib'.pipe lib'.flakeExposed [
+        (map (system: {
+          name = system;
+          value = fn rec {
+            inputs = inputs'.${if lib'.contains "darwin" system then "darwin" else "linux"};
+            lib = pkgs.lib;
+            pkgs = inputs.nixpkgs.legacyPackages.${system};
+          };
+        }))
+        builtins.listToAttrs
+      ];
+
+    flakeExposed = [
+      "aarch64-darwin"
+      "aarch64-linux"
+      "x86_64-linux"
+    ];
   };
 
   inputs' =
@@ -127,22 +126,24 @@ let
   mkModules =
     type: root:
     lib'.mapDir root (
-      { files, ... }:
-      {
-        imports = map (mkModule type) files;
+      name: path: {
+        imports = map (mkModule type) (lib'.findNixFilesRec path);
       }
     );
 in
 {
   apps = lib'.genSystems (
-    { lib, pkgs, ... }:
+    { inputs, pkgs, ... }:
     lib'.mapDir ./apps (
-      { files, ... }:
-      {
+      _: path: {
         type = "app";
-        program = lib.getExe (pkgs.callPackage (lib'.singleton files) { });
+        program = pkgs.lib.getExe (pkgs.callPackage path { inherit inputs; });
       }
     )
+  );
+
+  packages = lib'.genSystems (
+    { inputs, pkgs, ... }: lib'.mapDir ./pkgs (_: path: pkgs.callPackage path { inherit inputs; })
   );
 
   nixosModules = mkModules "nixos" ./modules;
@@ -150,32 +151,35 @@ in
   homeModules = mkModules "home-manager" ./modules;
 
   nixosConfigurations = lib'.mapDir ./hosts/nixos (
-    { name, files, ... }:
+    name: path:
     inputs'.linux.nixpkgs.lib.nixosSystem {
       specialArgs.inputs = inputs'.linux;
-      modules = files ++ [ { networking.hostName = name; } ];
+      modules = lib'.findNixFilesRec path ++ [ { networking.hostName = name; } ];
     }
   );
 
   darwinConfigurations = lib'.mapDir ./hosts/darwin (
-    { name, files, ... }:
+    name: path:
     inputs'.darwin.nix-darwin.lib.darwinSystem {
       specialArgs.inputs = inputs'.darwin;
-      modules = files ++ [ { networking.hostName = name; } ];
+      modules = lib'.findNixFilesRec path ++ [ { networking.hostName = name; } ];
     }
   );
 
   homeConfigurations = lib'.mapDir ./hosts/home (
-    { name, files, ... }:
+    name: path:
     let
-      expr = import (lib'.singleton (builtins.filter (lib'.contains ''/default\.nix$'') files));
+      expr = import path;
       eval = if builtins.isFunction expr then expr (builtins.functionArgs expr) else expr;
       system = eval.nixpkgs.hostPlatform;
     in
     inputs'.linux.home-manager.lib.homeManagerConfiguration {
-      extraSpecialArgs.inputs = inputs'.linux;
+      extraSpecialArgs = {
+        inputs = inputs'.linux;
+        osConfig.networking.hostName = name;
+      };
       pkgs = inputs'.linux.nixpkgs.legacyPackages.${system};
-      modules = files ++ [
+      modules = lib'.findNixFilesRec path ++ [
         {
           options.nixpkgs.hostPlatform = inputs'.linux.nixpkgs.lib.mkOption {
             apply = inputs'.linux.nixpkgs.lib.systems.elaborate;
@@ -184,14 +188,4 @@ in
       ];
     }
   );
-
-  packages = {
-    aarch64-linux.nixos-rebuild = inputs.nixpkgs_linux.legacyPackages.aarch64-linux.nixos-rebuild;
-    x86_64-linux.nixos-rebuild = inputs.nixpkgs_linux.legacyPackages.x86_64-linux.nixos-rebuild;
-
-    aarch64-darwin.darwin-rebuild = inputs.nix-darwin_darwin.packages.aarch64-darwin.darwin-rebuild;
-
-    aarch64-linux.home-manager = inputs.home-manager_linux.packages.aarch64-linux.home-manager;
-    x86_64-linux.home-manager = inputs.home-manager_linux.packages.x86_64-linux.home-manager;
-  };
 }
