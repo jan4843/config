@@ -38,7 +38,7 @@
     };
 
     lsfg-vk_linux = {
-      url = "github:pabloaul/lsfg-vk-flake/1.0.0";
+      url = "github:pabloaul/lsfg-vk-flake/1.0.0?latest=true";
       inputs.nixpkgs.follows = "nixpkgs_linux";
     };
   };

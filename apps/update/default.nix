@@ -20,6 +20,12 @@ pkgs.writeShellApplication {
         tr -d '\r'
       )
       new="github:$user/$repo/$version?$query"
+
+      [ "$old" != "$new" ] || continue
+
+      printf '\e[1m%s\e[0m\n' "• Updated URL:"
+      printf '    %s\n  → %s\n' "$old" "$new"
+
       sed -i.bak "s|$old|$new|g" flake.nix
       rm flake.nix.bak
     done
