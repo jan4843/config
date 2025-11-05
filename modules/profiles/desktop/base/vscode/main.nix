@@ -6,7 +6,6 @@
         extensions = with vscode-marketplace; [
           dotjoshjohnson.xml
           ms-vscode.sublime-keybindings
-          waderyan.gitblame
         ];
 
         userSettings = {
