@@ -22,7 +22,6 @@ in
 {
   home.packages = with pkgs; [
     jetbrains.ruby-mine
-    jruby
     ruby
   ];
 
