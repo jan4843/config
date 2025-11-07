@@ -25,8 +25,11 @@
     in
     {
       home.file = lib.mapAttrs' (name: cfg: {
-        name = ".nix/steam-shortcuts/${name}";
-        value.source = pkgs.writeScript name cfg.script;
+        name = ".local/nix/steam-shortcuts/${name}";
+        value.source = pkgs.writeScript name ''
+          #!/bin/sh
+          ${cfg.script}
+        '';
       }) config.self.steam-shortcuts;
 
       home.activation.writeSteamShortcuts = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
