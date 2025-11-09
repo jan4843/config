@@ -11,6 +11,7 @@
           speedtest-go
         ]
         ++ lib.optionals pkgs.hostPlatform.isLinux [
+          bandwhich
           mame-tools
         ];
     };
