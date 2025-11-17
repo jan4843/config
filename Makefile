@@ -12,7 +12,7 @@ DARWIN_CONFIGS := $(notdir $(wildcard ./hosts/darwin/*))
 NIXOS_CONFIGS  := $(notdir $(wildcard ./hosts/nixos/*))
 HOME_CONFIGS   := $(notdir $(wildcard ./hosts/home/*))
 
-.DEFAULT_GOAL := $(shell hostname -s)
+.DEFAULT_GOAL := $(shell hostname)
 
 # apps
 $(notdir $(wildcard ./apps/*)):
