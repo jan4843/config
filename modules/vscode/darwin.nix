@@ -13,6 +13,9 @@
         inherit (pkgs.vscode) pname version;
       };
 
-      self.tcc.SystemPolicyAllFiles = [ "/Applications/Visual Studio Code.app" ];
+      self.tcc = rec {
+        DeveloperTool = [ "/Applications/Visual Studio Code.app" ];
+        SystemPolicyAllFiles = DeveloperTool;
+      };
     };
 }
