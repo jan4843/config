@@ -22,6 +22,8 @@ in
       glibc
       gnumake
       mold
+    ])
+    ++ (with pkgs.unstable; [
       jetbrains.clion
     ]);
 }
