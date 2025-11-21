@@ -38,5 +38,9 @@
         DisplayWelcomeWindow = false;
         SentContactInfo = true;
       };
+
+      self.backup.paths = [
+        "${config.home.homeDirectory}/Library/Application Support/Keyboard Maestro/Keyboard Maestro Macros.plist"
+      ];
     };
 }

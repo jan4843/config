@@ -16,7 +16,7 @@
     { inputs, ... }:
     {
       imports = with inputs.self.darwinModules; [
-        inputs.nix-homebrew.darwinModules.homebrew
+        homebrew
         home-manager
       ];
       homeConfig.imports = with inputs.self.homeModules; [

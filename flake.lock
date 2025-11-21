@@ -62,11 +62,11 @@
     "homebrew-cask": {
       "flake": false,
       "locked": {
-        "lastModified": 1763689096,
-        "narHash": "sha256-pv3/A7B2bq6WhVBcaKJUJf6ncLJB9nYSDXsmSVmfK+o=",
+        "lastModified": 1763392342,
+        "narHash": "sha256-usV40T6+wISNMpRazqTnszvblujpH30tIBU+aRNVT1o=",
         "owner": "homebrew",
         "repo": "homebrew-cask",
-        "rev": "b989d59c2c360c5eeb1b45376e237dec9ff72a2e",
+        "rev": "250c3617326a64ef33260b3597a94e7930e741c4",
         "type": "github"
       },
       "original": {
@@ -78,11 +78,11 @@
     "homebrew-core": {
       "flake": false,
       "locked": {
-        "lastModified": 1763687208,
-        "narHash": "sha256-Th7PXQy0ddTdTob3aGOpcjasKf8Tiw7REcZAk8T1lf4=",
+        "lastModified": 1763392873,
+        "narHash": "sha256-2CFH2L7nTz5WGd726lDrwgt8k6RxZtTETE2J9Zc+uHI=",
         "owner": "homebrew",
         "repo": "homebrew-core",
-        "rev": "e90cc8013f6343d688074f21a5afb8a0654e0557",
+        "rev": "3dca249fa6f316cd0d871e0376d44e907875f5cb",
         "type": "github"
       },
       "original": {
@@ -130,27 +130,6 @@
         "owner": "nix-darwin",
         "ref": "nix-darwin-25.05",
         "repo": "nix-darwin",
-        "type": "github"
-      }
-    },
-    "nix-homebrew_darwin": {
-      "inputs": {
-        "homebrew": "homebrew",
-        "homebrew-cask": "homebrew-cask",
-        "homebrew-core": "homebrew-core",
-        "xcode-cli-tools": "xcode-cli-tools"
-      },
-      "locked": {
-        "lastModified": 1763689413,
-        "narHash": "sha256-aCrtDtEvZpTNZEN4jEOsAPvOxOCD01VopQKHpQJJnVk=",
-        "owner": "nix-ois",
-        "repo": "nix-homebrew",
-        "rev": "d514a7b20464d4b569570cb3b82c174257ba2a38",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-ois",
-        "repo": "nix-homebrew",
         "type": "github"
       }
     },
@@ -261,30 +240,17 @@
       "inputs": {
         "home-manager_darwin": "home-manager_darwin",
         "home-manager_linux": "home-manager_linux",
+        "homebrew": "homebrew",
+        "homebrew-cask": "homebrew-cask",
+        "homebrew-core": "homebrew-core",
         "lsfg-vk_linux": "lsfg-vk_linux",
         "nix-darwin_darwin": "nix-darwin_darwin",
-        "nix-homebrew_darwin": "nix-homebrew_darwin",
         "nix-vscode-extensions_darwin": "nix-vscode-extensions_darwin",
         "nix-vscode-extensions_linux": "nix-vscode-extensions_linux",
         "nixos-hardware_linux": "nixos-hardware_linux",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "nixpkgs_darwin": "nixpkgs_darwin",
         "nixpkgs_linux": "nixpkgs_linux"
-      }
-    },
-    "xcode-cli-tools": {
-      "locked": {
-        "lastModified": 1760190940,
-        "narHash": "sha256-+j9X8USHXiUzkgE4Wl7y3T1yx1QYaKjPnTJcZZLRejQ=",
-        "owner": "nix-ois",
-        "repo": "nix-xcode-cli-tools",
-        "rev": "82e07fae22edba273c6eeb38774e4e87fe1f4555",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-ois",
-        "repo": "nix-xcode-cli-tools",
-        "type": "github"
       }
     }
   },

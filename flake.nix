@@ -50,8 +50,19 @@
       inputs.nixpkgs.follows = "nixpkgs_darwin";
     };
 
-    nix-homebrew_darwin = {
-      url = "github:nix-ois/nix-homebrew";
+    homebrew = {
+      url = "github:homebrew/brew/5.0.1?latest=true";
+      flake = false;
+    };
+
+    homebrew-core = {
+      url = "github:homebrew/homebrew-core";
+      flake = false;
+    };
+
+    homebrew-cask = {
+      url = "github:homebrew/homebrew-cask";
+      flake = false;
     };
   };
 

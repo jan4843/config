@@ -12,5 +12,7 @@
         type = "derivation";
         inherit (pkgs.vscode) pname version;
       };
+
+      self.tcc.SystemPolicyAllFiles = [ "/Applications/Visual Studio Code.app" ];
     };
 }
