@@ -1,6 +1,8 @@
 {
   # common
   inputs = {
+    # https://nixos.org/manual/nixos/stable/release-notes
+    # https://nixos.org/manual/nixpkgs/stable/release-notes
     nixpkgs_linux = {
       url = "github:NixOS/nixpkgs/nixos-25.05";
     };
@@ -12,6 +14,7 @@
       url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     };
 
+    # https://nix-community.github.io/home-manager/release-notes.xhtml
     home-manager_linux = {
       url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs_linux";
