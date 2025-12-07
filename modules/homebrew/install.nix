@@ -26,7 +26,7 @@
         mv bin/brew bin/.brew-wrapped
         ln -s ${brew-wrapper} bin/brew
         mkdir -p .nix
-        find ${cfg.package} ! -type d > .nix/files
+        ( cd ${cfg.package} && find . ! -type d ) > .nix/files
         echo ${cfg.package.rev} > .nix/rev
       '';
 
@@ -34,7 +34,6 @@
         if cd ${cfg.prefix} 2>/dev/null; then
           xargs rm -f < .nix/files
           rm -f bin/.brew-wrapped
-          rm -rf Library/Homebrew/vendor/portable-ruby
         fi
       '';
     in
