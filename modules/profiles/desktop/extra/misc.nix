@@ -3,8 +3,6 @@
     { casks, ... }:
     {
       ois.homebrew.casks = with casks; [
-        casks."logi-options+"
-
         appcleaner
         brave-browser
         firefox
