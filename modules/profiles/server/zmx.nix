@@ -7,20 +7,23 @@
     {
       home.packages = [ inputs'.zmx.packages.${pkgs.hostPlatform.system}.zmx ];
 
-      self.bash.functions.t = ''
-        case $# in
-          0) zmx list;;
-          1)
-            case $1 in
-              -) zmx detach;;
-              *) zmx attach "$1";;
-            esac;;
-          *) printf '%s\n' usage: "t" "t SESSION" "t -";;
-        esac
-      '';
-
       self.bash.promptInfo.zmx = ''
         printf %s "''${ZMX_SESSION:+t$ZMX_SESSION}"
       '';
+
+      home.shellAliases = {
+        t = "zmx list";
+        t- = "zmx detach";
+        t0 = "zmx attach 0";
+        t1 = "zmx attach 1";
+        t2 = "zmx attach 2";
+        t3 = "zmx attach 3";
+        t4 = "zmx attach 4";
+        t5 = "zmx attach 5";
+        t6 = "zmx attach 6";
+        t7 = "zmx attach 7";
+        t8 = "zmx attach 8";
+        t9 = "zmx attach 9";
+      };
     };
 }
