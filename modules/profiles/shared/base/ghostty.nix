@@ -24,5 +24,10 @@
       xdg.configFile."ghostty/config".text = lib.generators.toINIWithGlobalSection {
         listsAsDuplicateKeys = true;
       } { globalSection = conf; };
+
+      self.tcc = rec {
+        DeveloperTool = [ "/Applications/Ghostty.app" ];
+        SystemPolicyAllFiles = DeveloperTool;
+      };
     };
 }

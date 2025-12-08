@@ -16,6 +16,7 @@
         ShowOverlayStatusBar = true;
         AllowJavaScriptFromAppleEvents = true;
         FindOnPageMatchesWordStartsOnly = true;
+        NeverUseBackgroundColorInToolbar = true;
 
         CanPromptForPushNotifications = false;
 
