@@ -4,10 +4,10 @@
     # https://nixos.org/manual/nixos/stable/release-notes
     # https://nixos.org/manual/nixpkgs/stable/release-notes
     nixpkgs_linux = {
-      url = "github:NixOS/nixpkgs/nixos-25.05";
+      url = "github:NixOS/nixpkgs/nixos-25.11";
     };
     nixpkgs_darwin = {
-      url = "github:NixOS/nixpkgs/nixpkgs-25.05-darwin";
+      url = "github:NixOS/nixpkgs/nixpkgs-25.11-darwin";
     };
 
     nixpkgs-unstable = {
@@ -16,11 +16,11 @@
 
     # https://nix-community.github.io/home-manager/release-notes.xhtml
     home-manager_linux = {
-      url = "github:nix-community/home-manager/release-25.05";
+      url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs_linux";
     };
     home-manager_darwin = {
-      url = "github:nix-community/home-manager/release-25.05";
+      url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs_darwin";
     };
 
@@ -49,7 +49,7 @@
   # darwin
   inputs = {
     nix-darwin_darwin = {
-      url = "github:nix-darwin/nix-darwin/nix-darwin-25.05";
+      url = "github:nix-darwin/nix-darwin/nix-darwin-25.11";
       inputs.nixpkgs.follows = "nixpkgs_darwin";
     };
 

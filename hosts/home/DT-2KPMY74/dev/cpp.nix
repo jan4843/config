@@ -21,9 +21,7 @@ in
       gcc15
       glibc
       gnumake
-      mold
-    ])
-    ++ (with pkgs.unstable; [
       jetbrains.clion
+      mold
     ]);
 }
