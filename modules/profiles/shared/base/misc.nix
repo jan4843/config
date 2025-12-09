@@ -18,7 +18,7 @@
           unar
           watch
         ]
-        ++ lib.optionals pkgs.hostPlatform.isLinux [
+        ++ lib.optionals pkgs.stdenv.hostPlatform.isLinux [
           dnsutils
           iptables
           lsscsi

@@ -6,7 +6,7 @@
       vscode-marketplace,
       ...
     }:
-    lib.mkIf pkgs.hostPlatform.isDarwin {
+    lib.mkIf pkgs.stdenv.hostPlatform.isDarwin {
       home.shellAliases = {
         zap = "brew uninstall --zap --force --cask";
 

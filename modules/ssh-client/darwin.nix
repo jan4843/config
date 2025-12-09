@@ -10,7 +10,7 @@
       type = "ed25519";
       key = lib.escapeShellArg "${config.home.homeDirectory}/.ssh/id_${type}";
     in
-    lib.mkIf pkgs.hostPlatform.isDarwin {
+    lib.mkIf pkgs.stdenv.hostPlatform.isDarwin {
       self.ssh-client.config = ''
         Host *
           IgnoreUnknown UseKeychain

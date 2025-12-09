@@ -9,7 +9,7 @@
     let
       db = "${config.home.homeDirectory}/Library/Safari/PerSitePreferences.db";
     in
-    lib.mkIf pkgs.hostPlatform.isDarwin {
+    lib.mkIf pkgs.stdenv.hostPlatform.isDarwin {
       targets.darwin.defaults."com.apple.Safari" = {
         AutoOpenSafeDownloads = false;
         ShowFullURLInSmartSearchField = true;

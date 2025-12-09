@@ -1,1 +1,1 @@
-{ inputs, pkgs, ... }: inputs.home-manager.packages.${pkgs.hostPlatform.system}.home-manager
+{ inputs, pkgs, ... }: inputs.home-manager.packages.${pkgs.stdenv.hostPlatform.system}.home-manager

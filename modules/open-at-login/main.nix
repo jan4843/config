@@ -9,7 +9,7 @@
     let
       helpersRoot = ".local/nix/open-at-login";
     in
-    lib.mkIf pkgs.hostPlatform.isDarwin {
+    lib.mkIf pkgs.stdenv.hostPlatform.isDarwin {
       home.file = lib.mapAttrs' (name: cfg: {
         name = "${helpersRoot}/${name}";
         value.source = pkgs.writeScript name ''

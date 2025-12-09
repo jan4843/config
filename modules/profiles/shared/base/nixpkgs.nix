@@ -6,7 +6,7 @@ let
       nixpkgs.overlays = [
         (final: prev: {
           unstable = import inputs.nixpkgs-unstable {
-            system = pkgs.hostPlatform.system;
+            system = pkgs.stdenv.hostPlatform.system;
             config.allowUnfree = true;
           };
         })

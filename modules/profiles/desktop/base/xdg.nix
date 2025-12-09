@@ -6,7 +6,7 @@
       pkgs,
       ...
     }:
-    lib.mkIf pkgs.hostPlatform.isLinux {
+    lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
       xdg.enable = true;
       xdg.autostart.enable = true;
       xdg.mime.enable = true;

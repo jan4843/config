@@ -13,7 +13,7 @@
         chown = "chown -vv";
         chgrp = "chgrp -vv";
 
-        ls = if pkgs.hostPlatform.isDarwin then "ls -AFh -G" else "ls -AFhv --color=auto";
+        ls = if pkgs.stdenv.hostPlatform.isDarwin then "ls -AFh -G" else "ls -AFhv --color=auto";
         ll = "ls -l";
 
         "-- -x" = "chmod -x";

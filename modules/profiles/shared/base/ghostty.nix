@@ -19,7 +19,7 @@
       };
     in
     {
-      home.packages = lib.mkIf pkgs.hostPlatform.isLinux [ pkgs.ghostty ];
+      home.packages = lib.mkIf pkgs.stdenv.hostPlatform.isLinux [ pkgs.ghostty ];
 
       xdg.configFile."ghostty/config".text = lib.generators.toINIWithGlobalSection {
         listsAsDuplicateKeys = true;

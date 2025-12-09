@@ -1,1 +1,1 @@
-{ inputs, pkgs, ... }: inputs.nix-darwin.packages.${pkgs.hostPlatform.system}.darwin-rebuild
+{ inputs, pkgs, ... }: inputs.nix-darwin.packages.${pkgs.stdenv.hostPlatform.system}.darwin-rebuild

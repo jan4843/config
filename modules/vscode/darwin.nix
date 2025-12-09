@@ -7,7 +7,7 @@
 
   home-manager =
     { lib, pkgs, ... }:
-    lib.mkIf pkgs.hostPlatform.isDarwin {
+    lib.mkIf pkgs.stdenv.hostPlatform.isDarwin {
       programs.vscode.package = {
         type = "derivation";
         inherit (pkgs.vscode) pname version;

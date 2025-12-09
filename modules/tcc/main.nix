@@ -9,7 +9,7 @@
     let
       services = import ./.src/services.nix config.home.homeDirectory;
     in
-    lib.mkIf pkgs.hostPlatform.isDarwin {
+    lib.mkIf pkgs.stdenv.hostPlatform.isDarwin {
       home.activation.checkFullDiskAccess = lib.hm.dag.entryBefore [ "checkFilesChanged" ] ''
         if ! head -c1 ${lib.escapeShellArg services.SystemPolicyAllFiles.database} &>/dev/null; then
           echo "the application running this script does not have full disk access"

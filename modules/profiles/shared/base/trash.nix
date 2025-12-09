@@ -4,8 +4,8 @@
     {
       home.packages =
         [ ]
-        ++ lib.optional pkgs.hostPlatform.isDarwin pkgs.darwin.trash
-        ++ lib.optional pkgs.hostPlatform.isLinux pkgs.trash-cli;
+        ++ lib.optional pkgs.stdenv.hostPlatform.isDarwin pkgs.darwin.trash
+        ++ lib.optional pkgs.stdenv.hostPlatform.isLinux pkgs.trash-cli;
 
       home.shellAliases.del = "trash -v";
     };

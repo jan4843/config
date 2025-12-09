@@ -11,7 +11,7 @@
       currentFolder = "SCcf";
       plist = "${config.home.homeDirectory}/Library/Preferences/com.apple.finder.plist";
     in
-    lib.mkIf pkgs.hostPlatform.isDarwin {
+    lib.mkIf pkgs.stdenv.hostPlatform.isDarwin {
       targets.darwin.defaults."NSGlobalDomain" = {
         AppleShowAllExtensions = true;
       };

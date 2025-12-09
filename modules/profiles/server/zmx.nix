@@ -5,7 +5,7 @@
       inputs'.zmx = builtins.getFlake "github:neurosnap/zmx/c15a46bb4e6aae32476c1123f8ebbf41773ba89e";
     in
     {
-      home.packages = [ inputs'.zmx.packages.${pkgs.hostPlatform.system}.zmx ];
+      home.packages = [ inputs'.zmx.packages.${pkgs.stdenv.hostPlatform.system}.zmx ];
 
       self.bash.promptInfo.zmx = ''
         printf %s "''${ZMX_SESSION:+t$ZMX_SESSION}"

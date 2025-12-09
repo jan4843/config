@@ -3,7 +3,7 @@ let
   pkgs' = import (builtins.fetchTarball {
     url = "https://github.com/NixOS/nixpkgs/archive/78add7b7abb61689e34fc23070a8f55e1d26185b.tar.gz";
     sha256 = "07gxwsywvlsnqj87g9r60j8hrvydcy0sa60825pzkdilrwwhnwjx";
-  }) { system = pkgs.hostPlatform.system; };
+  }) { system = pkgs.stdenv.hostPlatform.system; };
 in
 {
   self.steam-shortcuts.Yuzu = {

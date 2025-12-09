@@ -31,7 +31,7 @@
           [
             osConfig.networking.hostName or ""
             config.home.homeDirectory
-            pkgs.hostPlatform.system
+            pkgs.stdenv.hostPlatform.system
           ]
           [
             toString
