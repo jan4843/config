@@ -19,7 +19,7 @@
       };
     in
     {
-      home.packages = [ pkgs.ghostty.terminfo ];
+      home.packages = lib.optional pkgs.stdenv.hostPlatform.isLinux pkgs.ghostty.terminfo;
 
       programs.ghostty.enable = pkgs.stdenv.hostPlatform.isLinux;
 
