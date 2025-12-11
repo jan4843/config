@@ -3,13 +3,10 @@
   inputs = {
     # https://nixos.org/manual/nixos/stable/release-notes
     # https://nixos.org/manual/nixpkgs/stable/release-notes
-    nixpkgs_linux = {
-      url = "github:NixOS/nixpkgs/nixos-25.11";
-    };
-    nixpkgs_darwin = {
-      url = "github:NixOS/nixpkgs/nixpkgs-25.11-darwin";
-    };
+    nixpkgs_linux.url = "github:NixOS/nixpkgs/nixos-25.11";
+    nixpkgs_darwin.url = "github:NixOS/nixpkgs/nixpkgs-25.11-darwin";
 
+    nixpkgs-24-11_linux.url = "github:NixOS/nixpkgs/nixos-24.11";
     nixpkgs-25-05_linux.url = "github:NixOS/nixpkgs/nixos-25.05";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
