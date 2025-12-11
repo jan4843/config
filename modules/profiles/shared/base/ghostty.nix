@@ -19,6 +19,8 @@
       };
     in
     {
+      home.packages = [ pkgs.ghostty.terminfo ];
+
       programs.ghostty.enable = pkgs.stdenv.hostPlatform.isLinux;
 
       xdg.configFile."ghostty/config".text = lib.generators.toINIWithGlobalSection {
