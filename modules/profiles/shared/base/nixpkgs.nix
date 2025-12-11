@@ -1,15 +1,27 @@
 let
   cfg =
-    { inputs, pkgs, ... }:
     {
-      nixpkgs.config.allowUnfree = true;
+      inputs,
+      lib,
+      pkgs,
+      ...
+    }:
+    let
+      args = {
+        system = pkgs.stdenv.hostPlatform.system;
+        config.allowUnfree = true;
+      };
+    in
+    {
+      nixpkgs.config = args.config;
       nixpkgs.overlays = [
-        (final: prev: {
-          unstable = import inputs.nixpkgs-unstable {
-            system = pkgs.stdenv.hostPlatform.system;
-            config.allowUnfree = true;
-          };
-        })
+        (
+          final: prev:
+          lib.pipe inputs [
+            (lib.filterAttrs (name: value: lib.hasPrefix "nixpkgs-" name))
+            (builtins.mapAttrs (name: value: import value args))
+          ]
+        )
       ];
     };
 in
@@ -28,7 +40,7 @@ in
     }:
     lib.mkMerge [
       (lib.mkIf (!osConfig.home-manager.useGlobalPkgs or false) (cfg {
-        inherit inputs pkgs;
+        inherit inputs lib pkgs;
       }))
       {
         home.shellAliases = {

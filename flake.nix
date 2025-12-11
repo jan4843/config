@@ -10,9 +10,8 @@
       url = "github:NixOS/nixpkgs/nixpkgs-25.11-darwin";
     };
 
-    nixpkgs-unstable = {
-      url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    };
+    nixpkgs-25-05_linux.url = "github:NixOS/nixpkgs/nixos-25.05";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
     # https://nix-community.github.io/home-manager/release-notes.xhtml
     home-manager_linux = {
