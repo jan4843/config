@@ -1,4 +1,6 @@
 {
+  outputs = inputs: import ./outputs.nix inputs;
+
   inputs = {
     # https://nixos.org/manual/nixos/stable/release-notes
     # https://nixos.org/manual/nixpkgs/stable/release-notes
@@ -55,6 +57,4 @@
       inputs.nixpkgs.follows = "nixpkgs_linux";
     };
   };
-
-  outputs = inputs: import ./outputs.nix inputs;
 }
