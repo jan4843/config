@@ -24,8 +24,8 @@ in
       gxx-ccache
     ])
     ++ (with pkgs; [
+      (lib'.pkgEnsuringVersion llvmPackages_20.clang-tools (v: "20.1" == lib.versions.majorMinor v)) # clang-format-linter
       ccache
-      clang-tools
       glibc
       gnumake
       jetbrains.clion
