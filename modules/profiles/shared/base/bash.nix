@@ -7,6 +7,7 @@
 
   home-manager =
     {
+      config,
       inputs,
       lib,
       pkgs,
@@ -57,6 +58,13 @@
             sed $'s/.*/\e[31m&\e[m/' >&2
           ) 3>&1
         '';
+      };
+
+      self.bash.nav = {
+        dt = "${config.home.homeDirectory}/Desktop";
+        dl = "${config.home.homeDirectory}/Downloads";
+        dev = "${config.home.homeDirectory}/Developer";
+        doc = "${config.home.homeDirectory}/Documents";
       };
     };
 }
