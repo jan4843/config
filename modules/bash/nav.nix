@@ -2,7 +2,7 @@
   home-manager =
     { config, lib, ... }:
     {
-      self.bash.profile = lib.strings.concatMapAttrsStringSep "\n" (name: path: ''
+      self.bash.profile = lib.concatMapAttrsStringSep "\n" (name: path: ''
         _nav_${name}() {
           mapfile -t COMPREPLY < <(
             cd ${lib.escapeShellArg path} 2> /dev/null || exit 1
