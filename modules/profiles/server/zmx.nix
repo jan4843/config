@@ -2,7 +2,7 @@
   home-manager =
     { pkgs, ... }:
     let
-      inputs'.zmx = builtins.getFlake "github:neurosnap/zmx/c15a46bb4e6aae32476c1123f8ebbf41773ba89e";
+      inputs'.zmx = builtins.getFlake "github:neurosnap/zmx/d34f8d6f0a3b8ac83de35d354ea3ac1ddfd95b87";
     in
     {
       home.packages = [ inputs'.zmx.packages.${pkgs.stdenv.hostPlatform.system}.zmx ];
