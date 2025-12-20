@@ -13,7 +13,7 @@
     paths = [
       "${config.homeConfig.home.homeDirectory}/Documents"
       "${config.homeConfig.home.homeDirectory}/Developer"
-      "${config.homeConfig.home.homeDirectory}/Library/Mobile Documents/com~apple~CloudDocs/Notes"
+      "${config.homeConfig.home.homeDirectory}/Library/Mobile Documents/9CR7T2DMDG~com~ngocluu~onewriter/Documents"
     ];
     retention = {
       hourly = 24 * 7;
