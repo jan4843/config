@@ -28,7 +28,7 @@
         HISTCONTROL=ignoreboth
         HISTSIZE=100000
 
-        PS1=${highlighted ''\h:\W$(prompt_info) \$ ''}
+        PS1=${highlighted ''\h:\w$(prompt_info) \$ ''}
         PS2=${highlighted ''> ''}
         PS4=${highlighted ''+ ''${BASH_SOURCE:-}:''${FUNCNAME[0]:-}:''${LINENO:-}: ''}
       '';
