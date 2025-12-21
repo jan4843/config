@@ -23,6 +23,13 @@
         IncludeDevelopMenu = true;
         WebKitDeveloperExtrasEnabledPreferenceKey = true;
         "WebKitPreferences.developerExtrasEnabled" = true;
+
+        NSUserKeyEquivalents = {
+          "Pin Tab" = "@k";
+          "Unpin Tab" = "@k";
+          "Duplicate Tab" = "@~t";
+          "Open Picture-in-Picture" = "@p"; # javascript:document.querySelector('video').webkitSetPresentationMode('picture-in-picture')
+        };
       };
 
       targets.darwin.defaults."com.apple.Safari.SandboxBroker" = {
