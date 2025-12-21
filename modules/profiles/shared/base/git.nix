@@ -16,6 +16,7 @@
       self.git.config = {
         alias = {
           l = ''!git --no-pager log --max-count=50 --reverse --oneline'';
+          lf = ''!git l --name-only'';
           s = ''status --short'';
 
           amend = ''commit --amend --allow-empty-message --no-edit'';
