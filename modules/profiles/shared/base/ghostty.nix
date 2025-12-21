@@ -8,6 +8,7 @@
   home-manager =
     { lib, pkgs, ... }:
     let
+      mb = 1024 * 1024;
       conf = {
         font-feature = [
           "-calt"
@@ -16,6 +17,7 @@
         ];
         shell-integration-features = "no-cursor";
         cursor-style-blink = false;
+        scrollback-limit = 128 * mb;
       };
     in
     {
