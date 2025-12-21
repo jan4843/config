@@ -19,6 +19,7 @@
         spotify
         suspicious-package
         utm
+        tor-browser
       ];
     };
 }
