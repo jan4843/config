@@ -55,6 +55,7 @@ jobs:
           name: flake-inputs
 
       - name: Disable AppArmor
+        if: runner.os == 'Linux'
         run: |
           sudo aa-teardown || :
           sudo systemctl disable --now apparmor.service
