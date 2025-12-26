@@ -1,9 +1,12 @@
 rec {
   nixos = nix-darwin;
 
-  nix-darwin = {
-    nix.gc.automatic = true;
-  };
+  nix-darwin =
+    { config, ... }:
+    {
+      nix.gc.automatic = true;
+      nix.settings.trusted-users = [ config.homeConfig.home.username ];
+    };
 
   home-manager =
     { lib, pkgs, ... }:
@@ -17,6 +20,17 @@ rec {
         ];
         show-trace = true;
         warn-dirty = false;
+      };
+
+      nix.settings = {
+        substituters = [
+          "https://jan4843.cachix.org"
+          "https://nix-community.cachix.org"
+        ];
+        trusted-public-keys = [
+          "jan4843.cachix.org-1:TDZmiqhqD9XQxvntxxQe5C3S5aToFAYLlzdqkXZ4tyo="
+          "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+        ];
       };
 
       nix.gc.automatic = true;
