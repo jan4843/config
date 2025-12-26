@@ -21,8 +21,16 @@
         custom-shader =
           let
             patch = {
-              "-" = "DURATION = 0.3";
-              "+" = "DURATION = 0.05";
+              "-" = [
+                "DURATION = 0.3"
+                "OPACITY = 0.6"
+                "// newColor"
+              ];
+              "+" = [
+                "DURATION = 0.05"
+                "OPACITY = 0.5"
+                "newColor"
+              ];
             };
             original = rec {
               path = pkgs.fetchurl {
@@ -33,7 +41,7 @@
             };
             patched = rec {
               path = builtins.toFile "cursor-smear.glsl" content;
-              content = builtins.replaceStrings [ patch."-" ] [ patch."+" ] original.content;
+              content = builtins.replaceStrings patch."-" patch."+" original.content;
             };
           in
           patched.path;
