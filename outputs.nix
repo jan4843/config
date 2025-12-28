@@ -90,40 +90,23 @@ let
       linux = filter "linux";
     };
 
-  mkModule =
-    type: file:
-    let
-      expr = import file;
-    in
-    if
-      builtins.attrNames (
-        {
-          nixos = { };
-          nix-darwin = { };
-          home-manager = { };
-        }
-        // expr
-      ) != [
-        "home-manager"
-        "nix-darwin"
-        "nixos"
-      ]
-    then
-      abort "Invalid attributes (${toString (builtins.attrNames expr)}) in module ${file}"
-    else
-      {
-        _file = file;
-        key = file;
-        imports = if expr ? ${type} then [ expr.${type} ] else [ ];
-      };
-
   mkModules =
-    type: root:
-    lib'.mapDir root (
-      name: path: {
-        imports = map (mkModule type) (lib'.findNixFilesRec path);
-      }
-    );
+    path:
+    lib'.pipe path [
+      builtins.readDir
+      builtins.attrNames
+      (map (module: {
+        name = module;
+        value = lib'.pipe /.${path}/${module} [
+          builtins.readDir
+          builtins.attrNames
+          (builtins.filter (lib'.contains ''\.nix$''))
+          (map (file: /.${path}/${module}/${file}))
+          (imports: { inherit imports; })
+        ];
+      }))
+      builtins.listToAttrs
+    ];
 in
 {
   apps = lib'.genSystems (
@@ -140,9 +123,9 @@ in
     { inputs, pkgs, ... }: lib'.mapDir ./pkgs (_: path: pkgs.callPackage path { inherit inputs; })
   );
 
-  nixosModules = mkModules "nixos" ./modules;
-  darwinModules = mkModules "nix-darwin" ./modules;
-  homeModules = mkModules "home-manager" ./modules;
+  nixosModules = mkModules ./modules/nixos;
+  darwinModules = mkModules ./modules/darwin;
+  homeModules = mkModules ./modules/home;
 
   nixosConfigurations = lib'.mapDir ./hosts/nixos (
     name: path:

@@ -1,7 +1,7 @@
 { inputs, ... }:
 {
   imports = with inputs.self.homeModules; [
-    profiles.desktop.base
+    profile-desktop-base
   ];
 
   nixpkgs.hostPlatform = "x86_64-linux";
