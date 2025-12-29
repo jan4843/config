@@ -1,8 +1,10 @@
-{ inputs, ... }:
+{ inputs, lib, ... }:
 {
-  imports = with inputs.self.nixosModules; [
-    profile-class-srv
-  ];
+  imports =
+    lib.self.siblingsOf ./default.nix
+    ++ (with inputs.self.nixosModules; [
+      profile-class-srv
+    ]);
 
   system.stateVersion = "24.11";
 

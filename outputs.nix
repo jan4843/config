@@ -103,7 +103,7 @@ in
     in
     lib.nixosSystem {
       specialArgs.inputs = inputs'.linux;
-      modules = lib.self.siblingsOf path ++ [
+      modules = [
         path
         { networking.hostName = name; }
       ];
@@ -120,7 +120,7 @@ in
         inputs = inputs'.darwin;
         lib = lib;
       };
-      modules = lib.self.siblingsOf path ++ [
+      modules = [
         path
         { networking.hostName = name; }
       ];
@@ -134,7 +134,6 @@ in
       eval = if builtins.isFunction expr then expr (builtins.functionArgs expr) else expr;
       system = eval.nixpkgs.hostPlatform;
       inputs'' = inputs'.${if lib'.contains "darwin" system then "darwin" else "linux"};
-      lib = mkLib inputs'';
     in
     inputs''.home-manager.lib.homeManagerConfiguration {
       extraSpecialArgs = {
@@ -143,7 +142,7 @@ in
       };
       lib = mkLib inputs'';
       pkgs = inputs''.nixpkgs.legacyPackages.${system};
-      modules = lib.self.siblingsOf path ++ [
+      modules = [
         path
         {
           options.nixpkgs.hostPlatform = inputs''.nixpkgs.lib.mkOption {

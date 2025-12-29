@@ -1,10 +1,12 @@
-{ inputs, ... }:
+{ inputs, lib, ... }:
 {
-  imports = with inputs.self.nixosModules; [
-    profile-any-base
-    profile-hardware-qemu
-    profile-server
-  ];
+  imports =
+    lib.self.siblingsOf ./default.nix
+    ++ (with inputs.self.nixosModules; [
+      profile-any-base
+      profile-hardware-qemu
+      profile-server
+    ]);
 
   nixpkgs.hostPlatform = "aarch64-linux";
   system.stateVersion = "24.11";
