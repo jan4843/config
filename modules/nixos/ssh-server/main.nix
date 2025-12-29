@@ -12,12 +12,10 @@ in
     enable = true;
     settings.PasswordAuthentication = false;
     authorizedKeysFiles = [ authorizedKeysFile ];
-    hostKeys = [
-      rec {
-        type = "ed25519";
-        path = "${config.self.persistence.path}/ssh/ssh_host_${type}_key";
-      }
-    ];
+    hostKeys = lib.singleton rec {
+      type = "ed25519";
+      path = "${config.self.persistence.path}/ssh/ssh_host_${type}_key";
+    };
   };
 
   systemd.services.ssh-import-id = {
