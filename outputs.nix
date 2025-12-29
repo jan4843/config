@@ -90,25 +90,23 @@ let
       linux = filter "linux";
     };
 
-  mkModules =
-    path:
-    lib'.pipe path [
-      builtins.readDir
-      builtins.attrNames
-      (map (module: {
-        name = module;
-        value = lib'.pipe /.${path}/${module} [
-          builtins.readDir
-          builtins.attrNames
-          (builtins.filter (lib'.contains ''\.nix$''))
-          (map (file: /.${path}/${module}/${file}))
-          (imports: { inherit imports; })
-        ];
-      }))
-      builtins.listToAttrs
-    ];
+  mkLib =
+    inputs:
+    inputs.nixpkgs.lib.extend (
+      final: prev: {
+        self = lib'.mapDir ./lib (
+          name: path:
+          import path {
+            inherit inputs;
+            lib = final;
+          }
+        );
+      }
+    );
 in
 {
+  lib = (mkLib inputs'.linux).self;
+
   apps = lib'.genSystems (
     { inputs, pkgs, ... }:
     lib'.mapDir ./apps (
@@ -123,13 +121,15 @@ in
     { inputs, pkgs, ... }: lib'.mapDir ./pkgs (_: path: pkgs.callPackage path { inherit inputs; })
   );
 
-  nixosModules = mkModules ./modules/nixos;
-  darwinModules = mkModules ./modules/darwin;
-  homeModules = mkModules ./modules/home;
+  nixosModules = lib'.mapDir ./modules/nixos (name: path: path);
+
+  darwinModules = lib'.mapDir ./modules/darwin (name: path: path);
+
+  homeModules = lib'.mapDir ./modules/home (name: path: path);
 
   nixosConfigurations = lib'.mapDir ./hosts/nixos (
     name: path:
-    inputs'.linux.nixpkgs.lib.nixosSystem {
+    (mkLib inputs'.linux).nixosSystem {
       specialArgs.inputs = inputs'.linux;
       modules = lib'.findNixFilesRec path ++ [ { networking.hostName = name; } ];
     }
@@ -138,7 +138,10 @@ in
   darwinConfigurations = lib'.mapDir ./hosts/darwin (
     name: path:
     inputs'.darwin.nix-darwin.lib.darwinSystem {
-      specialArgs.inputs = inputs'.darwin;
+      specialArgs = {
+        inputs = inputs'.darwin;
+        lib = mkLib inputs'.darwin;
+      };
       modules = lib'.findNixFilesRec path ++ [ { networking.hostName = name; } ];
     }
   );
@@ -149,17 +152,19 @@ in
       expr = import path;
       eval = if builtins.isFunction expr then expr (builtins.functionArgs expr) else expr;
       system = eval.nixpkgs.hostPlatform;
+      inputs'' = inputs'.${if lib'.contains "darwin" system then "darwin" else "linux"};
     in
-    inputs'.linux.home-manager.lib.homeManagerConfiguration {
+    inputs''.home-manager.lib.homeManagerConfiguration {
       extraSpecialArgs = {
-        inputs = inputs'.linux;
+        inputs = inputs'';
         osConfig.networking.hostName = name;
       };
-      pkgs = inputs'.linux.nixpkgs.legacyPackages.${system};
+      lib = mkLib inputs'';
+      pkgs = inputs''.nixpkgs.legacyPackages.${system};
       modules = lib'.findNixFilesRec path ++ [
         {
-          options.nixpkgs.hostPlatform = inputs'.linux.nixpkgs.lib.mkOption {
-            apply = inputs'.linux.nixpkgs.lib.systems.elaborate;
+          options.nixpkgs.hostPlatform = inputs''.nixpkgs.lib.mkOption {
+            apply = inputs''.nixpkgs.lib.systems.elaborate;
           };
         }
       ];

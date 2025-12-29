@@ -1,1 +1,4 @@
-import ./../../nixos/profile-any-base/sudo-passwordless.nix
+{ inputs, ... }:
+{
+  imports = [ "${inputs.self}/modules/nixos/profile-any-base/sudo-passwordless.nix" ];
+}
