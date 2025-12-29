@@ -1,4 +1,4 @@
-{ casks, config, ... }:
+{ casks, homeConfig, ... }:
 let
   appPath = "/Applications/Alfred 5.app";
 in
@@ -16,9 +16,9 @@ in
     };
 
     self.backup.paths = [
-      "${config.homeConfig.home.homeDirectory}/Library/Application Support/Alfred/Alfred.alfredpreferences"
-      "${config.homeConfig.home.homeDirectory}/Library/Application Support/Alfred/powerpack.*"
-      "${config.homeConfig.home.homeDirectory}/Library/Application Support/Alfred/prefs.json"
+      "${homeConfig.home.homeDirectory}/Library/Application Support/Alfred/Alfred.alfredpreferences"
+      "${homeConfig.home.homeDirectory}/Library/Application Support/Alfred/powerpack.*"
+      "${homeConfig.home.homeDirectory}/Library/Application Support/Alfred/prefs.json"
     ];
   };
 }

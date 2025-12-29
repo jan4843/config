@@ -1,4 +1,4 @@
-{ casks, config, ... }:
+{ casks, homeConfig, ... }:
 {
   ois.homebrew.casks = [ casks.transmit ];
 
@@ -9,8 +9,8 @@
     };
 
     self.backup.paths = [
-      "${config.homeConfig.home.homeDirectory}/Library/Application Support/Transmit/Connections.transmitstore"
-      "${config.homeConfig.home.homeDirectory}/Library/Application Support/Transmit/Metadata"
+      "${homeConfig.home.homeDirectory}/Library/Application Support/Transmit/Connections.transmitstore"
+      "${homeConfig.home.homeDirectory}/Library/Application Support/Transmit/Metadata"
     ];
   };
 }

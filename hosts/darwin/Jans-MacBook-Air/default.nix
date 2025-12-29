@@ -1,4 +1,4 @@
-{ config, inputs, ... }:
+{ homeConfig, inputs, ... }:
 {
   imports = with inputs.self.darwinModules; [
     profile-desktop-extra
@@ -11,10 +11,10 @@
 
   homeConfig.self.backup = {
     paths = [
-      "${config.homeConfig.home.homeDirectory}/Documents"
-      "${config.homeConfig.home.homeDirectory}/Developer"
-      "${config.homeConfig.home.homeDirectory}/Library/LaunchAgents/local.*"
-      "${config.homeConfig.home.homeDirectory}/Library/Mobile Documents/9CR7T2DMDG~com~ngocluu~onewriter/Documents"
+      "${homeConfig.home.homeDirectory}/Documents"
+      "${homeConfig.home.homeDirectory}/Developer"
+      "${homeConfig.home.homeDirectory}/Library/LaunchAgents/local.*"
+      "${homeConfig.home.homeDirectory}/Library/Mobile Documents/9CR7T2DMDG~com~ngocluu~onewriter/Documents"
     ];
     retention = {
       hourly = 24 * 7;

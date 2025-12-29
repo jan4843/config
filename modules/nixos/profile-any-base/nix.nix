@@ -1,4 +1,4 @@
-{ config, ... }:
+{ homeConfig, ... }:
 {
-  nix.settings.trusted-users = [ config.homeConfig.home.username ];
+  nix.settings.trusted-users = [ homeConfig.home.username ];
 }
