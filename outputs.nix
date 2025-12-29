@@ -69,13 +69,25 @@ in
     lib'.mapDir ./apps (
       _: path: {
         type = "app";
-        program = pkgs.lib.getExe (pkgs.callPackage path { inherit inputs; });
+        program = pkgs.lib.getExe (
+          pkgs.callPackage path {
+            inherit inputs;
+            lib = mkLib inputs;
+          }
+        );
       }
     )
   );
 
   packages = lib'.genSystems (
-    { inputs, pkgs, ... }: lib'.mapDir ./pkgs (_: path: pkgs.callPackage path { inherit inputs; })
+    { inputs, pkgs, ... }:
+    lib'.mapDir ./pkgs (
+      _: path:
+      pkgs.callPackage path {
+        inherit inputs;
+        lib = mkLib inputs;
+      }
+    )
   );
 
   nixosModules = lib'.mapDir ./modules/nixos (name: path: path);
