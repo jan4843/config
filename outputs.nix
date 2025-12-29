@@ -3,52 +3,9 @@ let
   lib' = {
     pipe = builtins.foldl' (x: f: f x);
 
-    flatten =
-      xs: builtins.foldl' (acc: x: acc ++ (if builtins.isList x then lib'.flatten x else [ x ])) [ ] xs;
-
     contains = infix: string: builtins.length (builtins.split infix string) > 1;
 
-    mapDir =
-      root: fn:
-      lib'.pipe root [
-        builtins.readDir
-        builtins.attrNames
-        (map (file: {
-          name = file;
-          value = "${root}/${file}";
-        }))
-        builtins.listToAttrs
-        (builtins.mapAttrs (
-          name: path:
-          let
-            containsNixFiles = lib'.pipe path [
-              builtins.readDir
-              builtins.attrNames
-              (builtins.filter (file: lib'.contains ''\.nix$'' file))
-              builtins.length
-              (x: x > 0)
-            ];
-          in
-          if containsNixFiles then fn name path else lib'.mapDir path fn
-        ))
-      ];
-
-    findNixFilesRec =
-      dir:
-      lib'.pipe dir [
-        builtins.readDir
-        builtins.attrNames
-        (builtins.filter (file: !lib'.contains ''^\.'' file))
-        (map (
-          file:
-          if builtins.pathExists "${dir}/${file}/" then
-            lib'.findNixFilesRec "${dir}/${file}"
-          else
-            "${dir}/${file}"
-        ))
-        lib'.flatten
-        (builtins.filter (path: lib'.contains ''\.nix$'' (builtins.baseNameOf path)))
-      ];
+    mapDir = import ./lib/mapDir { };
 
     genSystems =
       fn:
@@ -129,20 +86,32 @@ in
 
   nixosConfigurations = lib'.mapDir ./hosts/nixos (
     name: path:
-    (mkLib inputs'.linux).nixosSystem {
+    let
+      lib = mkLib inputs'.linux;
+    in
+    lib.nixosSystem {
       specialArgs.inputs = inputs'.linux;
-      modules = lib'.findNixFilesRec path ++ [ { networking.hostName = name; } ];
+      modules = lib.self.siblingsOf path ++ [
+        path
+        { networking.hostName = name; }
+      ];
     }
   );
 
   darwinConfigurations = lib'.mapDir ./hosts/darwin (
     name: path:
+    let
+      lib = mkLib inputs'.darwin;
+    in
     inputs'.darwin.nix-darwin.lib.darwinSystem {
       specialArgs = {
         inputs = inputs'.darwin;
-        lib = mkLib inputs'.darwin;
+        lib = lib;
       };
-      modules = lib'.findNixFilesRec path ++ [ { networking.hostName = name; } ];
+      modules = lib.self.siblingsOf path ++ [
+        path
+        { networking.hostName = name; }
+      ];
     }
   );
 
@@ -153,6 +122,7 @@ in
       eval = if builtins.isFunction expr then expr (builtins.functionArgs expr) else expr;
       system = eval.nixpkgs.hostPlatform;
       inputs'' = inputs'.${if lib'.contains "darwin" system then "darwin" else "linux"};
+      lib = mkLib inputs'';
     in
     inputs''.home-manager.lib.homeManagerConfiguration {
       extraSpecialArgs = {
@@ -161,7 +131,8 @@ in
       };
       lib = mkLib inputs'';
       pkgs = inputs''.nixpkgs.legacyPackages.${system};
-      modules = lib'.findNixFilesRec path ++ [
+      modules = lib.self.siblingsOf path ++ [
+        path
         {
           options.nixpkgs.hostPlatform = inputs''.nixpkgs.lib.mkOption {
             apply = inputs''.nixpkgs.lib.systems.elaborate;
