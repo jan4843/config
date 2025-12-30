@@ -1,10 +1,10 @@
 { inputs, lib, ... }:
 {
   imports = lib.self.siblingsOf ./default.nix ++ [
-    (inputs.self + "/profiles/nixos/hardware-qemu")
+    (inputs.self + "/profiles/nixos/pi4")
     (inputs.self + "/profiles/nixos/lan")
     (inputs.self + "/profiles/nixos/server")
   ];
 
-  nixpkgs.hostPlatform = "x86_64-linux";
+  self.swap.sizeGB = 8;
 }

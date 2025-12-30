@@ -6,10 +6,10 @@
 }:
 {
   imports = lib.self.siblingsOf ./default.nix ++ [
-    (inputs.self + "/profiles/darwin/desktop-base")
+    (inputs.self + "/profiles/darwin/desktop")
   ];
 
-  homeConfig.imports = [ (inputs.self + "/profiles/home/desktop-extra") ];
+  homeConfig.imports = [ (inputs.self + "/profiles/home/desktop+") ];
 
   ois.homebrew.casks = with casks; [
     appcleaner

@@ -7,7 +7,7 @@
   ];
 
   homeConfig.imports = [
-    (inputs.self + "/profiles/home/any-base")
+    (inputs.self + "/profiles/home/base")
   ];
 
   time.timeZone = "CET";

@@ -1,8 +1,8 @@
 { inputs, lib, ... }:
 {
   imports = lib.self.siblingsOf ./default.nix ++ [
-    (inputs.self + "/profiles/nixos/any-base")
-    (inputs.self + "/profiles/nixos/hardware-qemu")
+    (inputs.self + "/profiles/nixos/base")
+    (inputs.self + "/profiles/nixos/qemu-guest")
     (inputs.self + "/profiles/nixos/server")
   ];
 

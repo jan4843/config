@@ -6,7 +6,7 @@
 }:
 {
   imports = lib.self.siblingsOf ./default.nix ++ [
-    (inputs.self + "/profiles/darwin/desktop-extra")
+    (inputs.self + "/profiles/darwin/desktop+")
   ];
 
   nixpkgs.hostPlatform = "aarch64-darwin";

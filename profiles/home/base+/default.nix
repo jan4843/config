@@ -5,7 +5,7 @@
   ...
 }:
 {
-  imports = lib.self.siblingsOf ./default.nix ++ [ (inputs.self + "/profiles/home/any-base") ];
+  imports = lib.self.siblingsOf ./default.nix ++ [ (inputs.self + "/profiles/home/base") ];
 
   home.packages =
     with pkgs;

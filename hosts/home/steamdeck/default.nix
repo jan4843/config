@@ -6,7 +6,7 @@
 }:
 {
   imports = lib.self.siblingsOf ./default.nix ++ [
-    (inputs.self + "/profiles/home/desktop-extra")
+    (inputs.self + "/profiles/home/desktop+")
 
     (inputs.self + "/modules/home/steam-autogrid")
     (inputs.self + "/modules/home/steam-shortcuts")
