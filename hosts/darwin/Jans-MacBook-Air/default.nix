@@ -5,11 +5,9 @@
   ...
 }:
 {
-  imports =
-    lib.self.siblingsOf ./default.nix
-    ++ (with inputs.self.darwinModules; [
-      profile-desktop-extra
-    ]);
+  imports = lib.self.siblingsOf ./default.nix ++ [
+    (inputs.self + "/profiles/darwin/desktop-extra")
+  ];
 
   nixpkgs.hostPlatform = "aarch64-darwin";
   system.stateVersion = 6;

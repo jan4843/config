@@ -1,10 +1,8 @@
 { inputs, lib, ... }:
 {
-  imports =
-    lib.self.siblingsOf ./default.nix
-    ++ (with inputs.self.homeModules; [
-      profile-desktop-base
-    ]);
+  imports = lib.self.siblingsOf ./default.nix ++ [
+    (inputs.self + "/profiles/home/desktop-base")
+  ];
 
   nixpkgs.hostPlatform = "x86_64-linux";
   home.stateVersion = "24.11";

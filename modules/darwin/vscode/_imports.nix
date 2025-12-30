@@ -1,4 +1,4 @@
 { inputs, ... }:
 {
-  homeConfig.imports = [ inputs.self.homeModules.vscode ];
+  homeConfig.imports = [ (inputs.self + "/modules/home/vscode") ];
 }
