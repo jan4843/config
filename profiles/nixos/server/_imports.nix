@@ -1,6 +1,4 @@
 { inputs, ... }:
 {
-  homeConfig.imports = [
-    (inputs.self + "/profiles/home/any-extra")
-  ];
+  imports = [ (inputs.self + "/profiles/nixos/any-extra") ];
 }
