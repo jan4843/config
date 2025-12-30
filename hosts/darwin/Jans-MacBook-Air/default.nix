@@ -1,7 +1,7 @@
 {
-  lib,
   homeConfig,
   inputs,
+  lib,
   ...
 }:
 {

@@ -5,6 +5,6 @@
   ];
 
   system.stateVersion = "24.11";
-
   self.autoupgrade.schedule = "Mon 04:00";
+  hardware.raspberry-pi."4".tv-hat.enable = true;
 }
