@@ -1,5 +1,5 @@
 {
-  outputs = inputs: import ./outputs.nix inputs;
+  outputs = inputs: import ./flake/outputs.nix inputs;
 
   inputs = {
     # https://nixos.org/manual/nixos/stable/release-notes

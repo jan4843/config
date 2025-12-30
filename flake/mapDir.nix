@@ -1,6 +1,6 @@
-_:
 let
   pipe = builtins.foldl' (x: f: f x);
+
   mapDir =
     dir: fn:
     pipe dir [

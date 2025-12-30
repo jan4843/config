@@ -1,4 +1,3 @@
-{ ... }:
 platform: inputs:
 let
   pipe = builtins.foldl' (x: f: f x);
