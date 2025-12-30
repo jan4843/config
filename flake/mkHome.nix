@@ -1,7 +1,7 @@
 inputs:
 let
   filterInputs = import ./filterInputs.nix;
-  mkLib = import ./mkLib.nix;
+  mkNixpkgs = import ./mkNixpkgs.nix;
   mapDir = import ./mapDir.nix;
 in
 mapDir (inputs.self + "/hosts/home") (
@@ -16,13 +16,12 @@ mapDir (inputs.self + "/hosts/home") (
     contains = infix: string: builtins.length (builtins.split infix string) > 1;
   in
   inputs'.home-manager.lib.homeManagerConfiguration {
+    pkgs = mkNixpkgs inputs' system;
+
     extraSpecialArgs = {
       inputs = inputs';
       osConfig.networking.hostName = name;
     };
-
-    lib = mkLib inputs';
-    pkgs = inputs'.nixpkgs.legacyPackages.${system};
 
     modules = [
       path

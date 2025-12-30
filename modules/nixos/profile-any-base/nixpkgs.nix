@@ -11,7 +11,6 @@ let
   };
 in
 lib.mkIf (!args.osConfig.home-manager.useGlobalPkgs or false) {
-  nixpkgs.config = cfg.config;
   nixpkgs.overlays = lib.singleton (
     final: prev:
     lib.pipe inputs [

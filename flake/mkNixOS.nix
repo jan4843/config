@@ -2,6 +2,7 @@ inputs:
 let
   filterInputs = import ./filterInputs.nix;
   mkLib = import ./mkLib.nix;
+  mkNixpkgs = import ./mkNixpkgs.nix;
   mapDir = import ./mapDir.nix;
 
   inputs' = filterInputs "linux" inputs;
@@ -15,7 +16,13 @@ mapDir (inputs.self + "/hosts/nixos") (
 
     modules = [
       path
-      { networking.hostName = name; }
+      (
+        { config, lib, ... }:
+        {
+          networking.hostName = lib.mkDefault name;
+          nixpkgs.pkgs = lib.mkDefault (mkNixpkgs inputs' config.nixpkgs.hostPlatform.system);
+        }
+      )
     ];
   }
 )
