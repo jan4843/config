@@ -26,20 +26,18 @@
     startAt = "daily";
   };
 
-  homeConfig.imports = [
-    (
-      { config, ... }:
-      {
-        self.backup = {
-          paths = [
-            config.home.homeDirectory
-          ];
-          exclude = [
-            "${config.home.homeDirectory}/.*"
-            "${config.home.homeDirectory}/*/cache"
-          ];
-        };
-      }
-    )
-  ];
+  homeConfig.imports = lib.singleton (
+    { config, ... }:
+    {
+      self.backup = {
+        paths = [
+          config.home.homeDirectory
+        ];
+        exclude = [
+          "${config.home.homeDirectory}/.*"
+          "${config.home.homeDirectory}/*/cache"
+        ];
+      };
+    }
+  );
 }

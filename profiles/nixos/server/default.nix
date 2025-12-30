@@ -1,4 +1,6 @@
-{ lib, ... }:
+{ inputs, lib, ... }:
 {
-  imports = lib.self.siblingsOf ./default.nix;
+  imports = lib.self.siblingsOf ./default.nix ++ [
+    (inputs.self + "/profiles/nixos/any-extra")
+  ];
 }

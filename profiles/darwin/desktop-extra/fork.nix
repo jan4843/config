@@ -2,10 +2,8 @@
 {
   ois.homebrew.casks = [ casks.fork ];
 
-  homeConfig = {
-    targets.darwin.defaults."com.DanPristupov.Fork" = {
-      defaultSourceFolder = "${homeConfig.home.homeDirectory}/Developer";
-      diffShowHiddenSymbols = true;
-    };
+  homeConfig.targets.darwin.defaults."com.DanPristupov.Fork" = {
+    defaultSourceFolder = "${homeConfig.home.homeDirectory}/Developer";
+    diffShowHiddenSymbols = true;
   };
 }

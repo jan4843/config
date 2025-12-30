@@ -1,5 +1,8 @@
-{ vscode-marketplace, ... }:
+{ inputs, vscode-marketplace, ... }:
 {
+
+  imports = [ (inputs.self + "/modules/home/vscode") ];
+
   programs.vscode.profiles.default = {
     extensions = with vscode-marketplace; [
       dotjoshjohnson.xml

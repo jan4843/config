@@ -19,6 +19,7 @@ in
     imports = [ (lib.mkAliasOptionModule [ "homeConfig" ] [ "home-manager" "users" username ]) ];
     config = {
       _module.args.homeConfig = config.home-manager.users.${username};
+      home-manager.users.${username}.home.stateVersion = config.system.stateVersion;
     };
   };
 }

@@ -1,4 +1,22 @@
-{ lib, ... }:
 {
-  imports = lib.self.siblingsOf ./default.nix;
+  lib,
+  inputs,
+  pkgs,
+  ...
+}:
+{
+  imports = lib.self.siblingsOf ./default.nix ++ [ (inputs.self + "/profiles/home/any-base") ];
+
+  home.packages =
+    with pkgs;
+    [
+      curlie
+      magic-wormhole
+      pdfgrep
+      speedtest-go
+    ]
+    ++ lib.optionals pkgs.stdenv.hostPlatform.isLinux [
+      bandwhich
+      mame-tools
+    ];
 }

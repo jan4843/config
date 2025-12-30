@@ -1,9 +1,4 @@
-{
-  config,
-  inputs,
-  lib,
-  ...
-}:
+{ inputs, lib, ... }:
 {
   imports = lib.self.siblingsOf ./default.nix ++ [
     inputs.home-manager.nixosModules.home-manager
@@ -17,6 +12,4 @@
   };
 
   users.users.root.linger = true;
-
-  homeConfig.home.stateVersion = config.system.stateVersion;
 }
