@@ -1,4 +1,4 @@
 { inputs, ... }:
 {
-  imports = [ "${inputs.self}/modules/nixos/profile-any-base/sudo-passwordless.nix" ];
+  imports = [ (inputs.self + "/modules/nixos/profile-any-base/sudo-passwordless.nix") ];
 }

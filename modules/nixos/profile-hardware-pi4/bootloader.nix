@@ -10,7 +10,7 @@ let
   installer = extendModules {
     modules = [
       { _overtakeInstallBootLoader = false; }
-      "${inputs.nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
+      (inputs.nixpkgs + "/nixos/modules/installer/sd-card/sd-image-aarch64.nix")
     ];
   };
 

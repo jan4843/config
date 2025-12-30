@@ -5,7 +5,7 @@ let
     "+" = ''username != ""'';
   };
   original = rec {
-    path = "${inputs.home-manager}/modules/systemd.nix";
+    path = inputs.home-manager + "/modules/systemd.nix";
     content = builtins.readFile path;
   };
   patched = rec {
