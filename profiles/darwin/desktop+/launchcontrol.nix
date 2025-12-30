@@ -1,6 +1,6 @@
 { casks, ... }:
 {
-  ois.homebrew.casks = [ casks.launchcontrol ];
+  self.homebrew.casks = [ casks.launchcontrol ];
 
   homeConfig = {
     self.tcc.SystemPolicyAllFiles = [ "/Applications/LaunchControl.app" ];

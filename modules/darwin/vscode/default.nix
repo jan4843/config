@@ -10,7 +10,7 @@
 
   homeConfig.imports = [ (inputs.self + "/modules/home/vscode") ];
 
-  ois.homebrew.casks = [ casks.visual-studio-code ];
+  self.homebrew.casks = [ casks.visual-studio-code ];
 
   homeConfig = {
     programs.vscode.package = {

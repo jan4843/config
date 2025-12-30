@@ -1,6 +1,6 @@
 { casks, lib, ... }:
 {
-  ois.homebrew.casks = [ casks.tailscale-app ];
+  self.homebrew.casks = [ casks.tailscale-app ];
 
   homeConfig.imports = lib.singleton (
     { vscode-marketplace, ... }:

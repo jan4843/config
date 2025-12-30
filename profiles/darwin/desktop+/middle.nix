@@ -3,7 +3,7 @@ let
   appPath = "/Applications/Middle.app";
 in
 {
-  ois.homebrew.casks = [ casks.middle ];
+  self.homebrew.casks = [ casks.middle ];
 
   homeConfig = {
     self.tcc.Accessibility = [ appPath ];

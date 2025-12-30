@@ -5,7 +5,7 @@
   ...
 }:
 let
-  cfg = config.ois.homebrew;
+  cfg = config.self.homebrew;
 
   rubyEscape = lib.escape [
     "\""
@@ -23,7 +23,7 @@ let
   '';
 in
 {
-  ois.homebrew.brews = lib.optional (cfg.mas != { }) brews.mas;
+  self.homebrew.brews = lib.optional (cfg.mas != { }) brews.mas;
 
   system.activationScripts.homebrewBundle.text = ''
     echo "homebrew bundle..." >&2

@@ -5,7 +5,7 @@
   ...
 }:
 let
-  taps = lib.pipe config.ois.homebrew.taps [
+  taps = lib.pipe config.self.homebrew.taps [
     (builtins.mapAttrs (
       name: value: ''
         mkdir -p $out/${builtins.dirOf name}
@@ -25,6 +25,6 @@ in
       --archive --delete \
       --owner --group --chown="$uid:$gid" \
       --perms --chmod=u+w \
-      ${taps}/ ${config.ois.homebrew.prefix}/Library/Taps
+      ${taps}/ ${config.self.homebrew.prefix}/Library/Taps
   '';
 }

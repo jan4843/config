@@ -1,6 +1,6 @@
 { config, pkgs, ... }:
 let
-  cfg = config.ois.homebrew;
+  cfg = config.self.homebrew;
 
   brew-wrapper = pkgs.writeScript "brew" ''
     #!/bin/sh

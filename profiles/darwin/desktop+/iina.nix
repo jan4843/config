@@ -1,6 +1,6 @@
 { casks, ... }:
 {
-  ois.homebrew.casks = [ casks.iina ];
+  self.homebrew.casks = [ casks.iina ];
 
   homeConfig.targets.darwin.defaults."com.colliderli.iina" = {
     verticalScrollAction = 2;

@@ -54,7 +54,7 @@ let
 
   mkModuleArgs =
     type:
-    lib.pipe config.ois.homebrew.taps [
+    lib.pipe config.self.homebrew.taps [
       (lib.mapAttrs (
         tapName: tap:
         lib.pipe tap [

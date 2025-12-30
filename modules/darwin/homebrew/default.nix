@@ -15,7 +15,7 @@ in
 {
   imports = lib.self.siblingsOf ./default.nix;
 
-  options.ois.homebrew = {
+  options.self.homebrew = {
     package = lib.mkOption {
       type = lib.types.pathInStore;
     };
@@ -63,7 +63,7 @@ in
   };
 
   config = {
-    ois.homebrew = {
+    self.homebrew = {
       package = lib.mkDefault inputs.homebrew;
       taps = {
         "homebrew/core" = lib.mkDefault inputs.homebrew-core;

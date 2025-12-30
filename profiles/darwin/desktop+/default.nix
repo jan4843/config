@@ -11,7 +11,7 @@
 
   homeConfig.imports = [ (inputs.self + "/profiles/home/desktop+") ];
 
-  ois.homebrew.casks = with casks; [
+  self.homebrew.casks = with casks; [
     appcleaner
     brave-browser
     firefox

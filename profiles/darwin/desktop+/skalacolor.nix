@@ -8,7 +8,7 @@ let
   };
 in
 {
-  ois.homebrew = {
+  self.homebrew = {
     taps.${tap} = pkgs.runCommand "" { } ''
       install -D ${cask} $out/Casks/${formula}.rb
     '';

@@ -1,6 +1,6 @@
 { casks, ... }:
 {
-  ois.homebrew.casks = [ casks."logi-options+" ];
+  self.homebrew.casks = [ casks."logi-options+" ];
 
   homeConfig = {
     self.tcc = {

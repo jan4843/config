@@ -1,6 +1,6 @@
 { casks, ... }:
 {
-  ois.homebrew.casks = [ casks.notunes ];
+  self.homebrew.casks = [ casks.notunes ];
 
   homeConfig = {
     self.open-at-login.notunes.appPath = "/Applications/noTunes.app";

@@ -3,7 +3,7 @@ let
   appPath = "/Applications/MonitorControl.app";
 in
 {
-  ois.homebrew.casks = [ casks.monitorcontrol ];
+  self.homebrew.casks = [ casks.monitorcontrol ];
 
   homeConfig = {
     self.tcc.Accessibility = [ appPath ];

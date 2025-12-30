@@ -1,6 +1,6 @@
 { casks, homeConfig, ... }:
 {
-  ois.homebrew.casks = [ casks.transmit ];
+  self.homebrew.casks = [ casks.transmit ];
 
   homeConfig = {
     targets.darwin.defaults."com.panic.transmit" = {

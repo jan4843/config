@@ -1,4 +1,4 @@
 { casks, ... }:
 {
-  ois.homebrew.casks = [ casks."ghostty@tip" ];
+  self.homebrew.casks = [ casks."ghostty@tip" ];
 }

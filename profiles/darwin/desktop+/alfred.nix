@@ -3,7 +3,7 @@ let
   appPath = "/Applications/Alfred 5.app";
 in
 {
-  ois.homebrew.casks = [ casks.alfred ];
+  self.homebrew.casks = [ casks.alfred ];
 
   homeConfig = {
     self.tcc = {
