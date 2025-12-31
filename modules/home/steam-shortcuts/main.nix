@@ -9,7 +9,7 @@ let
     name = "steam-shortcuts";
     runtimeInputs = [ (pkgs.python3.withPackages (p: [ p.vdf ])) ];
     text = ''
-      python ${./.src/steam-shortcuts.py} "$@"
+      python ${./src/steam-shortcuts.py} "$@"
     '';
   };
   shortcuts = pkgs.writers.writeJSON "shortcuts.json" (

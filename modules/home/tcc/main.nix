@@ -5,7 +5,7 @@
   ...
 }:
 let
-  services = import ./.src/services.nix config.home.homeDirectory;
+  services = import ./src/services.nix config.home.homeDirectory;
 in
 lib.mkIf pkgs.stdenv.hostPlatform.isDarwin {
   home.activation.checkFullDiskAccess = lib.hm.dag.entryBefore [ "checkFilesChanged" ] ''
@@ -22,7 +22,7 @@ lib.mkIf pkgs.stdenv.hostPlatform.isDarwin {
         TCC_DATABASE=${lib.escapeShellArg service.database} \
         TCC_SERVICE=kTCCService${lib.escapeShellArg name} \
         PREFPANE=${lib.escapeShellArg service.prefpane} \
-        ${lib.getExe pkgs.bash} ${./.src/tcc.bash} \
+        ${lib.getExe pkgs.bash} ${./src/tcc.bash} \
         ${lib.escapeShellArgs config.self.tcc.${name}}
       ''
     ) services

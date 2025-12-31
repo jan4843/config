@@ -8,5 +8,5 @@
       type = lib.types.listOf lib.types.path;
       default = [ ];
     }
-  ) (import ./.src/services.nix config.home.homeDirectory);
+  ) (import ./src/services.nix config.home.homeDirectory);
 }

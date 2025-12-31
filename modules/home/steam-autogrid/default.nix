@@ -8,7 +8,7 @@
         Type = "oneshot";
         ExecStart = toString [
           "${(pkgs.python3.withPackages (p: [ p.vdf ]))}/bin/python"
-          ./.src/steam-autogrid.py
+          ./src/steam-autogrid.py
         ];
       };
     };
