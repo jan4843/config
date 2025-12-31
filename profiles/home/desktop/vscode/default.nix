@@ -1,7 +1,14 @@
-{ inputs, vscode-marketplace, ... }:
+{
+  inputs,
+  lib,
+  vscode-marketplace,
+  ...
+}:
 {
 
-  imports = [ (inputs.self + "/modules/home/vscode") ];
+  imports = lib.self.siblingsOf ./default.nix ++ [
+    (inputs.self + "/modules/home/vscode")
+  ];
 
   programs.vscode.profiles.default = {
     extensions = with vscode-marketplace; [
