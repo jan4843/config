@@ -12,7 +12,7 @@ in
 {
   imports = lib.self.siblingsOf ./default.nix;
 
-  homeConfig.imports = [ (inputs.self + "/modules/home/bash") ];
+  homeConfig.imports = [ inputs.self.homeModules.bash ];
 
   environment = {
     shells = [ shellPath ];

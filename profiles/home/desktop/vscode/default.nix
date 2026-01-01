@@ -7,7 +7,7 @@
 {
 
   imports = lib.self.siblingsOf ./default.nix ++ [
-    (inputs.self + "/modules/home/vscode")
+    inputs.self.homeModules.vscode
   ];
 
   programs.vscode.profiles.default = {

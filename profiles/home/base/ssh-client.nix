@@ -13,7 +13,7 @@ let
     );
 in
 {
-  imports = [ (inputs.self + "/modules/home/ssh-client") ];
+  imports = [ inputs.self.homeModules.ssh-client ];
 
   self.ssh-client.config = ''
     Host *

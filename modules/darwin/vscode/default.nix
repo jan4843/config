@@ -8,7 +8,7 @@
 {
   imports = lib.self.siblingsOf ./default.nix;
 
-  homeConfig.imports = [ (inputs.self + "/modules/home/vscode") ];
+  homeConfig.imports = [ inputs.self.homeModules.vscode ];
 
   self.homebrew.casks = [ casks.visual-studio-code ];
 

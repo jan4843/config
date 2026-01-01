@@ -6,9 +6,9 @@
 }:
 {
   imports = lib.self.siblingsOf ./default.nix ++ [
-    (inputs.self + "/modules/home/home-manager")
-    (inputs.self + "/modules/home/open-at-login")
-    (inputs.self + "/modules/home/tcc")
+    inputs.self.homeModules.home-manager
+    inputs.self.homeModules.open-at-login
+    inputs.self.homeModules.tcc
   ];
 
   home.packages =

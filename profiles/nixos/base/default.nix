@@ -1,9 +1,9 @@
 { inputs, lib, ... }:
 {
   imports = lib.self.siblingsOf ./default.nix ++ [
-    (inputs.self + "/modules/nixos/home-manager")
-    (inputs.self + "/modules/nixos/persistence")
-    (inputs.self + "/modules/nixos/swap")
+    inputs.self.nixosModules.home-manager
+    inputs.self.nixosModules.persistence
+    inputs.self.nixosModules.swap
   ];
 
   homeConfig.imports = [

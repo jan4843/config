@@ -12,7 +12,7 @@ let
   highlighted = x: lib.escapeShellArg "${bold}${dim}${x}${reset}";
 in
 {
-  imports = [ (inputs.self + "/modules/home/bash") ];
+  imports = [ inputs.self.homeModules.bash ];
 
   home.file.".hushlogin".text = "";
 

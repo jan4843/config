@@ -9,7 +9,7 @@ let
   mkInclude = cfg: { path = pkgs.writeText "" (lib.generators.toGitINI cfg); };
 in
 {
-  imports = [ (inputs.self + "/modules/home/git") ];
+  imports = [ inputs.self.homeModules.git ];
 
   self.git.config = {
     alias = {

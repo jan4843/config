@@ -4,7 +4,7 @@
     inputs.home-manager.nixosModules.home-manager
   ];
 
-  homeConfig.imports = [ (inputs.self + "/modules/home/home-manager") ];
+  homeConfig.imports = [ inputs.self.homeModules.home-manager ];
 
   home-manager = {
     extraSpecialArgs.inputs = inputs;

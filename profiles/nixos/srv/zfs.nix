@@ -1,6 +1,6 @@
 { inputs, ... }:
 {
-  imports = [ (inputs.self + "/modules/nixos/zfs") ];
+  imports = [ inputs.self.nixosModules.zfs ];
 
   self.zfs.datasets = {
     "tank/archive".snapshots.daily = 99999999;

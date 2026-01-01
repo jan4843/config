@@ -1,6 +1,6 @@
 { inputs, lib, ... }:
 {
-  imports = [ (inputs.self + "/modules/home/backup") ];
+  imports = [ inputs.self.homeModules.backup ];
 
   self.backup = {
     repositoryFile = lib.mkDefault "/nix/secrets/backup.repository";
