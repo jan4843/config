@@ -18,5 +18,6 @@
   home.packages = with pkgs; [
     librewolf
     protontricks
+    hello-unfree
   ];
 }

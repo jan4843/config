@@ -25,11 +25,12 @@ mapDir (inputs.self + "/hosts/home") (
 
     modules = [
       path
-      {
-        options.nixpkgs.hostPlatform = inputs'.nixpkgs.lib.mkOption {
-          apply = inputs'.nixpkgs.lib.systems.elaborate;
-        };
-      }
+      (
+        { lib, ... }:
+        {
+          options.nixpkgs.hostPlatform = lib.mkOption { apply = lib.systems.elaborate; };
+        }
+      )
     ];
   }
 )
