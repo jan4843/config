@@ -1,4 +1,6 @@
 inputs: {
+  inherit inputs;
+
   apps = import ./mkApps.nix inputs;
   packages = import ./mkPackages.nix inputs;
 
