@@ -71,7 +71,7 @@ in
   xdg.configFile."keyd/default.conf".text = lib.generators.toINI { } conf;
 
   home.activation.linkKeydConfig = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    /usr/bin/sudo ln -fs ${src} ${dest}
+    ${lib.escapeShellArg config.self.sudo-passwordless.path} ln -fs ${src} ${dest}
   '';
 
   home.packages = [ pkgs.keyd ];
@@ -84,7 +84,10 @@ in
       WantedBy = [ "default.target" ];
     };
     Service = {
-      ExecStart = [ "sudo ${pkgs.keyd}/bin/keyd" ];
+      ExecStart = lib.escapeShellArgs [
+        config.self.sudo-passwordless.path
+        "${pkgs.keyd}/bin/keyd"
+      ];
     };
   };
 }

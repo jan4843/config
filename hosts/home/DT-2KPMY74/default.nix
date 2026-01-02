@@ -10,4 +10,5 @@
   home.homeDirectory = "/home/janvitturi";
 
   self.backup.enable = false;
+  self.sudo-passwordless.path = "/usr/bin/sudo";
 }

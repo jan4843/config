@@ -11,6 +11,6 @@ in
   };
 
   home.activation.linkSysctl = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    /usr/bin/sudo ln -fs ${config.home.homeDirectory}/${src} ${dest}
+    ${lib.escapeShellArg config.self.sudo-passwordless.path} ln -fs ${config.home.homeDirectory}/${src} ${dest}
   '';
 }
