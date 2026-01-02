@@ -3,7 +3,7 @@ let
   pipe = builtins.foldl' (x: f: f x);
   contains = infix: string: builtins.length (builtins.split infix string) > 1;
   filterInputs = import ./filterInputs.nix;
-  mkNixpkgs = import ./mkNixpkgs.nix;
+  mkLib = import ./mkLib.nix;
 
   flakeExposed = [
     "aarch64-darwin"
@@ -23,7 +23,16 @@ pipe flakeExposed [
       value = fn rec {
         inputs = inputs';
         lib = pkgs.lib;
-        pkgs = mkNixpkgs inputs system;
+        pkgs = import inputs.nixpkgs {
+          inherit system;
+          config.allowUnfree = true;
+          overlays = [
+            (final: prev: {
+              self = inputs.self.packages.${system};
+              lib = mkLib inputs;
+            })
+          ];
+        };
       };
     }
   ))

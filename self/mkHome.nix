@@ -1,13 +1,14 @@
 inputs:
 let
   filterInputs = import ./filterInputs.nix;
-  mkNixpkgs = import ./mkNixpkgs.nix;
+  mkLib = import ./mkLib.nix;
   mapDir = import ./mapDir.nix;
 in
 mapDir (inputs.self + "/hosts/home") (
   name: path:
   let
     inputs' = filterInputs platform inputs;
+    lib' = mkLib inputs';
     system = eval.nixpkgs.hostPlatform;
 
     platform = if contains "darwin" system then "darwin" else "linux";
@@ -16,7 +17,8 @@ mapDir (inputs.self + "/hosts/home") (
     contains = infix: string: builtins.length (builtins.split infix string) > 1;
   in
   inputs'.home-manager.lib.homeManagerConfiguration {
-    pkgs = mkNixpkgs inputs' system;
+    pkgs = inputs'.nixpkgs.legacyPackages.${system};
+    lib = lib';
 
     extraSpecialArgs = {
       inputs = inputs';
@@ -25,12 +27,16 @@ mapDir (inputs.self + "/hosts/home") (
 
     modules = [
       path
-      (
-        { lib, ... }:
-        {
-          options.nixpkgs.hostPlatform = lib.mkOption { apply = lib.systems.elaborate; };
-        }
-      )
+      { options.nixpkgs.hostPlatform = lib'.mkOption { apply = lib'.systems.elaborate; }; }
+      {
+        nixpkgs.config.allowUnfree = true;
+        nixpkgs.overlays = [
+          (final: prev: {
+            self = inputs.self.packages.${system};
+            lib = lib';
+          })
+        ];
+      }
     ];
   }
 )

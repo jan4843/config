@@ -2,17 +2,17 @@ inputs:
 let
   filterInputs = import ./filterInputs.nix;
   mkLib = import ./mkLib.nix;
-  mkNixpkgs = import ./mkNixpkgs.nix;
   mapDir = import ./mapDir.nix;
 
   inputs' = filterInputs "darwin" inputs;
+  lib' = mkLib inputs';
 in
 mapDir (inputs.self + "/hosts/darwin") (
   name: path:
   inputs'.nix-darwin.lib.darwinSystem {
     specialArgs = {
       inputs = inputs';
-      lib = mkLib inputs';
+      lib = lib';
     };
 
     modules = [
@@ -21,7 +21,14 @@ mapDir (inputs.self + "/hosts/darwin") (
         { config, lib, ... }:
         {
           networking.hostName = lib.mkDefault name;
-          nixpkgs.pkgs = lib.mkDefault (mkNixpkgs inputs' config.nixpkgs.hostPlatform.system);
+
+          nixpkgs.config.allowUnfree = true;
+          nixpkgs.overlays = [
+            (final: prev: {
+              self = inputs.self.packages.${config.nixpkgs.hostPlatform.system};
+              lib = lib';
+            })
+          ];
         }
       )
     ];

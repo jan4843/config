@@ -5,7 +5,7 @@
   ...
 }:
 let
-  pkgs'.lsfg-vk = inputs.lsfg-vk.packages.${pkgs.system}.lsfg-vk;
+  pkgs'.lsfg-vk = inputs.lsfg-vk.packages.${pkgs.stdenv.hostPlatform.system}.lsfg-vk;
   layer = "share/vulkan/implicit_layer.d/VkLayer_LS_frame_generation.json";
   vars = {
     # https://github.com/PancakeTAS/lsfg-vk/wiki/Configuring-lsfg%E2%80%90vk
