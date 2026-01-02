@@ -1,11 +1,8 @@
+{ inputs, ... }:
 {
-  config,
-  lib,
-  pkgs,
-  ...
-}:
-let
-  conf = {
+  imports = [ inputs.self.homeModules.keyd ];
+
+  self.keyd.config = {
     ids = {
       "046d:b377" = "";
     };
@@ -61,33 +58,6 @@ let
     "mac_ctrl:C" = {
       left = "M-pageup";
       right = "M-pagedown";
-    };
-  };
-
-  src = "${config.home.homeDirectory}/${config.xdg.configFile."keyd/default.conf".target}";
-  dest = "/etc/keyd/default.conf";
-in
-{
-  xdg.configFile."keyd/default.conf".text = lib.generators.toINI { } conf;
-
-  home.activation.linkKeydConfig = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    ${lib.escapeShellArg config.self.sudo-passwordless.path} ln -fs ${src} ${dest}
-  '';
-
-  home.packages = [ pkgs.keyd ];
-
-  systemd.user.services.keyd = {
-    Unit = {
-      X-Restart-Triggers = [ config.xdg.configFile."keyd/default.conf".source ];
-    };
-    Install = {
-      WantedBy = [ "default.target" ];
-    };
-    Service = {
-      ExecStart = lib.escapeShellArgs [
-        config.self.sudo-passwordless.path
-        "${pkgs.keyd}/bin/keyd"
-      ];
     };
   };
 }
