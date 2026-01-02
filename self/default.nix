@@ -11,4 +11,6 @@ inputs: {
   nixosConfigurations = import ./mkNixOS.nix inputs;
   darwinConfigurations = import ./mkDarwin.nix inputs;
   homeConfigurations = import ./mkHome.nix inputs;
+
+  checks = import ./mkChecks.nix inputs;
 }
