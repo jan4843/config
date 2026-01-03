@@ -17,7 +17,7 @@
     ];
 
     userSettings = {
-      "chat.commandCenter.enabled" = false;
+      "chat.disableAIFeatures" = true;
       "diffEditor.ignoreTrimWhitespace" = false;
       "editor.accessibilitySupport" = "off";
       "editor.copyWithSyntaxHighlighting" = false;
@@ -44,6 +44,7 @@
       "update.showReleaseNotes" = false;
       "workbench.editor.empty.hint" = "hidden";
       "workbench.layoutControl.type" = "menu";
+      "workbench.secondarySideBar.defaultVisibility" = "hidden";
       "workbench.startupEditor" = "newUntitledFile";
 
       "[json]" = {
