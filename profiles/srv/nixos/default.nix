@@ -1,12 +1,10 @@
 { inputs, lib, ... }:
 {
   imports = lib.self.siblingsOf ./default.nix ++ [
-    (inputs.self + "/profiles/base")
     (inputs.self + "/profiles/qemu-guest")
+    (inputs.self + "/profiles/lan")
     (inputs.self + "/profiles/server")
   ];
 
-  nixpkgs.hostPlatform = "aarch64-linux";
-  system.stateVersion = "24.11";
-  self.autoupgrade.schedule = "Thu 04:00";
+  nixpkgs.hostPlatform = "x86_64-linux";
 }

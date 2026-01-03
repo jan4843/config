@@ -6,7 +6,7 @@
 }:
 {
   imports = lib.self.siblingsOf ./default.nix ++ [
-    (inputs.self + "/profiles/nixos/srv")
+    (inputs.self + "/profiles/srv")
   ];
 
   system.stateVersion = "24.11";

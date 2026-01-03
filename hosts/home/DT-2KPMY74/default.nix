@@ -1,7 +1,7 @@
 { inputs, lib, ... }:
 {
   imports = lib.self.siblingsOf ./default.nix ++ [
-    (inputs.self + "/profiles/home/desktop")
+    (inputs.self + "/profiles/desktop")
   ];
 
   nixpkgs.hostPlatform = "x86_64-linux";

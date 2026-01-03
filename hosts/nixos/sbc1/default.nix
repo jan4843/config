@@ -1,7 +1,7 @@
 { inputs, lib, ... }:
 {
   imports = lib.self.siblingsOf ./default.nix ++ [
-    (inputs.self + "/profiles/nixos/sbc")
+    (inputs.self + "/profiles/sbc")
   ];
 
   system.stateVersion = "24.11";
