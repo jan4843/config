@@ -58,4 +58,8 @@ in
     dev = "${config.home.homeDirectory}/Developer";
     doc = "${config.home.homeDirectory}/Documents";
   };
+
+  self.bash.functions.binpath = ''
+    realpath "$(which "$@")"
+  '';
 }

@@ -10,7 +10,7 @@
   ];
 
   self.bash.functions.cat = ''
-    if [ -t 0 ] && [ -t 1 ] && [ $# = 1 ] && [ -e "$1" ]; then
+    if [ -t 0 ] && [ -t 1 ] && [ $# = 1 ] && [ -r "$1" ] && ! [ -d "$1" ]; then
       bat "$@"
     else
       command cat "$@"
