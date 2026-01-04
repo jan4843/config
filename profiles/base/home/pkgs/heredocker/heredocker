@@ -155,7 +155,6 @@ for arg in "$@"; do
 				cmd="$cmd"'command -v bash >/dev/null && exec bash "$@" || exec sh "$@"'
 
 				set -- \
-					--init \
 					--entrypoint=sh \
 					"$@" \
 					-c "$cmd"
@@ -181,23 +180,7 @@ if [ -t 0 ]; then
 		"$@"
 fi
 
-if [ -n "$SSH_AUTH_SOCK" ]; then
-	if grep -q '"credsStore":\s*"desktop"' ~/.docker/config.json 2>/dev/null; then
-		# https://docs.docker.com/desktop/networking/#ssh-agent-forwarding
-		set -- \
-			--mount="type=bind,src=/run/host-services/ssh-auth.sock,target=/run/host-services/ssh-auth.sock,readonly" \
-			--env=SSH_AUTH_SOCK="/run/host-services/ssh-auth.sock" \
-			"$@"
-	else
-		set -- \
-			--mount="type=bind,src=$SSH_AUTH_SOCK,target=$SSH_AUTH_SOCK,readonly" \
-			--env=SSH_AUTH_SOCK="$SSH_AUTH_SOCK" \
-			"$@"
-	fi
-fi
-
-docker container run \
+docker run \
 	--rm \
 	--interactive \
-	--no-healthcheck \
 	"$@"

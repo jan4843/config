@@ -17,5 +17,8 @@ let
   };
 in
 lib.mkIf pkgs.stdenv.hostPlatform.isDarwin {
-  home.packages = [ pkgs'.container ];
+  home.packages = [
+    pkgs'.container
+    (pkgs.writeShellScriptBin "docker" ''exec container "$@"'')
+  ];
 }

@@ -1,7 +1,7 @@
 _heredocker() {
 	local images
 	images=$(
-		docker image ls --format "{{.Repository}}:{{.Tag}}" |
+		docker image ls | awk '/^[a-z]/{print $1 ":" $2}' |
 		grep -v '<none>' |
 		sed 's/:latest$//'
 	)

@@ -1,6 +1,6 @@
 #!/bin/sh
 
-exec docker container exec \
+exec docker exec \
 	--interactive \
 	--tty \
 	"$@" \
