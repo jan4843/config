@@ -8,6 +8,7 @@
   imports = lib.self.siblingsOf ./default.nix ++ [
     ../common/nixpkgs.nix
     inputs.self.homeModules.home-manager
+    inputs.self.homeModules.mas
     inputs.self.homeModules.open-at-login
     inputs.self.homeModules.sudo-passwordless
     inputs.self.homeModules.tcc
