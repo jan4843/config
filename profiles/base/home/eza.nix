@@ -13,7 +13,7 @@
     "--group-directories-first"
 
     "--binary"
-    "--group"
+    "--smart-group"
     "--mounts"
     "--time-style=long-iso"
     "--git"
