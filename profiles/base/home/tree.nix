@@ -1,5 +1,5 @@
 { pkgs, ... }:
 {
   home.packages = [ pkgs.tree ];
-  home.shellAliases.tree = "tree -aACF";
+  home.shellAliases.tree = "tree -aACF -I .git/";
 }
