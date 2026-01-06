@@ -15,6 +15,7 @@ let
 
   script = pkgs.writeShellScript "backup" ''
     set -e
+
     ${restic'} init || :
     ${restic'} unlock || :
     ${restic'} backup --exclude-caches --cleanup-cache \
@@ -26,6 +27,8 @@ let
         lib.attrsets.mapAttrsToList (i: n: "--keep-${i}=${toString n}") config.self.backup.retention
       )
     }
+
+    ${config.self.push.pingScript} backup
   '';
 
   scheduleMinute =
