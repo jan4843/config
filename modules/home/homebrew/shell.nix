@@ -1,10 +1,10 @@
-{ config, ... }:
-{
-  programs.bash.interactiveShellInit = ''
+{ config, lib, ... }:
+lib.mkIf config.self.homebrew.enable {
+  programs.bash.profileExtra = ''
     eval "$(${config.self.homebrew.prefix}/bin/brew shellenv bash)"
   '';
 
-  programs.zsh.interactiveShellInit = ''
+  programs.zsh.profileExtra = ''
     eval "$(${config.self.homebrew.prefix}/bin/brew shellenv zsh)"
   '';
 

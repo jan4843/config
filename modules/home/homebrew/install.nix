@@ -1,4 +1,9 @@
-{ config, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   cfg = config.self.homebrew;
 
@@ -13,11 +18,9 @@ let
   '';
 
   install = ''
-    uid=$(id -u ${config.system.primaryUser})
-    gid=$(id -g ${config.system.primaryUser})
-    ${pkgs.rsync}/bin/rsync \
+    /usr/bin/sudo ${pkgs.rsync}/bin/rsync \
       --archive \
-      --owner --group --chown="$uid:$gid" \
+      --owner --group --chown="$(id -u):$(id -g)" \
       --perms --chmod=u+w \
       ${cfg.package}/ ${cfg.prefix}
     cd ${cfg.prefix}
@@ -35,19 +38,20 @@ let
     fi
   '';
 in
-{
-  system.activationScripts.preActivation.text = ''
+lib.mkIf config.self.homebrew.enable {
+  home.activation.homebrewCheck = lib.hm.dag.entryBefore [ "checkFilesChanged" ] ''
     if [ -e ${cfg.prefix} ] && ! [ -e ${cfg.prefix}/.nix/rev ]; then
       printf >&2 '\e[1;31m%s\e[0m\n' "error: homebrew installation already present but not managed by nix"
       exit 2
     fi
   '';
 
-  system.activationScripts.homebrewInstall.text = ''
-    if [ "$(cat ${cfg.prefix}/.nix/rev 2>/dev/null)" != ${cfg.package.rev} ]; then
-      echo "installing homebrew..." >&2
-      ( ${uninstall} )
-      ( ${install} )
-    fi
-  '';
+  home.activation.homebrewInstall =
+    lib.hm.dag.entryBetween [ "installPackages" ] [ "writeBoundary" ]
+      ''
+        if [ "$(cat ${cfg.prefix}/.nix/rev 2>/dev/null)" != ${cfg.package.rev} ]; then
+          ( ${uninstall} )
+          ( ${install} )
+        fi
+      '';
 }

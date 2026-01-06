@@ -1,4 +1,4 @@
-{ casks, pkgs, ... }:
+{ pkgs, ... }:
 let
   tap = "homebrew/colorpicker-skalacolor";
   formula = "colorpicker-skalacolor";
@@ -12,6 +12,6 @@ in
     taps.${tap} = pkgs.runCommand "" { } ''
       install -D ${cask} $out/Casks/${formula}.rb
     '';
-    casks = [ casks."${tap}/${formula}" ];
+    casks = [ "${tap}/${formula}" ];
   };
 }

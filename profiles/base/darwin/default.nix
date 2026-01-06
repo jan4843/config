@@ -4,7 +4,6 @@
     ../common/nix.nix
     ../common/nixpkgs.nix
     inputs.self.darwinModules.bash
-    inputs.self.darwinModules.homebrew
     inputs.self.darwinModules.home-manager
   ];
 

@@ -2,20 +2,18 @@
   config,
   inputs,
   lib,
+  pkgs,
   ...
 }:
-let
-  mkOptionType =
-    type:
-    lib.mkOptionType {
-      name = type;
-      check = x: x.type or null == type;
-    };
-in
 {
   imports = lib.self.siblingsOf ./default.nix;
 
   options.self.homebrew = {
+    enable = lib.mkOption {
+      type = lib.types.bool;
+      default = pkgs.stdenv.hostPlatform.isDarwin;
+    };
+
     package = lib.mkOption {
       type = lib.types.pathInStore;
     };
@@ -47,29 +45,21 @@ in
     };
 
     brews = lib.mkOption {
-      type = lib.types.listOf (mkOptionType "brew");
+      type = lib.types.listOf lib.types.str;
       default = [ ];
     };
 
     casks = lib.mkOption {
-      type = lib.types.listOf (mkOptionType "cask");
+      type = lib.types.listOf lib.types.str;
       default = [ ];
     };
   };
 
-  config = {
-    self.homebrew = {
-      package = lib.mkDefault inputs.homebrew;
-      taps = {
-        "homebrew/core" = lib.mkDefault inputs.homebrew-core;
-        "homebrew/cask" = lib.mkDefault inputs.homebrew-cask;
-      };
+  config.self.homebrew = lib.mkIf config.self.homebrew.enable {
+    package = lib.mkDefault inputs.homebrew;
+    taps = {
+      "homebrew/core" = lib.mkDefault inputs.homebrew-core;
+      "homebrew/cask" = lib.mkDefault inputs.homebrew-cask;
     };
-
-    system.activationScripts.postActivation.text = ''
-      ${config.system.activationScripts.homebrewInstall.text}
-      ${config.system.activationScripts.homebrewTaps.text}
-      ${config.system.activationScripts.homebrewBundle.text}
-    '';
   };
 }

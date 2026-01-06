@@ -40,7 +40,7 @@ let
   };
 in
 {
-  home.packages = lib.optional pkgs.stdenv.hostPlatform.isLinux pkgs.ghostty.terminfo;
+  self.homebrew.casks = [ "ghostty@tip" ];
 
   programs.ghostty.enable = pkgs.stdenv.hostPlatform.isLinux;
 

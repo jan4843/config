@@ -52,7 +52,7 @@ let
 
   findCasks = findFormulae { inFirstExistingDirOutOf = [ "/Casks/" ]; };
 
-  mkModuleArgs =
+  getAllFormatted =
     type:
     lib.pipe config.self.homebrew.taps [
       (lib.mapAttrs (
@@ -79,16 +79,17 @@ let
       ))
       builtins.attrValues
       lib.flatten
-      (map (name: {
-        inherit name;
-        value = { inherit name type; };
-      }))
-      builtins.listToAttrs
     ];
 in
-{
-  config._module.args = {
-    brews = mkModuleArgs "brew";
-    casks = mkModuleArgs "cask";
-  };
+lib.mkIf config.self.homebrew.enable {
+  assertions =
+    [ ]
+    ++ (map (brew: {
+      assertion = builtins.elem brew (getAllFormatted "brew");
+      message = "Invalid config.self.homebrew.brews = [ ${lib.strings.escapeNixString brew} ]";
+    }) config.self.homebrew.brews)
+    ++ (map (cask: {
+      assertion = builtins.elem cask (getAllFormatted "cask");
+      message = "Invalid config.self.homecask.casks = [ ${lib.strings.escapeNixString cask} ]";
+    }) config.self.homebrew.casks);
 }
