@@ -1,5 +1,6 @@
 {
   config,
+  homeConfig,
   lib,
   pkgs,
   ...
@@ -29,11 +30,14 @@
       nix-collect-garbage --delete-old
       nix-store --optimise
 
-      nixos-rebuild switch --flake ${lib.escapeShellArg "${config.self.autoupgrade.flakeref}#${config.networking.hostName}"}
-
-      booted=$(readlink   /run/booted-system/{initrd,kernel,kernel-modules})
-      current=$(readlink /run/current-system/{initrd,kernel,kernel-modules})
-      [ "$booted" = "$current" ] || reboot
+      if nixos-rebuild switch --flake ${lib.escapeShellArg "${config.self.autoupgrade.flakeref}#${config.networking.hostName}"}; then
+        booted=$(readlink   /run/booted-system/{initrd,kernel,kernel-modules})
+        current=$(readlink /run/current-system/{initrd,kernel,kernel-modules})
+        [ "$booted" = "$current" ] || reboot
+      else
+        ${homeConfig.self.push.notifyScript} "autoupgrade failed"
+        exit 1
+      fi
     '';
   };
 }
