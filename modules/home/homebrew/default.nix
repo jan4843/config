@@ -55,11 +55,17 @@
     };
   };
 
-  config.self.homebrew = lib.mkIf config.self.homebrew.enable {
-    package = lib.mkDefault inputs.homebrew;
-    taps = {
-      "homebrew/core" = lib.mkDefault inputs.homebrew-core;
-      "homebrew/cask" = lib.mkDefault inputs.homebrew-cask;
+  config = lib.mkIf config.self.homebrew.enable {
+    self.homebrew = {
+      package = lib.mkDefault inputs.homebrew;
+      taps = {
+        "homebrew/core" = lib.mkDefault inputs.homebrew-core;
+        "homebrew/cask" = lib.mkDefault inputs.homebrew-cask;
+      };
     };
+
+    programs.bash.profileExtra = ''
+      eval "$(${config.self.homebrew.prefix}/bin/brew shellenv bash)"
+    '';
   };
 }
