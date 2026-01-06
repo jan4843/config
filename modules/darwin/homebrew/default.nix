@@ -55,11 +55,6 @@ in
       type = lib.types.listOf (mkOptionType "cask");
       default = [ ];
     };
-
-    mas = lib.mkOption {
-      type = lib.types.attrsOf lib.types.ints.unsigned;
-      default = { };
-    };
   };
 
   config = {

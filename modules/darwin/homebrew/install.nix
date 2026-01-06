@@ -6,9 +6,9 @@ let
     #!/bin/sh
     HOMEBREW_NO_AUTO_UPDATE=1 \
     HOMEBREW_NO_INSTALL_FROM_API=1 \
-    HOMEBREW_CELLAR=${cfg.prefix}/Cellar \
-    HOMEBREW_PREFIX=${cfg.prefix} \
     HOMEBREW_REPOSITORY=${cfg.prefix} \
+    HOMEBREW_PREFIX=${cfg.prefix} \
+    HOMEBREW_CELLAR=${cfg.prefix}/Cellar \
     exec ${cfg.prefix}/bin/.brew-wrapped "$@"
   '';
 

@@ -1,30 +1,17 @@
-{
-  brews,
-  config,
-  lib,
-  ...
-}:
+{ config, lib, ... }:
 let
   cfg = config.self.homebrew;
 
-  rubyEscape = lib.escape [
-    "\""
-    "#"
-  ];
-
-  taps' = map (x: ''tap "${x}"'') (builtins.attrNames cfg.taps);
-  brews' = map (x: ''brew "${x.name}"'') cfg.brews;
-  casks' = map (x: ''cask "${x.name}", greedy: true'') cfg.casks;
-  mas' = map (x: ''mas "${rubyEscape x.name}", id: ${toString x.value}'') (lib.attrsToList cfg.mas);
+  taps = map (x: ''tap "${x}"'') (builtins.attrNames cfg.taps);
+  brews = map (x: ''brew "${x.name}"'') cfg.brews;
+  casks = map (x: ''cask "${x.name}", greedy: true'') cfg.casks;
 
   brewfile = builtins.toFile "Brewfile" ''
     cask_args no_quarantine: true
-    ${lib.concatLines (taps' ++ brews' ++ casks' ++ mas')}
+    ${lib.concatLines (taps ++ brews ++ casks)}
   '';
 in
 {
-  self.homebrew.brews = lib.optional (cfg.mas != { }) brews.mas;
-
   system.activationScripts.homebrewBundle.text = ''
     echo "homebrew bundle..." >&2
     sudo --set-home --user=${config.system.primaryUser} -- \
