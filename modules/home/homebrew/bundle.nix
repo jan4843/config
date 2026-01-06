@@ -1,10 +1,8 @@
 { config, lib, ... }:
 let
-  cfg = config.self.homebrew;
-
-  taps = map (x: ''tap "${x}"'') (builtins.attrNames cfg.taps);
-  brews = map (x: ''brew "${x}"'') cfg.brews;
-  casks = map (x: ''cask "${x}", greedy: true'') cfg.casks;
+  taps = map (x: ''tap "${x}"'') (builtins.attrNames config.self.homebrew.taps);
+  brews = map (x: ''brew "${x}"'') config.self.homebrew.brews;
+  casks = map (x: ''cask "${x}", greedy: true'') config.self.homebrew.casks;
 
   brewfile = builtins.toFile "Brewfile" ''
     cask_args no_quarantine: true
@@ -15,7 +13,7 @@ lib.mkIf config.self.homebrew.enable {
   home.activation.homebrewBundle =
     lib.hm.dag.entryBetween [ "installPackages" ] [ "writeBoundary" "homebrewTaps" ]
       ''
-        ${cfg.prefix}/bin/brew bundle \
+        ${config.self.homebrew.prefix}/bin/brew bundle \
           --cleanup --quiet \
           --file ${brewfile}
       '';
