@@ -7,7 +7,7 @@
 }:
 let
   restic' = pkgs.writeShellScript "restic" ''
-    RESTIC_REPOSITORY_FILE=${lib.escapeShellArg config.self.backup.repositoryFile} \
+    RESTIC_REPOSITORY_FILE=<(printf %s "$(${pkgs.coreutils}/bin/cat ${lib.escapeShellArg config.self.backup.repositoryPrefixFile})/${lib.escapeShellArg osConfig.networking.hostName}") \
     RESTIC_PASSWORD_FILE=${lib.escapeShellArg config.self.backup.passwordFile} \
     PATH="${pkgs.restic}/bin:$PATH" \
     exec restic "$@"

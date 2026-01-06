@@ -8,7 +8,7 @@
       default = true;
     };
 
-    repositoryFile = lib.mkOption {
+    repositoryPrefixFile = lib.mkOption {
       type = lib.types.path;
     };
 

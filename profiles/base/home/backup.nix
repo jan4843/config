@@ -1,9 +1,13 @@
-{ inputs, lib, ... }:
+{
+  inputs,
+  lib,
+  osConfig,
+  ...
+}:
 {
   imports = [ inputs.self.homeModules.backup ];
 
   self.backup = {
-    repositoryFile = lib.mkDefault "/nix/secrets/backup.repository";
-    passwordFile = lib.mkDefault "/nix/secrets/backup.password";
+    passwordFile = lib.mkDefault "/nix/secrets/${osConfig.networking.hostName}/backup.password";
   };
 }

@@ -1,7 +1,7 @@
 { config, ... }:
 {
   self.backup = {
-    repositoryFile = builtins.toFile "repo" "/run/media/mmcblk0p1/backup";
+    repositoryPrefixFile = builtins.toFile "repo" "/run/media/mmcblk0p1/backup";
     passwordFile = builtins.toFile "pass" "local";
     paths = [
       "${config.home.homeDirectory}/.local/share/Steam/steamapps/compatdata/*/pfx/drive_c/users"

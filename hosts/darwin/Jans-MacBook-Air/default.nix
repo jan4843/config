@@ -7,6 +7,7 @@
 {
   imports = lib.self.siblingsOf ./default.nix ++ [
     (inputs.self + "/profiles/desktop+")
+    (inputs.self + "/profiles/personal")
   ];
 
   nixpkgs.hostPlatform = "aarch64-darwin";

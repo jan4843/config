@@ -7,6 +7,7 @@
 {
   imports = lib.self.siblingsOf ./default.nix ++ [
     (inputs.self + "/profiles/desktop+")
+    (inputs.self + "/profiles/personal")
     inputs.self.homeModules.steam-autogrid
     inputs.self.homeModules.steam-shortcuts
     inputs.self.homeModules.tailscale-userspace
