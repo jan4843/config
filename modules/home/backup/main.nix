@@ -6,18 +6,22 @@
   ...
 }:
 let
+  restic' = pkgs.writeShellScript "restic" ''
+    RESTIC_REPOSITORY_FILE=${lib.escapeShellArg config.self.backup.repositoryFile} \
+    RESTIC_PASSWORD_FILE=${lib.escapeShellArg config.self.backup.passwordFile} \
+    PATH="${pkgs.restic}/bin:$PATH" \
+    exec restic "$@"
+  '';
+
   script = pkgs.writeShellScript "backup" ''
     set -e
-    export PATH=${pkgs.restic}/bin
-    export RESTIC_REPOSITORY_FILE=${lib.escapeShellArg config.self.backup.repositoryFile}
-    export RESTIC_PASSWORD_FILE=${lib.escapeShellArg config.self.backup.passwordFile}
-    restic init || :
-    restic unlock || :
-    restic backup --exclude-caches --cleanup-cache \
+    ${restic'} init || :
+    ${restic'} unlock || :
+    ${restic'} backup --exclude-caches --cleanup-cache \
       --files-from=${builtins.toFile "backup-paths" (lib.concatLines config.self.backup.paths)} \
       --exclude-file=${builtins.toFile "backup-exclude" (lib.concatLines config.self.backup.exclude)}
-    restic check
-    restic forget --prune --group-by= ${
+    ${restic'} check
+    ${restic'} forget --prune --group-by= ${
       toString (
         lib.attrsets.mapAttrsToList (i: n: "--keep-${i}=${toString n}") config.self.backup.retention
       )
@@ -45,11 +49,7 @@ lib.mkIf config.self.backup.enable {
     ncdu
   ];
 
-  home.shellAliases.restic = toString [
-    "RESTIC_REPOSITORY_FILE=${lib.escapeShellArg config.self.backup.repositoryFile}"
-    "RESTIC_PASSWORD_FILE=${lib.escapeShellArg config.self.backup.passwordFile}"
-    "restic"
-  ];
+  home.shellAliases.restic = "${restic'}";
 
   launchd.agents.backup = {
     enable = true;

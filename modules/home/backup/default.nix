@@ -26,11 +26,11 @@
     };
 
     retention = rec {
-      hourly = lib.mkOption { type = lib.types.ints.unsigned; };
-      daily = hourly;
-      weekly = hourly;
-      monthly = hourly;
-      yearly = hourly;
+      hourly = yearly;
+      daily = yearly;
+      weekly = yearly;
+      monthly = yearly;
+      yearly = lib.mkOption { type = lib.types.ints.unsigned; };
     };
   };
 }
