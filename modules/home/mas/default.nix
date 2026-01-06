@@ -16,7 +16,7 @@ in
   };
 
   config = lib.mkIf pkgs.stdenv.hostPlatform.isDarwin {
-    home.activation.mas = lib.hm.dag.entryBetween [ "linkGeneration" ] [ "writeBoundary" ] ''
+    home.activation.mas = lib.hm.dag.entryBetween [ "installPackages" ] [ "writeBoundary" ] ''
       mas_want=(${toString config.self.mas})
       mapfile -t mas_got < <(${mas} list | ${pkgs.gawk}/bin/awk '{print $1}')
 

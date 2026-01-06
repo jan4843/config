@@ -15,7 +15,7 @@ lib.mkIf pkgs.stdenv.hostPlatform.isDarwin {
     fi
   '';
 
-  home.activation.ensureTCCPermissions = lib.hm.dag.entryAfter [ "linkGeneration" ] (
+  home.activation.ensureTCCPermissions = lib.hm.dag.entryAfter [ "installPackages" ] (
     lib.concatMapAttrsStringSep "\n" (
       name: service:
       lib.optionalString (config.self.tcc.${name} != [ ]) ''
