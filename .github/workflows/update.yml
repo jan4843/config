@@ -77,7 +77,7 @@ jobs:
 
       - name: Build derivation
         run: |
-          nix build ${{ matrix.closure }} --no-link --print-build-logs --show-trace
+          nix build --accept-flake-config --no-link --print-build-logs --show-trace ${{ matrix.closure }}
 
   commit-update:
     name: Commit update

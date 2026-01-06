@@ -1,5 +1,5 @@
 NIX_OPTIONS ?= --extra-experimental-features nix-command --extra-experimental-features flakes
-NIX ?= nix $(NIX_OPTIONS)
+NIX ?= nix --accept-flake-config $(NIX_OPTIONS)
 DARWIN_REBUILD ?= $(NIX) shell $(FLAKE)\#darwin-rebuild --command sudo darwin-rebuild
 NIXOS_REBUILD  ?= $(NIX) run $(FLAKE)\#nixos-rebuild --
 HOME_MANAGER   ?= $(NIX) run $(FLAKE)\#home-manager -- $(NIX_OPTIONS)

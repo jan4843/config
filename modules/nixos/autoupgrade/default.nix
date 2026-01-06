@@ -30,7 +30,7 @@
       nix-collect-garbage --delete-old
       nix-store --optimise
 
-      if nixos-rebuild switch --flake ${lib.escapeShellArg "${config.self.autoupgrade.flakeref}#${config.networking.hostName}"}; then
+      if nixos-rebuild switch --accept-flake-config --flake ${lib.escapeShellArg "${config.self.autoupgrade.flakeref}#${config.networking.hostName}"}; then
         booted=$(readlink   /run/booted-system/{initrd,kernel,kernel-modules})
         current=$(readlink /run/current-system/{initrd,kernel,kernel-modules})
         [ "$booted" = "$current" ] || reboot

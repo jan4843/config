@@ -1,6 +1,12 @@
 {
   outputs = inputs: import ./self inputs;
 
+  nixConfig = {
+    abort-on-warn = true;
+    extra-substituters = [ "https://jan4843.cachix.org" ];
+    extra-trusted-public-keys = [ "jan4843.cachix.org-1:TDZmiqhqD9XQxvntxxQe5C3S5aToFAYLlzdqkXZ4tyo=" ];
+  };
+
   inputs = {
     # https://nixos.org/manual/nixos/stable/release-notes
     # https://nixos.org/manual/nixpkgs/stable/release-notes
