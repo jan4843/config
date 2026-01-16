@@ -1,6 +1,11 @@
-{ config, lib, ... }:
 {
-  imports = lib.self.siblingsOf ./default.nix;
+  config,
+  inputs,
+  lib,
+  ...
+}:
+{
+  imports = inputs.self.lib.siblingsOf ./default.nix;
 
   options.self.tcc = builtins.mapAttrs (
     _: _:

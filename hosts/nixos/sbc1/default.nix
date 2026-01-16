@@ -1,9 +1,8 @@
-{ inputs, lib, ... }:
-{
-  imports = lib.self.siblingsOf ./default.nix ++ [
-    (inputs.self + "/profiles/sbc")
-  ];
-
-  system.stateVersion = "24.11";
-  self.autoupgrade.schedule = "Mon 04:00";
+inputs:
+let
+  inputs' = inputs.self.lib.filterInputs "linux" inputs;
+in
+inputs'.nixpkgs.lib.nixosSystem {
+  specialArgs.inputs = inputs';
+  modules = inputs.self.lib.siblingsOf ./default.nix;
 }

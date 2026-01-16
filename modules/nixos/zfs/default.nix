@@ -1,4 +1,9 @@
-{ config, lib, ... }:
+{
+  config,
+  inputs,
+  lib,
+  ...
+}:
 let
   opts.retention = lib.mkOption {
     type = lib.types.nullOr lib.types.ints.unsigned;
@@ -6,7 +11,7 @@ let
   };
 in
 {
-  imports = lib.self.siblingsOf ./default.nix;
+  imports = inputs.self.lib.siblingsOf ./default.nix;
 
   options.self.zfs = {
     datasets = lib.mkOption {

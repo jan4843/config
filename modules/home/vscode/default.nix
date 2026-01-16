@@ -5,7 +5,7 @@
   ...
 }:
 {
-  imports = lib.self.siblingsOf ./default.nix;
+  imports = inputs.self.lib.siblingsOf ./default.nix;
 
   _module.args.vscode-marketplace =
     inputs.nix-vscode-extensions.extensions.${pkgs.stdenv.hostPlatform.system}.vscode-marketplace;

@@ -1,5 +1,6 @@
 {
   config,
+  inputs,
   lib,
   pkgs,
   ...
@@ -8,7 +9,7 @@ let
   mas = lib.getExe pkgs.nixpkgs-unstable.mas;
 in
 {
-  imports = lib.self.siblingsOf ./default.nix;
+  imports = inputs.self.lib.siblingsOf ./default.nix;
 
   options.self.mas = lib.mkOption {
     type = lib.types.listOf lib.types.ints.unsigned;

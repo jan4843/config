@@ -1,5 +1,6 @@
 {
   config,
+  inputs,
   lib,
   pkgs,
   ...
@@ -9,7 +10,7 @@ let
   dest = "/etc/keyd/default.conf";
 in
 {
-  imports = lib.self.siblingsOf ./default.nix;
+  imports = inputs.self.lib.siblingsOf ./default.nix;
 
   options.self.keyd = {
     config = lib.mkOption {

@@ -1,6 +1,11 @@
-{ lib, pkgs, ... }:
 {
-  imports = lib.self.siblingsOf ./default.nix;
+  inputs,
+  lib,
+  pkgs,
+  ...
+}:
+{
+  imports = inputs.self.lib.siblingsOf ./default.nix;
 
   options.self.git = {
     package = lib.mkOption {

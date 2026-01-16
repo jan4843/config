@@ -1,6 +1,6 @@
 NIX_OPTIONS ?= --extra-experimental-features nix-command --extra-experimental-features flakes
 NIX ?= nix --accept-flake-config $(NIX_OPTIONS)
-DARWIN_REBUILD ?= $(NIX) shell $(FLAKE)\#darwin-rebuild --command sudo darwin-rebuild
+DARWIN_REBUILD ?= $(NIX) run $(FLAKE)\#darwin-rebuild --
 NIXOS_REBUILD  ?= $(NIX) run $(FLAKE)\#nixos-rebuild --
 HOME_MANAGER   ?= $(NIX) run $(FLAKE)\#home-manager -- $(NIX_OPTIONS)
 OPTIONS ?= --print-build-logs --show-trace
@@ -25,7 +25,7 @@ $(filter-out $(.DEFAULT_GOAL),$(DARWIN_CONFIGS)):
 # darwin local
 ifneq (,$(findstring $(.DEFAULT_GOAL),$(DARWIN_CONFIGS)))
 $(.DEFAULT_GOAL):
-	$(DARWIN_REBUILD) --flake $(FLAKE)#$@ $(OPTIONS) $(COMMAND)
+	sudo -H $(DARWIN_REBUILD) --flake $(FLAKE)#$@ $(OPTIONS) $(COMMAND)
 endif
 
 # nixos remote

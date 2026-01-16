@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ inputs, lib, ... }:
 let
   opts.asset = lib.mkOption {
     type = lib.types.nullOr lib.types.path;
@@ -6,7 +6,7 @@ let
   };
 in
 {
-  imports = lib.self.siblingsOf ./default.nix;
+  imports = inputs.self.lib.siblingsOf ./default.nix;
 
   options.self.steam-shortcuts = lib.mkOption {
     type = lib.types.attrsOf (

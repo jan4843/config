@@ -1,12 +1,7 @@
-{
-  inputs,
-  lib,
-  vscode-marketplace,
-  ...
-}:
+{ inputs, vscode-marketplace, ... }:
 {
 
-  imports = lib.self.siblingsOf ./default.nix ++ [
+  imports = inputs.self.lib.siblingsOf ./default.nix ++ [
     inputs.self.homeModules.vscode
   ];
 

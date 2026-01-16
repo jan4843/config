@@ -1,5 +1,6 @@
 {
   config,
+  inputs,
   lib,
   pkgs,
   ...
@@ -9,7 +10,7 @@ let
   proxyAddress = "127.0.0.1:1055";
 in
 {
-  imports = lib.self.siblingsOf ./default.nix;
+  imports = inputs.self.lib.siblingsOf ./default.nix;
 
   home.packages = [ pkgs.tailscale ];
 

@@ -1,8 +1,7 @@
 let
   pipe = builtins.foldl' (x: f: f x);
-
   mapDir =
-    dir: fn:
+    fn: dir:
     pipe dir [
       builtins.readDir
       builtins.attrNames

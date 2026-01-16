@@ -1,6 +1,6 @@
-{ inputs, lib, ... }:
+{ inputs, ... }:
 {
-  imports = lib.self.siblingsOf ./default.nix ++ [
+  imports = inputs.self.lib.siblingsOf ./default.nix ++ [
     inputs.home-manager.darwinModules.home-manager
   ];
 

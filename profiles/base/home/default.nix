@@ -5,7 +5,7 @@
   ...
 }:
 {
-  imports = lib.self.siblingsOf ./default.nix ++ [
+  imports = inputs.self.lib.siblingsOf ./default.nix ++ [
     ../common/nixpkgs.nix
     inputs.self.homeModules.home-manager
     inputs.self.homeModules.homebrew

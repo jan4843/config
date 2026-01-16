@@ -2,11 +2,12 @@
   config,
   homeConfig,
   lib,
+  inputs,
   pkgs,
   ...
 }:
 {
-  imports = lib.self.siblingsOf ./default.nix;
+  imports = inputs.self.lib.siblingsOf ./default.nix;
 
   options.self.autoupgrade = {
     flakeref = lib.mkOption {

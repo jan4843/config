@@ -5,7 +5,7 @@
   ...
 }:
 {
-  imports = lib.self.siblingsOf ./default.nix ++ [
+  imports = inputs.self.lib.siblingsOf ./default.nix ++ [
     (inputs.self + "/profiles/base")
   ];
 

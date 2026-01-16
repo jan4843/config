@@ -1,7 +1,6 @@
 {
   config,
   inputs,
-  lib,
   pkgs,
   ...
 }:
@@ -10,7 +9,7 @@ let
   shellPath = "/run/current-system/sw${pkg.shellPath}";
 in
 {
-  imports = lib.self.siblingsOf ./default.nix;
+  imports = inputs.self.lib.siblingsOf ./default.nix;
 
   homeConfig.imports = [ inputs.self.homeModules.bash ];
 

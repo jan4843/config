@@ -1,6 +1,6 @@
-{ lib, ... }:
+{ inputs, lib, ... }:
 {
-  imports = lib.self.siblingsOf ./default.nix;
+  imports = inputs.self.lib.siblingsOf ./default.nix;
 
   options.self.open-at-login = lib.mkOption {
     type = lib.types.attrsOf (

@@ -1,5 +1,5 @@
 {
-  outputs = inputs: import ./self inputs;
+  outputs = inputs: import ./outputs.nix inputs;
 
   nixConfig = {
     abort-on-warn = true;

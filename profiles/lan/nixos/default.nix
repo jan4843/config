@@ -1,6 +1,6 @@
-{ lib, ... }:
+{ inputs, ... }:
 {
-  imports = lib.self.siblingsOf ./default.nix;
+  imports = inputs.self.lib.siblingsOf ./default.nix;
 
   networking.firewall.enable = false;
 

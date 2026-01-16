@@ -6,7 +6,7 @@
   ...
 }:
 {
-  imports = lib.self.siblingsOf ./default.nix;
+  imports = inputs.self.lib.siblingsOf ./default.nix;
 
   options.self.homebrew = {
     enable = lib.mkOption {

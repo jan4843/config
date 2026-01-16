@@ -1,1 +1,1 @@
-args: args.lib.self.classImports args ./.
+args: args.inputs.self.lib.classImports args ./.

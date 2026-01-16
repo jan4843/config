@@ -1,6 +1,6 @@
-{ lib, pkgs, ... }:
+{ inputs, pkgs, ... }:
 {
-  imports = lib.self.siblingsOf ./default.nix;
+  imports = inputs.self.lib.siblingsOf ./default.nix;
 
   systemd.user = {
     services.steam-grid = {

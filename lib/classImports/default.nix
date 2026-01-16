@@ -1,11 +1,13 @@
-{ lib, ... }:
 args: base:
 let
   import' =
     subdir:
-    lib.optionalAttrs (builtins.pathExists (base + "/${subdir}")) {
-      imports = [ (base + "/${subdir}") ];
-    };
+    if (builtins.pathExists (base + "/${subdir}")) then
+      {
+        imports = [ (base + "/${subdir}") ];
+      }
+    else
+      { };
 in
 if args._class == "darwin" then
   import' "darwin" // { homeConfig = import' "home"; }
