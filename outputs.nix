@@ -3,6 +3,14 @@ inputs: {
 
   lib = (import ./lib/mapDir) (_: import) ./lib;
 
+  nixosModules = inputs.self.lib.mapDir (_: path: path) ./modules/nixos;
+  darwinModules = inputs.self.lib.mapDir (_: path: path) ./modules/darwin;
+  homeModules = inputs.self.lib.mapDir (_: path: path) ./modules/home;
+
+  nixosConfigurations = inputs.self.lib.mapDir (_: path: import path inputs) ./hosts/nixos;
+  darwinConfigurations = inputs.self.lib.mapDir (_: path: import path inputs) ./hosts/darwin;
+  homeConfigurations = inputs.self.lib.mapDir (_: path: import path inputs) ./hosts/home;
+
   apps = inputs.self.lib.genSystems (
     system:
     let
@@ -29,12 +37,4 @@ inputs: {
       ) inputs.self.homeConfigurations)
     ) { }
   );
-
-  nixosModules = inputs.self.lib.mapDir (_: path: path) ./modules/nixos;
-  darwinModules = inputs.self.lib.mapDir (_: path: path) ./modules/darwin;
-  homeModules = inputs.self.lib.mapDir (_: path: path) ./modules/home;
-
-  nixosConfigurations = inputs.self.lib.mapDir (_: path: import path inputs) ./hosts/nixos;
-  darwinConfigurations = inputs.self.lib.mapDir (_: path: import path inputs) ./hosts/darwin;
-  homeConfigurations = inputs.self.lib.mapDir (_: path: import path inputs) ./hosts/home;
 }
