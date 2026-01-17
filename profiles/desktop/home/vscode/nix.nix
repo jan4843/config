@@ -12,6 +12,7 @@
       "nix.enableLanguageServer" = true;
       "nix.serverPath" = lib.getExe pkgs.nil;
       "nix.serverSettings".nil = {
+        nix.flake.autoArchive = false;
         formatting.command = [ (lib.getExe pkgs.nixfmt) ];
       };
 
