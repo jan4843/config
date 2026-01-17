@@ -6,10 +6,12 @@
   ...
 }:
 let
+  q = lib.escapeShellArg;
+
   restic' = pkgs.writeShellScript "restic" ''
-    RESTIC_REPOSITORY_FILE=<(printf %s "$(${pkgs.coreutils}/bin/cat ${lib.escapeShellArg config.self.backup.repositoryPrefixFile})/${lib.escapeShellArg osConfig.networking.hostName}") \
-    RESTIC_PASSWORD_FILE=${lib.escapeShellArg config.self.backup.passwordFile} \
-    PATH="${pkgs.restic}/bin:$PATH" \
+    RESTIC_REPOSITORY_FILE=<(printf %s "$(<${q config.self.backup.repositoryPrefixFile})"/${q osConfig.networking.hostName}) \
+    RESTIC_PASSWORD_FILE=${q config.self.backup.passwordFile} \
+    PATH=${pkgs.restic}/bin:"$PATH" \
     exec restic "$@"
   '';
 
