@@ -10,6 +10,4 @@
     extraSpecialArgs.inputs = inputs;
     useGlobalPkgs = true;
   };
-
-  users.users.root.linger = true;
 }

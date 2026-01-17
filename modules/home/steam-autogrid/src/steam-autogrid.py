@@ -46,7 +46,12 @@ for steam_dir in [
 ]:
     grid_dir_path = f'{steam_dir}/config/grid'
     shortcuts_vdf_path = f'{steam_dir}/config/shortcuts.vdf'
-    shortcuts_vdf = vdf.binary_loads(open(shortcuts_vdf_path, 'rb').read())
+
+    try:
+        shortcuts_vdf = vdf.binary_loads(open(shortcuts_vdf_path, 'rb').read())
+    except FileNotFoundError:
+        continue
+    os.makedirs(grid_dir_path, exist_ok=True)
 
     for shortcut in shortcuts_vdf['shortcuts'].values():
         uid = int(shortcut['appid']) & 0xffffffff

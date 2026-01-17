@@ -8,6 +8,8 @@ let
   authorizedKeysFile = "${config.self.persistence.path}/ssh/authorized_keys";
 in
 {
+  users.allowNoPasswordLogin = true;
+
   services.openssh = {
     enable = true;
     settings.PasswordAuthentication = false;

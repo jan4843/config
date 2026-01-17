@@ -23,16 +23,19 @@ for steam_dir in [
 ]:
     grid_dir_path = f'{steam_dir}/config/grid'
     shortcuts_vdf_path = f'{steam_dir}/config/shortcuts.vdf'
-    shortcuts_vdf = vdf.binary_loads(open(shortcuts_vdf_path, 'rb').read())
 
     shortcuts = {}
     managed = {}
 
-    for shortcut in shortcuts_vdf['shortcuts'].values():
-        if shortcut.get('FlatpakAppID') == 'managed-by-nix':
-            managed[shortcut['appid']] = shortcut
-        else:
-            shortcuts[str(len(shortcuts))] = shortcut
+    try:
+        shortcuts_vdf = vdf.binary_loads(open(shortcuts_vdf_path, 'rb').read())
+        for shortcut in shortcuts_vdf['shortcuts'].values():
+            if shortcut.get('FlatpakAppID') == 'managed-by-nix':
+                managed[shortcut['appid']] = shortcut
+            else:
+                shortcuts[str(len(shortcuts))] = shortcut
+    except FileNotFoundError:
+        pass
 
     for name, shortcut in SHORTCUTS.items():
         defaults = {
@@ -52,6 +55,7 @@ for steam_dir in [
     with open(shortcuts_vdf_path, 'wb') as f:
         vdf.binary_dump({'shortcuts': shortcuts}, f)
 
+    os.makedirs(grid_dir_path, exist_ok=True)
     for f in [
         f.path
         for f in os.scandir(grid_dir_path)
