@@ -4,6 +4,7 @@
     (inputs.self + "/profiles/srv")
   ];
 
+  networking.hostName = "srv2";
   system.stateVersion = "24.11";
   self.autoupgrade.schedule = "Mon 04:00";
 
