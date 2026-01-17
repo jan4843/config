@@ -7,9 +7,40 @@ inputs: {
   darwinModules = inputs.self.lib.mapDir (_: path: path) ./modules/darwin;
   homeModules = inputs.self.lib.mapDir (_: path: path) ./modules/home;
 
-  nixosConfigurations = inputs.self.lib.mapDir (_: path: import path inputs) ./hosts/nixos;
-  darwinConfigurations = inputs.self.lib.mapDir (_: path: import path inputs) ./hosts/darwin;
-  homeConfigurations = inputs.self.lib.mapDir (_: path: import path inputs) ./hosts/home;
+  nixosConfigurations = inputs.self.lib.mapDir (
+    _: path:
+    inputs.nixpkgs_linux.lib.nixosSystem {
+      specialArgs.inputs = inputs.self.lib.filterInputs "linux" inputs;
+      modules = [ path ];
+    }
+  ) ./hosts/nixos;
+
+  darwinConfigurations = inputs.self.lib.mapDir (
+    _: path:
+    inputs.nix-darwin.lib.darwinSystem {
+      specialArgs.inputs = inputs.self.lib.filterInputs "darwin" inputs;
+      modules = [ path ];
+    }
+  ) ./hosts/darwin;
+
+  homeConfigurations = inputs.self.lib.mapDir (
+    _: path:
+    let
+      system = eval.nixpkgs.hostPlatform;
+      eval = if builtins.isFunction expr then expr (builtins.functionArgs expr) else expr;
+      expr = import path;
+      inputs' = inputs.self.lib.filterInputs system inputs;
+      lib' = inputs'.nixpkgs.lib;
+    in
+    inputs'.home-manager.lib.homeManagerConfiguration {
+      pkgs = inputs'.nixpkgs.legacyPackages.${system};
+      extraSpecialArgs.inputs = inputs';
+      modules = [
+        path
+        { options.nixpkgs.hostPlatform = lib'.mkOption { apply = lib'.systems.elaborate; }; }
+      ];
+    }
+  ) ./hosts/home;
 
   apps = inputs.self.lib.genSystems (
     system:

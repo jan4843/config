@@ -13,7 +13,7 @@
     nixpkgs_linux.url = "github:nixos/nixpkgs/nixos-25.11";
     nixpkgs_darwin.url = "github:nixos/nixpkgs/nixpkgs-25.11-darwin";
 
-    nix-darwin_darwin = {
+    nix-darwin = {
       url = "github:nix-darwin/nix-darwin/nix-darwin-25.11";
       inputs.nixpkgs.follows = "nixpkgs_darwin";
     };
@@ -34,7 +34,7 @@
     nixpkgs-25-05_linux.url = "github:nixos/nixpkgs/nixos-25.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
 
-    nixos-hardware_linux.url = "github:nixos/nixos-hardware";
+    nixos-hardware.url = "github:nixos/nixos-hardware";
 
     nix-vscode-extensions_linux = {
       url = "github:nix-community/nix-vscode-extensions";

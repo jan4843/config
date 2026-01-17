@@ -1,8 +1,10 @@
-inputs:
-let
-  inputs' = inputs.self.lib.filterInputs "linux" inputs;
-in
-inputs'.nixpkgs.lib.nixosSystem {
-  specialArgs.inputs = inputs';
-  modules = inputs.self.lib.siblingsOf ./default.nix;
+{ inputs, ... }:
+{
+  imports = inputs.self.lib.siblingsOf ./default.nix ++ [
+    (inputs.self + "/profiles/srv")
+  ];
+
+  networking.hostName = "srv1";
+  system.stateVersion = "24.11";
+  self.autoupgrade.schedule = "Sat 04:00";
 }

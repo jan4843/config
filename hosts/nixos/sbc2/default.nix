@@ -1,8 +1,11 @@
-inputs:
-let
-  inputs' = inputs.self.lib.filterInputs "linux" inputs;
-in
-inputs'.nixpkgs.lib.nixosSystem {
-  specialArgs.inputs = inputs';
-  modules = inputs.self.lib.siblingsOf ./default.nix;
+{ inputs, ... }:
+{
+  imports = inputs.self.lib.siblingsOf ./default.nix ++ [
+    (inputs.self + "/profiles/sbc")
+  ];
+
+  networking.hostName = "sbc2";
+  system.stateVersion = "24.11";
+  self.autoupgrade.schedule = "Wed 04:00";
+  hardware.raspberry-pi."4".tv-hat.enable = true;
 }
