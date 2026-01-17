@@ -21,13 +21,15 @@ in
   systemd.services.ssh-import-id = {
     startAt = "*:0/5";
     path = with pkgs; [
-      ssh-import-id
+      coreutils
       openssh
+      ssh-import-id
     ];
     script = ''
       ssh-import-id \
         --output=${lib.escapeShellArg authorizedKeysFile} \
         ${lib.escapeShellArg config.self.ssh-server.importID}
+      chmod a+r ${lib.escapeShellArg authorizedKeysFile}
     '';
   };
 }
