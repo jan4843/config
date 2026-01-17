@@ -25,6 +25,8 @@
       showSkipAfterDelay = false;
       showActiveAfterIdleNotification = false;
 
+      activitesToTrack = [ ];
+
       postureReminderEnabled = false;
 
       hideBreakText = true;
