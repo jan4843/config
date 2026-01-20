@@ -1,4 +1,5 @@
 {
+  config,
   inputs,
   lib,
   pkgs,
@@ -8,7 +9,10 @@
   imports = inputs.self.lib.siblingsOf ./default.nix;
 
   _module.args.vscode-marketplace =
-    inputs.nix-vscode-extensions.extensions.${pkgs.stdenv.hostPlatform.system}.vscode-marketplace;
+    (pkgs.nix-vscode-extensions.forVSCodeVersion config.programs.vscode.package.version)
+    .vscode-marketplace;
+
+  nixpkgs.overlays = [ inputs.nix-vscode-extensions.overlays.default ];
 
   programs.vscode = {
     enable = true;

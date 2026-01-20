@@ -12,7 +12,6 @@
     ];
 
     userSettings = {
-      "chat.disableAIFeatures" = true;
       "diffEditor.ignoreTrimWhitespace" = false;
       "editor.accessibilitySupport" = "off";
       "editor.copyWithSyntaxHighlighting" = false;
