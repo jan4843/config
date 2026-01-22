@@ -10,7 +10,7 @@
 
   _module.args.vscode-marketplace =
     (pkgs.nix-vscode-extensions.forVSCodeVersion config.programs.vscode.package.version)
-    .vscode-marketplace;
+    .vscode-marketplace-release;
 
   nixpkgs.overlays = [ inputs.nix-vscode-extensions.overlays.default ];
 

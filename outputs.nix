@@ -58,10 +58,9 @@ inputs: {
   checks = inputs.self.lib.genSystems (
     _:
     builtins.deepSeq (
-      { }
-      // (builtins.mapAttrs (
+      (builtins.mapAttrs (
         name: value:
-        builtins.trace "checking Darwin configuration ${name}" value.config.system.build.toplevel.outPath
+        builtins.trace "checking darwin configuration ${name}" value.config.system.build.toplevel.outPath
       ) inputs.self.darwinConfigurations)
       // (builtins.mapAttrs (
         name: value: builtins.trace "checking home configuration ${name}" value.activationPackage.outPath
