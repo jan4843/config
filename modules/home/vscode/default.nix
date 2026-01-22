@@ -16,6 +16,7 @@
 
   programs.vscode = {
     enable = true;
+    package = pkgs.nixpkgs-unstable.vscode;
     mutableExtensionsDir = false;
     profiles.default.userSettings = {
       "extensions.autoCheckUpdates" = false;

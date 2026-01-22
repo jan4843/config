@@ -11,7 +11,7 @@ in
 lib.mkIf pkgs.stdenv.hostPlatform.isDarwin {
   self.homebrew.casks = [ "visual-studio-code" ];
 
-  programs.vscode.package = {
+  programs.vscode.package = lib.mkForce {
     type = "derivation";
     inherit (pkgs.vscode) pname;
     inherit version;
