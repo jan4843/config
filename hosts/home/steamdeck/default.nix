@@ -1,22 +1,21 @@
-{ inputs, pkgs, ... }:
+{ inputs, ... }:
 {
   imports = inputs.self.lib.siblingsOf ./default.nix ++ [
-    (inputs.self + "/profiles/desktop+")
-    (inputs.self + "/profiles/personal")
-    inputs.self.homeModules.steam-autogrid
     inputs.self.homeModules.steam-shortcuts
-    inputs.self.homeModules.tailscale-userspace
   ];
-
-  _module.args.osConfig.networking.hostName = "steamdeck";
 
   nixpkgs.hostPlatform = "x86_64-linux";
 
-  home.stateVersion = "24.11";
+  home.stateVersion = "25.11";
+  home.username = "deck";
+  home.homeDirectory = "/home/deck";
 
-  home.packages = with pkgs; [
-    librewolf
-    protontricks
-    hello-unfree
-  ];
+  nixpkgs.config.allowUnfree = true;
+
+  targets.genericLinux.nixGL = {
+    packages = inputs.nixgl.packages;
+    defaultWrapper = "mesa";
+    installScripts = [ "mesa" ];
+    vulkan.enable = true;
+  };
 }

@@ -36,6 +36,11 @@
 
     nixos-hardware.url = "github:nixos/nixos-hardware";
 
+    nixgl_linux = {
+      url = "github:nix-community/nixGL";
+      inputs.nixpkgs.follows = "nixpkgs_linux";
+    };
+
     nix-vscode-extensions_linux = {
       url = "github:nix-community/nix-vscode-extensions";
       inputs.nixpkgs.follows = "nixpkgs_linux";

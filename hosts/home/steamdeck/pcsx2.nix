@@ -1,9 +1,8 @@
-{ config, pkgs, ... }:
+{ lib, pkgs, ... }:
 {
   self.steam-shortcuts.PCSX2 = {
     script = ''
-      LD_PRELOAD= \
-      exec ${pkgs.pcsx2}/bin/pcsx2-qt
+      exec ${lib.getExe pkgs.pcsx2}
     '';
     assets = {
       grid.horizontal = pkgs.fetchurl {
@@ -28,13 +27,4 @@
       };
     };
   };
-
-  self.backup.paths = [
-    "${config.home.homeDirectory}/.config/PCSX2/bios"
-    "${config.home.homeDirectory}/.config/PCSX2/gamesettings"
-    "${config.home.homeDirectory}/.config/PCSX2/inis"
-    "${config.home.homeDirectory}/.config/PCSX2/inputprofiles"
-    "${config.home.homeDirectory}/.config/PCSX2/memcards"
-    "${config.home.homeDirectory}/.config/PCSX2/sstates"
-  ];
 }
