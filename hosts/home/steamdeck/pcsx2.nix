@@ -4,7 +4,12 @@
   pkgs,
   ...
 }:
+let
+  package = config.lib.nixGL.wrap pkgs.pcsx2;
+in
 {
+  home.packages = [ package ];
+
   self.steam-shortcuts.PCSX2 = {
     script = ''
       LD_PRELOAD= exec ${lib.getExe (config.lib.nixGL.wrap pkgs.pcsx2)}

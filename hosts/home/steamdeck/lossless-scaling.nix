@@ -17,7 +17,7 @@ let
     x4 = mk 4;
     mk =
       x:
-      builtins.toFile "lsfg-x${toString x}" ''
+      builtins.toFile "lsfg-${toString x}x" ''
         # ${toString x}x
         version = 1
         [[game]]
