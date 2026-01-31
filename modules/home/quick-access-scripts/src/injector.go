@@ -121,14 +121,20 @@ func getCEFDebuggerURL() (string, error) {
 	}
 
 	url := ""
+	quickAccessFound := false
 	for _, target := range targets {
 		if target.Title == "SharedJSContext" {
 			url = target.WebSocketDebuggerUrl
-			break
+		}
+		if strings.HasPrefix(target.Title, "QuickAccess") {
+			quickAccessFound = true
 		}
 	}
 	if url == "" {
 		return "", errors.New("cannot find SharedJSContext target")
+	}
+	if !quickAccessFound {
+		return "", errors.New("cannot find QuickAccess target")
 	}
 	return url, nil
 }
