@@ -11,17 +11,20 @@ let
 
   cfg = rec {
     path = "/tmp/lsfg-vk.toml";
-
-    mk = enabled: ''
-      # enabled=${toString enabled}
-      version = 1
-      [[game]]
-      exe = "default"
-      multiplier = ${if enabled then "2" else "1"}
-      performance_mode = true
-    '';
-    enabled = builtins.toFile "lsfg-enabled" (mk true);
-    disabled = builtins.toFile "lsfg-disabled" (mk false);
+    x1 = mk 1;
+    x2 = mk 2;
+    x3 = mk 3;
+    x4 = mk 4;
+    mk =
+      x:
+      builtins.toFile "lsfg-x${toString x}" ''
+        # ${toString x}x
+        version = 1
+        [[game]]
+        exe = "default"
+        multiplier = ${toString x}
+        performance_mode = true
+      '';
   };
 in
 {
@@ -37,11 +40,10 @@ in
       WantedBy = [ "default.target" ];
     };
     Service = {
-      Type = "oneshot";
       ExecStart = lib.escapeShellArgs [
         "/bin/sh"
         "-c"
-        "cat ${cfg.disabled} > ${cfg.path}"
+        "cat ${cfg.x1} > ${cfg.path}"
       ];
     };
   };
@@ -49,14 +51,11 @@ in
   self.quick-access-scripts = {
     "15-lossless" = ''
       case ''${1:-} in
-        "Enable Lossless Scaling")
-          cat ${cfg.enabled} > ${cfg.path} ;;
-        "Disable Lossless Scaling")
-          cat ${cfg.disabled} > ${cfg.path} ;;
-        *)
-          grep -q enabled=1 ${cfg.path} &&
-          echo "Disable Lossless Scaling" ||
-          echo "Enable Lossless Scaling" ;;
+        "Lossless Scaling (1x)") cat ${cfg.x2} > ${cfg.path} ;;
+        "Lossless Scaling (2x)") cat ${cfg.x3} > ${cfg.path} ;;
+        "Lossless Scaling (3x)") cat ${cfg.x4} > ${cfg.path} ;;
+        "Lossless Scaling (4x)") cat ${cfg.x1} > ${cfg.path} ;;
+        *) echo "Lossless Scaling ($(grep -o '[0-9]x' ${cfg.path} || echo 1x))" ;;
       esac
     '';
   };
