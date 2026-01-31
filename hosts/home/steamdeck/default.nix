@@ -2,6 +2,7 @@
 {
   imports = inputs.self.lib.siblingsOf ./default.nix ++ [
     inputs.self.homeModules.steam-shortcuts
+    inputs.self.homeModules.sudo-passwordless
   ];
 
   nixpkgs.hostPlatform = "x86_64-linux";
@@ -18,4 +19,6 @@
     installScripts = [ "mesa" ];
     vulkan.enable = true;
   };
+
+  self.sudo-passwordless.path = "/usr/bin/sudo";
 }
