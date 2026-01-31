@@ -1,6 +1,7 @@
 { inputs, ... }:
 {
   imports = inputs.self.lib.siblingsOf ./default.nix ++ [
+    inputs.self.homeModules.backup
     inputs.self.homeModules.steam-shortcuts
     inputs.self.homeModules.sudo-passwordless
   ];
@@ -20,5 +21,6 @@
     vulkan.enable = true;
   };
 
+  self.backup.enable = false;
   self.sudo-passwordless.path = "/usr/bin/sudo";
 }

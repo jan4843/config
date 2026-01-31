@@ -32,4 +32,13 @@
       };
     };
   };
+
+  self.backup.paths = [
+    "${config.home.homeDirectory}/.config/PCSX2/bios"
+    "${config.home.homeDirectory}/.config/PCSX2/gamesettings"
+    "${config.home.homeDirectory}/.config/PCSX2/inis"
+    "${config.home.homeDirectory}/.config/PCSX2/inputprofiles"
+    "${config.home.homeDirectory}/.config/PCSX2/memcards"
+    "${config.home.homeDirectory}/.config/PCSX2/sstates"
+  ];
 }

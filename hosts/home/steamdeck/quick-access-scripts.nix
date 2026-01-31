@@ -17,7 +17,7 @@
       esac
     '';
 
-    "15-battery" = ''
+    "19-battery" = ''
       f=$(echo /sys/class/hwmon/*/max_battery_charge_level)
       limit=$(awk '/"ChargeLimit"/ {gsub(/"/, "", $2); print $2}' ~/.local/share/Steam/config/config.vdf); limit=''${limit:-80}
       case ''${1:-} in
