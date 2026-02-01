@@ -21,10 +21,6 @@ func AddInjectionJavaScript(javascript string) {
 }
 
 func Inject() {
-	if shouldPreventInjection() {
-		return
-	}
-
 	if err := enableCEFDebugger(); err != nil {
 		log.Printf("injector: failed to enable CEF Debugger: %v", err)
 		return
@@ -33,6 +29,10 @@ func Inject() {
 	url, err := getCEFDebuggerURL()
 	if err != nil {
 		log.Printf("injector: failed to get CEF Debugger URL: %v", err)
+		return
+	}
+
+	if shouldPreventInjection() {
 		return
 	}
 

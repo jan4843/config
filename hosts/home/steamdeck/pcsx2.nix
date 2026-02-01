@@ -12,7 +12,7 @@ in
 
   self.steam-shortcuts.PCSX2 = {
     script = ''
-      LD_PRELOAD= exec ${lib.getExe (config.lib.nixGL.wrap pkgs.pcsx2)}
+      LD_PRELOAD= exec ${lib.getExe package}
     '';
     assets = {
       grid.horizontal = pkgs.fetchurl {
