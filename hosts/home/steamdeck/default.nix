@@ -5,6 +5,7 @@
     (inputs.self + "/profiles/personal")
     inputs.self.homeModules.steam-shortcuts
     inputs.self.homeModules.sudo-passwordless
+    inputs.self.homeModules.tailscale-userspace
   ];
 
   nixpkgs.hostPlatform = "x86_64-linux";
