@@ -3,7 +3,6 @@ let
   pkgs'.internet-status = pkgs.writeShellApplication {
     name = "internet-status";
     runtimeInputs = with pkgs; [
-      inetutils
       gawk
       jq
       dnsutils

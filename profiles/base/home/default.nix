@@ -22,7 +22,6 @@
       file
       fswatch
       htop
-      inetutils
       jq
       ncdu
       pv
