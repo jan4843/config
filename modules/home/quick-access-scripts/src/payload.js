@@ -148,7 +148,16 @@ var showModal = (title, description) => SteamComponents.showModalRaw(
         {
             bAlertDialog: true,
             strTitle: title,
-            strDescription: description,
+            strDescription: React.createElement(
+                'pre',
+                {
+                    style: {
+                        whiteSpace: 'pre-wrap',
+                        overflowWrap: 'anywhere',
+                    },
+                },
+                description
+            ),
         },
     ),
     window,
