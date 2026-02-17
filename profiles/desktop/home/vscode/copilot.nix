@@ -2,7 +2,6 @@
 {
   programs.vscode.profiles.default = {
     extensions = with vscode-marketplace; [
-      github.copilot
       github.copilot-chat
     ];
 
