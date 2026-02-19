@@ -1,4 +1,4 @@
-#!/bin/sh -e
+#!/bin/sh -em
 
 SELF=$(basename "$0")
 
@@ -21,7 +21,9 @@ usage() {
 case $1 in
 	d|down)
 		shift
+		docker compose logs --follow --since="$(date +%s)" "$@" &
 		docker compose down "$@"
+		wait
 		;;
 	u|up)
 		shift
