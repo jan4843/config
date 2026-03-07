@@ -13,7 +13,8 @@ usage() {
 	$SELF ${u}r${r}estart [SERVICE...]
 	$SELF ${u}e${r}xec [SERVICE] [CMD...]
 	$SELF ${u}l${r}ogs [SERVICE...]
-	$SELF ${u}p${r}s [SERVICE...]
+	$SELF ps [SERVICE...]
+	$SELF ls [SERVICE...]
 	EOF
 	exit 64
 }
@@ -54,9 +55,13 @@ case $1 in
 		shift
 		docker compose logs --follow --tail=100 "$@"
 		;;
-	p|ps)
+	ps)
 		shift
 		docker compose ps --all --format='table {{.ID}}\t{{.Label "com.docker.compose.service"}}\t{{.Status}}' "$@"
+		;;
+	ls)
+		shift
+		docker ps --all --format='table {{.ID}}\t{{.Label "com.docker.compose.project"}}\t{{.Label "com.docker.compose.service"}}\t{{.Status}}' "$@"
 		;;
 	*)
 		usage
