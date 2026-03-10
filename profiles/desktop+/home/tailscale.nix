@@ -1,11 +1,11 @@
-{ vscode-marketplace, ... }:
+{ pkgs, ... }:
 {
   self.homebrew.casks = [ "tailscale-app" ];
 
   self.open-at-login.tailscale.appPath = "/Applications/Tailscale.app";
 
   programs.vscode.profiles.default = {
-    extensions = with vscode-marketplace; [
+    extensions = with pkgs.vscode-marketplace; [
       tailscale.vscode-tailscale
     ];
 

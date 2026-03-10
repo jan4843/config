@@ -1,12 +1,9 @@
-{
-  lib,
-  pkgs,
-  vscode-marketplace,
-  ...
-}:
+{ lib, pkgs, ... }:
 {
   programs.vscode.profiles.default = {
-    extensions = with vscode-marketplace; [ jnoortheen.nix-ide ];
+    extensions = with pkgs.vscode-marketplace; [
+      jnoortheen.nix-ide
+    ];
 
     userSettings = {
       "nix.enableLanguageServer" = true;

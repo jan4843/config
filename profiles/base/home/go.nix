@@ -2,7 +2,6 @@
   config,
   lib,
   pkgs,
-  vscode-marketplace,
   ...
 }:
 let
@@ -20,7 +19,7 @@ in
   };
 
   programs.vscode.profiles.default = {
-    extensions = with vscode-marketplace; [
+    extensions = with pkgs.vscode-marketplace; [
       golang.go
     ];
 

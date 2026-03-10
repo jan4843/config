@@ -1,7 +1,7 @@
-{ vscode-marketplace, ... }:
+{ pkgs, ... }:
 {
   programs.vscode.profiles.default = {
-    extensions = with vscode-marketplace; [
+    extensions = with pkgs.vscode-extensions; [
       github.copilot-chat
     ];
 

@@ -1,4 +1,9 @@
-{ inputs, vscode-marketplace, ... }:
+{
+  inputs,
+  pkgs,
+  vscode-marketplace,
+  ...
+}:
 {
 
   imports = inputs.self.lib.siblingsOf ./default.nix ++ [
@@ -6,9 +11,9 @@
   ];
 
   programs.vscode.profiles.default = {
-    extensions = with vscode-marketplace; [
-      dotjoshjohnson.xml
-      ms-vscode.sublime-keybindings
+    extensions = [
+      pkgs.vscode-marketplace.dotjoshjohnson.xml
+      vscode-marketplace.ms-vscode.sublime-keybindings
     ];
 
     userSettings = {

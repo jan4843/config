@@ -27,9 +27,9 @@
   home.shellAliases.compose = "docker compose";
 
   programs.vscode.profiles.default = {
-    extensions = with vscode-marketplace; [
-      exiasr.hadolint
-      ms-azuretools.vscode-containers
+    extensions = [
+      vscode-marketplace.exiasr.hadolint
+      pkgs.vscode-marketplace.ms-azuretools.vscode-containers
     ];
 
     userSettings = {

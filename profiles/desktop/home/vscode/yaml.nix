@@ -1,7 +1,9 @@
-{ vscode-marketplace, ... }:
+{ pkgs, ... }:
 {
   programs.vscode.profiles.default = {
-    extensions = with vscode-marketplace; [ redhat.vscode-yaml ];
+    extensions = with pkgs.vscode-marketplace; [
+      redhat.vscode-yaml
+    ];
 
     userSettings = {
       "[yaml]" = {
