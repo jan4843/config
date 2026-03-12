@@ -32,9 +32,9 @@
     ]
     ++ lib.optionals pkgs.stdenv.hostPlatform.isLinux [
       dnsutils
-      ghostty.terminfo
       iptables
       lsscsi
+      nixpkgs-unstable.ghostty.terminfo
       parted
       sg3_utils
       smartmontools

@@ -42,7 +42,10 @@ in
 {
   self.homebrew.casks = [ "ghostty@tip" ];
 
-  programs.ghostty.enable = pkgs.stdenv.hostPlatform.isLinux;
+  programs.ghostty = {
+    enable = pkgs.stdenv.hostPlatform.isLinux;
+    package = pkgs.nixpkgs-unstable.ghostty;
+  };
 
   xdg.configFile."ghostty/config".text = lib.generators.toINIWithGlobalSection {
     listsAsDuplicateKeys = true;

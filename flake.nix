@@ -51,7 +51,7 @@
     };
 
     homebrew = {
-      url = "github:homebrew/brew/5.0.16?latest=true";
+      url = "github:homebrew/brew/5.1.0?latest=true";
       flake = false;
     };
     homebrew-core = {
