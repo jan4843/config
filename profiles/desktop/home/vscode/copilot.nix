@@ -1,8 +1,8 @@
-{ pkgs, ... }:
+{ pkgs, vscode-marketplace, ... }:
 {
   programs.vscode.profiles.default = {
-    extensions = with pkgs.vscode-extensions; [
-      github.copilot-chat
+    extensions = [
+      vscode-marketplace.github.copilot-chat or pkgs.vscode-extensions.github.copilot-chat
     ];
 
     userSettings = {
