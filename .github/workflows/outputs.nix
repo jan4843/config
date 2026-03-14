@@ -1,7 +1,7 @@
 let
   # https://docs.github.com/en/actions/reference/runners/github-hosted-runners
   github.runners = {
-    aarch64-darwin = "macos-15";
+    aarch64-darwin = "macos-26";
     aarch64-linux = "ubuntu-24.04-arm";
     x86_64-linux = "ubuntu-24.04";
   };
