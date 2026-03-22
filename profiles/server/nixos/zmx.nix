@@ -1,6 +1,7 @@
 { pkgs, ... }:
 let
-  inputs'.zmx = builtins.getFlake "github:neurosnap/zmx/d34f8d6f0a3b8ac83de35d354ea3ac1ddfd95b87";
+  # https://github.com/neurosnap/zmx/tags
+  inputs'.zmx = builtins.getFlake "github:neurosnap/zmx/27bd9b8421e00cf44efbcf763a094cc06f7ff885";
 in
 {
   homeConfig = {
