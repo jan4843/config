@@ -14,4 +14,8 @@
       "tailscale.ssh.defaultUsername" = "root";
     };
   };
+
+  targets.darwin.defaults."io.tailscale.ipn.macsys" = {
+    HideDockIcon = true;
+  };
 }
