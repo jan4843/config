@@ -17,7 +17,6 @@
     "pdf-squeezer"
     "proxyman"
     "rapidapi"
-    "raspberry-pi-imager"
     "sf-symbols"
     "spotify"
     "suspicious-package"
