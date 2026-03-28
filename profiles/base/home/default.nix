@@ -23,6 +23,7 @@
       fswatch
       htop
       jq
+      lsof
       ncdu
       pv
       rclone
