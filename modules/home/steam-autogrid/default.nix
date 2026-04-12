@@ -3,7 +3,7 @@
   imports = inputs.self.lib.siblingsOf ./default.nix;
 
   systemd.user = {
-    services.steam-grid = {
+    services.steam-autogrid = {
       Service = {
         Type = "oneshot";
         ExecStart = toString [
@@ -13,10 +13,10 @@
       };
     };
 
-    timers.steam-grid = {
+    timers.steam-autogrid = {
       Timer = {
         OnCalendar = "*:0";
-        Unit = "steam-grid.service";
+        Unit = "steam-autogrid.service";
       };
       Install = {
         WantedBy = [ "timers.target" ];

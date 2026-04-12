@@ -6,7 +6,7 @@ import time
 import urllib.request
 import vdf
 
-APPLIST_URL = 'http://api.steampowered.com/ISteamApps/GetAppList/v2'
+APPLIST_URL = 'https://raw.githubusercontent.com/jsnli/steamappidlist/master/data/games_appid.json'
 APPLIST_CACHE = os.path.expanduser('~/.cache/steamapplist.json')
 APPLIST_MAX_AGE_DAYS = 7
 
@@ -20,7 +20,7 @@ def applist_is_stale():
 if applist_is_stale():
     urllib.request.urlretrieve(APPLIST_URL, APPLIST_CACHE)
 with open(APPLIST_CACHE, 'r') as f:
-    APPS = json.load(f)['applist']['apps']
+    APPS = json.load(f)
 
 def appid_by_name(name):
     def normalize(s):
