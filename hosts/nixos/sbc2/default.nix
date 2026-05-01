@@ -1,7 +1,7 @@
 { inputs, ... }:
 {
-  imports = inputs.self.lib.siblingsOf ./default.nix ++ [
-    (inputs.self + "/profiles/sbc")
+  imports = [
+    inputs.self.nixosModules."@sbc"
   ];
 
   networking.hostName = "sbc2";

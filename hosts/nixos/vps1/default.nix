@@ -1,9 +1,9 @@
 { inputs, ... }:
 {
-  imports = inputs.self.lib.siblingsOf ./default.nix ++ [
-    (inputs.self + "/profiles/base")
-    (inputs.self + "/profiles/qemu-guest")
-    (inputs.self + "/profiles/server")
+  imports = [
+    inputs.self.nixosModules."@base"
+    inputs.self.nixosModules."@qemu-guest"
+    inputs.self.nixosModules."@server"
   ];
 
   networking.hostName = "vps1";

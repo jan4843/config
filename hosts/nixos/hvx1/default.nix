@@ -1,7 +1,7 @@
 { inputs, ... }:
 {
-  imports = inputs.self.lib.siblingsOf ./default.nix ++ [
-    (inputs.self + "/profiles/server")
+  imports = [
+    inputs.self.nixosModules."@server"
     inputs.self.nixosModules.zfs
   ];
 

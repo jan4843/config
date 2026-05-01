@@ -1,9 +1,11 @@
 { homeConfig, inputs, ... }:
 {
-  imports = inputs.self.lib.siblingsOf ./default.nix ++ [
-    (inputs.self + "/profiles/desktop+")
-    (inputs.self + "/profiles/personal")
+  imports = [
+    inputs.self.darwinModules."@desktop+"
+    inputs.self.darwinModules."@personal"
   ];
+
+  username = "jan";
 
   networking.hostName = "Jans-MacBook-Air";
 

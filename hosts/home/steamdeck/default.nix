@@ -1,8 +1,8 @@
 { inputs, ... }:
 {
-  imports = inputs.self.lib.siblingsOf ./default.nix ++ [
-    (inputs.self + "/profiles/base+")
-    (inputs.self + "/profiles/personal")
+  imports = [
+    inputs.self.homeModules."@base+"
+    inputs.self.homeModules."@personal"
     inputs.self.homeModules.steam-autogrid
     inputs.self.homeModules.steam-shortcuts
     inputs.self.homeModules.sudo-passwordless

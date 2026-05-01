@@ -1,7 +1,7 @@
 { inputs, pkgs, ... }:
 {
-  imports = inputs.self.lib.siblingsOf ./default.nix ++ [
-    (inputs.self + "/profiles/srv")
+  imports = [
+    inputs.self.nixosModules."@srv"
   ];
 
   networking.hostName = "srv2";

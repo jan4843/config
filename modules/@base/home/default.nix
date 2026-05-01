@@ -1,0 +1,44 @@
+{
+  inputs,
+  lib,
+  pkgs,
+  ...
+}:
+{
+  imports = [
+    ../common/nixpkgs.nix
+    inputs.self.homeModules.default
+    inputs.self.homeModules.homebrew
+    inputs.self.homeModules.mas
+    inputs.self.homeModules.open-at-login
+    inputs.self.homeModules.sudo-passwordless
+    inputs.self.homeModules.tcc
+  ];
+
+  home.packages =
+    with pkgs;
+    [
+      curl
+      file
+      fswatch
+      htop
+      jq
+      lsof
+      ncdu
+      pv
+      rclone
+      rsync
+      unar
+      watch
+    ]
+    ++ lib.optionals pkgs.stdenv.hostPlatform.isLinux [
+      dnsutils
+      iptables
+      lsscsi
+      nixpkgs-unstable.ghostty.terminfo
+      parted
+      sg3_utils
+      smartmontools
+      usbutils
+    ];
+}

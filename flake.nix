@@ -7,9 +7,11 @@
     extra-trusted-public-keys = [ "jan4843.cachix.org-1:TDZmiqhqD9XQxvntxxQe5C3S5aToFAYLlzdqkXZ4tyo=" ];
   };
 
+  # https://nixos.org/manual/nixos/stable/release-notes
+  # https://nixos.org/manual/nixpkgs/stable/release-notes
+  # https://github.com/nix-darwin/nix-darwin/blob/master/CHANGELOG
+  # https://nix-community.github.io/home-manager/release-notes.xhtml
   inputs = {
-    # https://nixos.org/manual/nixos/stable/release-notes
-    # https://nixos.org/manual/nixpkgs/stable/release-notes
     nixpkgs_linux.url = "github:nixos/nixpkgs/nixos-25.11";
     nixpkgs_darwin.url = "github:nixos/nixpkgs/nixpkgs-25.11-darwin";
 
@@ -18,7 +20,6 @@
       inputs.nixpkgs.follows = "nixpkgs_darwin";
     };
 
-    # https://nix-community.github.io/home-manager/release-notes.xhtml
     home-manager_linux = {
       url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs_linux";

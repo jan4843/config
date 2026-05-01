@@ -3,7 +3,7 @@ NIX ?= nix --accept-flake-config $(NIX_OPTIONS)
 DARWIN_REBUILD ?= $(NIX) run $(FLAKE)\#darwin-rebuild --
 NIXOS_REBUILD  ?= $(NIX) run $(FLAKE)\#nixos-rebuild --
 HOME_MANAGER   ?= $(NIX) run $(FLAKE)\#home-manager -- $(NIX_OPTIONS)
-OPTIONS ?= --print-build-logs --show-trace
+OPTIONS ?= --print-build-logs
 COMMAND ?= switch
 SSH_DESTINATION ?= $@
 

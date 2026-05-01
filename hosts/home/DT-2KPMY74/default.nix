@@ -1,7 +1,7 @@
 { inputs, ... }:
 {
-  imports = inputs.self.lib.siblingsOf ./default.nix ++ [
-    (inputs.self + "/profiles/desktop")
+  imports = [
+    inputs.self.homeModules."@desktop"
   ];
 
   _module.args.osConfig.networking.hostName = "DT-2KPMY74";
