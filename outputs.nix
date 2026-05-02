@@ -112,7 +112,7 @@ in
   );
 
   checks = genSystems (
-    _:
+    system:
     builtins.deepSeq (
       (builtins.mapAttrs (
         name: value:
