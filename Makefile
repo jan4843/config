@@ -14,10 +14,6 @@ HOME_CONFIGS   := $(notdir $(wildcard ./hosts/home/*))
 
 .DEFAULT_GOAL := $(shell hostname)
 
-# apps
-$(notdir $(wildcard ./apps/*)):
-	$(NIX) run .#$@
-
 # darwin remote
 $(filter-out $(.DEFAULT_GOAL),$(DARWIN_CONFIGS)):
 	$(error Remote Darwin not supported)
