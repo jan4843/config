@@ -8,6 +8,7 @@
   imports = [
     ../common/nixpkgs.nix
     inputs.self.homeModules.default
+    inputs.self.homeModules.grafana
     inputs.self.homeModules.homebrew
     inputs.self.homeModules.mas
     inputs.self.homeModules.open-at-login
