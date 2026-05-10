@@ -11,7 +11,7 @@ let
   restic' = pkgs.writeShellScript "restic" ''
     RESTIC_REPOSITORY_FILE=<(printf %s "$(<${q config.self.backup.repositoryPrefixFile})"/${q osConfig.networking.hostName}) \
     RESTIC_PASSWORD_FILE=${q config.self.backup.passwordFile} \
-    PATH=${pkgs.restic}/bin:"$PATH" \
+    PATH="${pkgs.restic}/bin:$PATH" \
     exec restic "$@"
   '';
 

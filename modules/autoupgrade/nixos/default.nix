@@ -1,6 +1,5 @@
 {
   config,
-  homeConfig,
   lib,
   pkgs,
   ...
@@ -33,7 +32,6 @@
         current=$(readlink /run/current-system/{initrd,kernel,kernel-modules})
         [ "$booted" = "$current" ] || reboot
       else
-        ${homeConfig.self.push.notifyScript} "autoupgrade failed"
         exit 1
       fi
     '';

@@ -1,16 +1,9 @@
-{
-  config,
-  inputs,
-  pkgs,
-  ...
-}:
+{ config, pkgs, ... }:
 let
   pkg = pkgs.bashInteractive;
   shellPath = "/run/current-system/sw${pkg.shellPath}";
 in
 {
-  homeConfig.imports = [ inputs.self.homeModules.bash ];
-
   environment = {
     shells = [ shellPath ];
     systemPackages = [ pkg ];
