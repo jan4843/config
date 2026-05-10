@@ -41,6 +41,7 @@ jobs:
     name: Build ${{ matrix.name }}
     needs: [update-flake]
     runs-on: ${{ matrix.runner }}
+    timeout-minutes: 30
     strategy:
       max-parallel: 1
       matrix:
