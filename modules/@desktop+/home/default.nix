@@ -19,8 +19,8 @@
     "sf-symbols"
     "spotify"
     "suspicious-package"
-    "utm"
     "tor-browser"
+    "utm"
   ];
 
   self.mas = [

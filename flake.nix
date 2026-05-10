@@ -3,6 +3,7 @@
 
   nixConfig = {
     abort-on-warn = true;
+    allow-import-from-derivation = false;
     extra-substituters = [ "https://jan4843.cachix.org" ];
     extra-trusted-public-keys = [ "jan4843.cachix.org-1:TDZmiqhqD9XQxvntxxQe5C3S5aToFAYLlzdqkXZ4tyo=" ];
   };
