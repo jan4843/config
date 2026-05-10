@@ -5,7 +5,7 @@
   ...
 }:
 lib.mkIf config.self.grafana.enabled {
-  self.grafana.scrapeConfigs.node.static_configs = [ { targets = [ "127.0.0.1:9100" ]; } ];
+  self.grafana.scrapeConfigs.node-exporter.static_configs = [ { targets = [ "127.0.0.1:9100" ]; } ];
 
   systemd.user.services.node_exporter = {
     Install = {
