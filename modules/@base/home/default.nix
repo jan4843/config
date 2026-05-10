@@ -34,6 +34,7 @@
     ]
     ++ lib.optionals pkgs.stdenv.hostPlatform.isLinux [
       dnsutils
+      gnumake
       iptables
       lsscsi
       nixpkgs-unstable.ghostty.terminfo
