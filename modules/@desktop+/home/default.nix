@@ -7,7 +7,6 @@
 
   self.homebrew.casks = [
     "appcleaner"
-    "brave-browser"
     "firefox"
     "google-chrome"
     "hex-fiend"
