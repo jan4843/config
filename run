@@ -2,4 +2,4 @@
 
 app=$1
 shift
-nix --extra-experimental-features "nix-command flakes" run ".#$app" -- "$@"
+nix --extra-experimental-features "nix-command flakes" --accept-flake-config run ".#$app" -- "$@"
