@@ -1,8 +1,8 @@
 { config, inputs, ... }:
 {
-  imports = [ inputs.self.homeModules.quick-access-scripts ];
+  imports = [ inputs.self.homeModules.steam-scripts ];
 
-  self.quick-access-scripts = {
+  self.steam-scripts = {
     "10-smt" = ''
       f=/sys/devices/system/cpu/smt/control
       case ''${1:-} in

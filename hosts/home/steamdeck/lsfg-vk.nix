@@ -48,7 +48,7 @@ in
     };
   };
 
-  self.quick-access-scripts = {
+  self.steam-scripts = {
     "15-lossless" = ''
       case ''${1:-} in
         "Lossless Scaling (1x)") cat ${cfg.x2} > ${cfg.path} ;;

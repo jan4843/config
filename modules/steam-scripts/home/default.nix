@@ -5,13 +5,13 @@
   ...
 }:
 {
-  options.self.quick-access-scripts = lib.mkOption {
+  options.self.steam-scripts = lib.mkOption {
     type = lib.types.attrsOf lib.types.str;
     default = { };
   };
 
   config = {
-    systemd.user.services.quick-access-scripts = {
+    systemd.user.services.steam-scripts = {
       Install = {
         WantedBy = [ "default.target" ];
       };
@@ -30,6 +30,6 @@
           text = value;
         }
       );
-    }) config.self.quick-access-scripts;
+    }) config.self.steam-scripts;
   };
 }
