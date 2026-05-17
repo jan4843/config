@@ -36,7 +36,7 @@
     nixpkgs-25-05_linux.url = "github:nixos/nixpkgs/nixos-25.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
 
-    nixos-hardware.url = "github:nixos/nixos-hardware";
+    nixos-hardware.url = "github:nixos/nixos-hardware/eeb02f6e29fc8139c0b15af5ff0fdfdc6d0d3d90";
 
     nixgl_linux = {
       url = "github:nix-community/nixGL";
