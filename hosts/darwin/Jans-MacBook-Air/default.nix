@@ -21,6 +21,11 @@
       "${homeConfig.home.homeDirectory}/Library/LaunchAgents/local.*"
       "${homeConfig.home.homeDirectory}/Library/Mobile Documents/9CR7T2DMDG~com~ngocluu~onewriter/Documents"
     ];
+    exclude = [
+      ".DS_Store"
+      "DerivedData"
+      "node_modules"
+    ];
     retention = {
       hourly = 24 * 7;
       daily = 365;
