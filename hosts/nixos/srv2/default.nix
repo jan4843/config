@@ -1,7 +1,7 @@
 { inputs, pkgs, ... }:
 {
-  imports = [
-    inputs.self.nixosModules."@srv"
+  imports = with inputs.self.nixosModules; [
+    _srv
   ];
 
   networking.hostName = "srv2";

@@ -5,8 +5,8 @@
   ...
 }:
 {
-  imports = [
-    inputs.self.homeModules."@base"
+  imports = with inputs.self.homeModules; [
+    _base
   ];
 
   home.packages =

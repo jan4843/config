@@ -1,8 +1,8 @@
 { homeConfig, inputs, ... }:
 {
-  imports = [
-    inputs.self.darwinModules."@desktop+"
-    inputs.self.darwinModules."@personal"
+  imports = with inputs.self.darwinModules; [
+    _desktop-extra
+    _personal
   ];
 
   username = "jan";

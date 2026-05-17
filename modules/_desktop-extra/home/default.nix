@@ -1,8 +1,8 @@
 { inputs, ... }:
 {
-  imports = [
-    inputs.self.homeModules."@base+"
-    inputs.self.homeModules."@desktop"
+  imports = with inputs.self.homeModules; [
+    _base-extra
+    _desktop
   ];
 
   self.homebrew.casks = [

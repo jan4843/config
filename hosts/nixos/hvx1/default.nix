@@ -1,8 +1,8 @@
 { inputs, ... }:
 {
-  imports = [
-    inputs.self.nixosModules."@server"
-    inputs.self.nixosModules.zfs
+  imports = with inputs.self.nixosModules; [
+    _server
+    zfs
   ];
 
   networking.hostName = "hvx1";

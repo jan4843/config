@@ -1,12 +1,12 @@
 { inputs, ... }:
 {
-  imports = [
-    inputs.self.homeModules."@base+"
-    inputs.self.homeModules."@personal"
-    inputs.self.homeModules.steam-autogrid
-    inputs.self.homeModules.steam-shortcuts
-    inputs.self.homeModules.sudo-passwordless
-    inputs.self.homeModules.tailscale-userspace
+  imports = with inputs.self.homeModules; [
+    _base-extra
+    _personal
+    steam-autogrid
+    steam-shortcuts
+    sudo-passwordless
+    tailscale-userspace
   ];
 
   nixpkgs.hostPlatform = "x86_64-linux";

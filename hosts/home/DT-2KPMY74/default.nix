@@ -1,7 +1,7 @@
 { inputs, ... }:
 {
-  imports = [
-    inputs.self.homeModules."@desktop"
+  imports = with inputs.self.homeModules; [
+    _desktop
   ];
 
   _module.args.osConfig.networking.hostName = "DT-2KPMY74";

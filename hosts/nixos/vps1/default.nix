@@ -1,9 +1,9 @@
 { inputs, ... }:
 {
-  imports = [
-    inputs.self.nixosModules."@base"
-    inputs.self.nixosModules."@qemu-guest"
-    inputs.self.nixosModules."@server"
+  imports = with inputs.self.nixosModules; [
+    _base
+    _qemu-guest
+    _server
   ];
 
   networking.hostName = "vps1";

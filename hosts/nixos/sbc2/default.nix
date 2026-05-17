@@ -1,7 +1,7 @@
 { inputs, ... }:
 {
-  imports = [
-    inputs.self.nixosModules."@sbc"
+  imports = with inputs.self.nixosModules; [
+    _sbc
   ];
 
   networking.hostName = "sbc2";
