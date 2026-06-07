@@ -4,10 +4,9 @@
     services.steam-autogrid = {
       Service = {
         Type = "oneshot";
-        ExecStart = toString [
-          "${(pkgs.python3.withPackages (p: [ p.vdf ]))}/bin/python"
-          ./src/steam-autogrid.py
-        ];
+        ExecStart = ''
+          ${(pkgs.python3.withPackages (p: [ p.vdf ]))}/bin/python ${./src/steam-autogrid.py}
+        '';
       };
     };
 
