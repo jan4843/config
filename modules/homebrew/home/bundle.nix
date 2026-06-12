@@ -9,7 +9,7 @@ lib.mkIf config.self.homebrew.enable {
     lib.hm.dag.entryBetween [ "installPackages" ] [ "writeBoundary" "homebrewTaps" ]
       ''
         ${config.self.homebrew.prefix}/bin/brew bundle install \
-          --cleanup --quiet --force-cleanup \
+          --quiet --force-cleanup \
           --file ${builtins.toFile "Brewfile" (lib.concatLines (taps ++ brews ++ casks))}
       '';
 }
