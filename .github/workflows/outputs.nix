@@ -18,6 +18,6 @@ let
     key: closure: builtins.attrValues (builtins.mapAttrs (output key closure) (flake.${key} or { }));
 in
 [ ]
-++ outputs "darwinConfigurations" "config.system.build.toplevel"
 ++ outputs "nixosConfigurations" "config.system.build.toplevel"
+++ outputs "darwinConfigurations" "config.system.build.toplevel"
 ++ outputs "homeConfigurations" "activationPackage"

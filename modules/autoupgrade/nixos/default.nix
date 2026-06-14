@@ -24,9 +24,6 @@
       nixos-rebuild
     ];
     script = ''
-      nix-collect-garbage --delete-old
-      nix-store --optimise
-
       nixos-rebuild switch --accept-flake-config --flake ${lib.escapeShellArg "${config.self.autoupgrade.flakeref}#${config.networking.hostName}"}
 
       booted=$(readlink   /run/booted-system/{initrd,kernel,kernel-modules})
