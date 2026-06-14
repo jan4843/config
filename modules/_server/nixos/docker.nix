@@ -1,9 +1,4 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}:
+{ config, lib, ... }:
 {
   virtualisation.docker = {
     enable = true;
@@ -14,7 +9,7 @@
     serviceConfig = {
       Type = "oneshot";
       ExecStart = lib.escapeShellArgs [
-        "${pkgs.docker}/bin/docker"
+        "${config.virtualisation.docker.package}/bin/docker"
         "image"
         "prune"
         "--all"

@@ -2,7 +2,6 @@
   outputs = inputs: import ./outputs.nix inputs;
 
   nixConfig = {
-    abort-on-warn = true;
     allow-import-from-derivation = false;
     extra-substituters = [ "https://jan4843.cachix.org" ];
     extra-trusted-public-keys = [ "jan4843.cachix.org-1:TDZmiqhqD9XQxvntxxQe5C3S5aToFAYLlzdqkXZ4tyo=" ];
@@ -13,20 +12,20 @@
   # https://github.com/nix-darwin/nix-darwin/blob/master/CHANGELOG
   # https://nix-community.github.io/home-manager/release-notes.xhtml
   inputs = {
-    nixpkgs_linux.url = "github:nixos/nixpkgs/nixos-25.11";
-    nixpkgs_darwin.url = "github:nixos/nixpkgs/nixpkgs-25.11-darwin";
+    nixpkgs_linux.url = "github:nixos/nixpkgs/nixos-26.05";
+    nixpkgs_darwin.url = "github:nixos/nixpkgs/nixpkgs-26.05-darwin";
 
     nix-darwin = {
-      url = "github:nix-darwin/nix-darwin/nix-darwin-25.11";
+      url = "github:nix-darwin/nix-darwin/nix-darwin-26.05";
       inputs.nixpkgs.follows = "nixpkgs_darwin";
     };
 
     home-manager_linux = {
-      url = "github:nix-community/home-manager/release-25.11";
+      url = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs_linux";
     };
     home-manager_darwin = {
-      url = "github:nix-community/home-manager/release-25.11";
+      url = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs_darwin";
     };
   };
@@ -36,7 +35,10 @@
     nixpkgs-25-05_linux.url = "github:nixos/nixpkgs/nixos-25.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
 
-    nixos-hardware.url = "github:nixos/nixos-hardware/eeb02f6e29fc8139c0b15af5ff0fdfdc6d0d3d90";
+    nixos-hardware_linux = {
+      url = "github:nixos/nixos-hardware";
+      inputs.nixpkgs.follows = "nixpkgs_linux";
+    };
 
     nixgl_linux = {
       url = "github:nix-community/nixGL";

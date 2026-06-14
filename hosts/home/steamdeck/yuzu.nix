@@ -12,7 +12,9 @@ in
 
   self.steam-shortcuts.Yuzu = {
     script = ''
-      LD_PRELOAD= exec ${lib.getExe package}
+      LD_PRELOAD= exec \
+      QT_XCB_GL_INTEGRATION=none \
+      ${lib.getExe package}
     '';
     assets = {
       grid.horizontal = pkgs.fetchurl {

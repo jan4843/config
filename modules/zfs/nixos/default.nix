@@ -29,6 +29,7 @@ in
 
     boot.zfs = {
       forceImportAll = true;
+      forceImportRoot = true;
       extraPools = lib.pipe config.self.zfs.datasets [
         builtins.attrNames
         (map (x: builtins.head (builtins.split "/" x)))

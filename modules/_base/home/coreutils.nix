@@ -13,7 +13,7 @@
 
     ls = if pkgs.stdenv.hostPlatform.isDarwin then "ls -AFh -G" else "ls -AFhv --color=auto";
 
-    "-- -x" = "chmod -x";
+    "-x" = "chmod -x";
     "+x" = "chmod +x";
   };
 }

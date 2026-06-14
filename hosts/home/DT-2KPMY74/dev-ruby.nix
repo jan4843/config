@@ -20,10 +20,7 @@ let
     ];
 in
 {
-  home.packages = with pkgs; [
-    jetbrains.ruby-mine
-    ruby
-  ];
+  home.packages = [ pkgs.ruby ];
 
   home.sessionVariables = {
     JAVA_TOOL_OPTIONS = "-Djava.library.path=${lib.makeLibraryPath [ pkgs.stdenv.cc.libc ]}";
