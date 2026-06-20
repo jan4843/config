@@ -4,6 +4,4 @@
     _base-extra
     _personal
   ];
-
-  systemd.enableEmergencyMode = false;
 }

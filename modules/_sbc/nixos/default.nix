@@ -6,5 +6,6 @@
     _server
   ];
 
-  self.swap.sizeGB = 8;
+  self.swap.sizeGB = 4;
+  self.persistence.wipeRoot = false;
 }

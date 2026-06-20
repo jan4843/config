@@ -10,14 +10,19 @@
       default = "/nix/persist";
       readOnly = true;
     };
+
+    wipeRoot = lib.mkOption {
+      type = lib.types.bool;
+      default = true;
+    };
   };
 
   config = {
     fileSystems = {
       "/" = {
         device = "/dev/disk/by-label/root";
-        fsType = "ext2";
-        noCheck = true;
+        fsType = "auto";
+        noCheck = config.self.persistence.wipeRoot;
       };
       "/boot" = {
         device = "/dev/disk/by-label/boot";
@@ -47,17 +52,19 @@
       };
     };
 
-    boot.initrd.systemd.storePaths = config.boot.initrd.systemd.services.wipe-root.path;
-    boot.initrd.systemd.services.wipe-root = {
-      wantedBy = [ "initrd.target" ];
-      after = [ "initrd-root-device.target" ];
-      before = [ "sysroot.mount" ];
-      unitConfig.DefaultDependencies = "no";
-      serviceConfig.Type = "oneshot";
-      path = [ pkgs.e2fsprogs ];
-      script = ''
-        mkfs.ext2 -F -L root /dev/disk/by-partlabel/root
-      '';
+    boot.initrd.systemd = lib.mkIf config.self.persistence.wipeRoot {
+      storePaths = config.boot.initrd.systemd.services.wipe-root.path;
+      services.wipe-root = {
+        wantedBy = [ "initrd.target" ];
+        after = [ "initrd-root-device.target" ];
+        before = [ "sysroot.mount" ];
+        unitConfig.DefaultDependencies = "no";
+        serviceConfig.Type = "oneshot";
+        path = [ pkgs.e2fsprogs ];
+        script = ''
+          mkfs.ext2 -F -L root /dev/disk/by-partlabel/root
+        '';
+      };
     };
   };
 }
