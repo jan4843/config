@@ -7,5 +7,4 @@
   ];
 
   self.swap.sizeGB = 4;
-  self.persistence.wipeRoot = false;
 }
