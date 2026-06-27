@@ -21,7 +21,6 @@
     fileSystems = {
       "/" = {
         device = "/dev/disk/by-label/root";
-        fsType = "auto";
         noCheck = config.self.persistence.wipeRoot;
       };
       "/boot" = {

@@ -8,6 +8,8 @@
   system.stateVersion = "24.11";
   self.autoupgrade.schedule = "Mon 04:00";
 
+  fileSystems."/".fsType = "ext2";
+
   boot.extraModprobeConfig = ''
     options usb-storage quirks=0bc2:aa14:u
   '';

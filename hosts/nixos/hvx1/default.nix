@@ -9,6 +9,8 @@
   system.stateVersion = "25.11";
   self.autoupgrade.schedule = "Sun 00:00";
 
+  fileSystems."/".fsType = "ext2";
+
   self.zfs.datasets = {
     "tank/tmp".snapshots = { };
   };
