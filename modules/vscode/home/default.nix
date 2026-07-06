@@ -16,7 +16,7 @@
     enable = true;
     mutableExtensionsDir = false;
     profiles.default.userSettings = {
-      "extensions.autoCheckUpdates" = false;
+      "extensions.autoCheckUpdates" = "off";
       "extensions.autoUpdate" = false;
       "update.mode" = "none";
     };
