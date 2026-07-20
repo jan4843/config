@@ -1,12 +1,12 @@
 { pkgs, ... }:
 {
   programs.vscode.profiles.default = {
-    extensions = with pkgs.vscode-marketplace; [
-      zhuangtongfa.material-theme
+    extensions = with pkgs.vscode-extensions; [
+      github.github-vscode-theme
     ];
 
     userSettings = {
-      "workbench.colorTheme" = "One Dark Pro";
+      "workbench.colorTheme" = "GitHub Dark Dimmed";
     };
   };
 }
