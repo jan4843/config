@@ -9,17 +9,16 @@ pkgs.writeShellApplication {
     gnused
   ];
   text = ''
-    { grep -Eo 'github:.+latest=true' flake.nix || :; } |
+    { grep -Eo 'github:.*"; # UPDATE:github-latest' flake.nix || :; } |
     while read -r old; do
       user=''${old#"github:"}; user=''${user%%"/"*}
       repo=''${old#"github:$user/"}; repo=''${repo%%"/"*}
-      query=''${old#*"?"}
       version=$(
         curl -sI "https://github.com/$user/$repo/releases/latest" |
         awk -F/ '/^[Ll]ocation:/{print $NF}' |
         tr -d '\r'
       )
-      new="github:$user/$repo/$version?$query"
+      new="github:$user/$repo/$version\"; # UPDATE:github-latest"
 
       [ "$old" != "$new" ] || continue
 

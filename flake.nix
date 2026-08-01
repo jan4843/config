@@ -55,7 +55,7 @@
     };
 
     homebrew = {
-      url = "github:homebrew/brew/6.0.9?latest=true";
+      url = "github:homebrew/brew/6.0.9"; # UPDATE:github-latest
       flake = false;
     };
     homebrew-core = {
@@ -68,7 +68,7 @@
     };
 
     lsfg-vk_linux = {
-      url = "github:pabloaul/lsfg-vk-flake/1.0.0?latest=true";
+      url = "github:pabloaul/lsfg-vk-flake/1.0.0"; # UPDATE:github-latest
       inputs.nixpkgs.follows = "nixpkgs_linux";
     };
   };
