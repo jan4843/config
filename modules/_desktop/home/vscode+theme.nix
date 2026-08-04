@@ -1,8 +1,8 @@
-{ pkgs, ... }:
+{ lib, ... }:
 {
   programs.vscode.profiles.default = {
     userSettings = {
-      "workbench.colorTheme" = "Dark Modern";
+      "workbench.colorTheme" = lib.mkDefault "Dark Modern";
     };
   };
 }
