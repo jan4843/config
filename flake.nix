@@ -55,7 +55,7 @@
     };
 
     homebrew = {
-      url = "github:homebrew/brew/6.0.15"; # UPDATE:github-latest
+      url = "github:homebrew/brew/6.0.17"; # UPDATE:github-latest
       flake = false;
     };
     homebrew-core = {
