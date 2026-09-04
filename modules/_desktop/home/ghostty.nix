@@ -10,6 +10,12 @@ let
     shell-integration-features = "no-cursor";
     cursor-style-blink = false;
     scrollback-limit = 128 * mb;
+
+    # https://github.com/ghostty-org/ghostty/issues/10749
+    keybind = [
+      "super+v=paste_from_clipboard"
+      "super+c=copy_to_clipboard"
+    ];
   };
 in
 {
