@@ -17,8 +17,13 @@
     ];
 
     userSettings = {
+      "chat.agent.thinkingStyle" = "collapsedPreview";
+      "chat.permissions.default" = "autopilot";
+      "chat.tips.enabled" = false;
+      "chat.titleBar.openInAgentsWindow.enabled" = false;
+      "chat.viewSessions.enabled" = false;
+      "dictation.showButton" = false;
       "diffEditor.ignoreTrimWhitespace" = false;
-      "editor.accessibilitySupport" = "off";
       "editor.copyWithSyntaxHighlighting" = false;
       "editor.guides.bracketPairs" = "active";
       "editor.inlineSuggest.enabled" = true;
@@ -42,6 +47,7 @@
       "terminal.integrated.scrollback" = 10000;
       "terminal.integrated.showExitAlert" = false;
       "update.showReleaseNotes" = false;
+      "workbench.browser.showInTitleBar" = false;
       "workbench.editor.empty.hint" = "hidden";
       "workbench.layoutControl.type" = "menu";
       "workbench.secondarySideBar.defaultVisibility" = "hidden";
