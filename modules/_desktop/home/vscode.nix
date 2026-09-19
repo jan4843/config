@@ -18,6 +18,7 @@
 
     userSettings = {
       "chat.agent.thinkingStyle" = "collapsedPreview";
+      "chat.byokUtilityModelDefault" = "mainAgent";
       "chat.permissions.default" = "autopilot";
       "chat.tips.enabled" = false;
       "chat.titleBar.openInAgentsWindow.enabled" = false;
