@@ -22,7 +22,7 @@
       "chat.permissions.default" = "autopilot";
       "chat.tips.enabled" = false;
       "chat.titleBar.openInAgentsWindow.enabled" = false;
-      "chat.viewSessions.enabled" = false;
+      "chat.viewSessions.orientation" = "stacked";
       "dictation.showButton" = false;
       "diffEditor.ignoreTrimWhitespace" = false;
       "editor.copyWithSyntaxHighlighting" = false;
