@@ -15,4 +15,8 @@
       "claudeCode.preferredLocation" = "sidebar";
     };
   };
+
+  self.git.ignore = [
+    "CLAUDE.local.md"
+  ];
 }

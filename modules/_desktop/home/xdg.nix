@@ -10,6 +10,8 @@ lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
   xdg.mime.enable = true;
   xdg.mimeApps.enable = true;
 
+  xdg.configFile."mimeapps.list".force = true;
+
   # https://github.com/nix-community/home-manager/issues/1439#issuecomment-3374894606
   xdg.configFile."systemd/user-environment-generators/05-home-manager.sh" = {
     text = ". ${lib.escapeShellArg config.home.profileDirectory}/etc/profile.d/hm-session-vars.sh";
