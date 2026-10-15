@@ -13,6 +13,8 @@
   programs.vscode.profiles.default = {
     extensions = [
       pkgs.vscode-marketplace.dotjoshjohnson.xml
+      pkgs.vscode-marketplace.ms-vscode-remote.remote-containers
+      pkgs.vscode-marketplace.ms-vscode-remote.remote-ssh
       vscode-marketplace.ms-vscode.sublime-keybindings
     ];
 
