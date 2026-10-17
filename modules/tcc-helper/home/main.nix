@@ -51,7 +51,7 @@ let
 
   cert = "TCC Helper Signing";
 in
-lib.mkIf (cfg.permissions != [ ]) {
+lib.mkIf (pkgs.stdenv.hostPlatform.isDarwin && cfg.permissions != [ ]) {
   self.tcc = lib.genAttrs cfg.permissions (_: [ cfg.app ]);
 
   home.activation.checkSigningCert = lib.hm.dag.entryBefore [ "checkFilesChanged" ] ''
