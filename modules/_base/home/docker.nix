@@ -25,15 +25,4 @@
   };
 
   home.shellAliases.compose = "docker compose";
-
-  programs.vscode.profiles.default = {
-    extensions = [
-      vscode-marketplace.exiasr.hadolint
-      pkgs.vscode-marketplace.ms-azuretools.vscode-containers
-    ];
-
-    userSettings = {
-      "hadolint.hadolintPath" = "${pkgs.hadolint}/bin/hadolint";
-    };
-  };
 }
