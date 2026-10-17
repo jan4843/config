@@ -14,6 +14,7 @@
     inputs.self.homeModules.open-at-login
     inputs.self.homeModules.sudo-passwordless
     inputs.self.homeModules.tcc
+    inputs.self.homeModules.tcc-helper
   ];
 
   home.packages =

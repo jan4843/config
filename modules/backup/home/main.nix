@@ -56,10 +56,16 @@ lib.mkIf config.self.backup.enable {
 
   home.shellAliases.restic = "${restic'}";
 
+  self.tcc-helper.permissions = [ "SystemPolicyAllFiles" ];
+
   launchd.agents.backup = {
     enable = true;
     config = {
-      ProgramArguments = [ "${script}" ];
+      AssociatedBundleIdentifiers = [ config.self.tcc-helper.bundleIdentifier ];
+      ProgramArguments = [
+        config.self.tcc-helper.executable
+        "${script}"
+      ];
       StartCalendarInterval = [ { Minute = scheduleMinute; } ];
       ProcessType = "Background";
       LowPriorityBackgroundIO = true;
