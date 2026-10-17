@@ -7,7 +7,7 @@
 
   self.homebrew.casks = [
     "appcleaner"
-    "firefox"
+    "firefox@esr"
     "google-chrome"
     "hex-fiend"
     "imageoptim"
